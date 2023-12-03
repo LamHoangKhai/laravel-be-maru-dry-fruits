@@ -1,0 +1,23 @@
+#layout-menu {
+    background-color: rgb(35, 52, 70) !important;
+}
+
+#layout-menu a {
+    color: #fff !important;
+    opacity: 0.8;
+}
+
+.bg-menu-theme .menu-inner > .menu-item.active > .menu-link {
+    background-color: #696cff !important;
+    opacity: 1;
+}
+
+.app-brand.demo a > h4 {
+    color: rgb(255, 255, 255);
+    opacity: 1;
+}
+
+.content-wrapper {
+    color: black;
+    font-weight: 400;
+}
