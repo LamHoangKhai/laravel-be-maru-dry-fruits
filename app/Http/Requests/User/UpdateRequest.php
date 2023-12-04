@@ -23,9 +23,9 @@ class UpdateRequest extends FormRequest
     {
         return [
             "full_name" => "required",
-            "phone" => "required|max:15",
+            "phone" => "required|max:15|min:10|regex:/^([0-9\s\-\+\(\)]*)$/",
             "address" => "required"
-            
+
         ];
     }
 }
