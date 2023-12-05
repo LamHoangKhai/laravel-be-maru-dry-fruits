@@ -65,9 +65,9 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = auth()->user();
-        if($user->level != 1) {
+        if($user->level == 1) {
             auth()->logout();
-            return response()->json(['error' => 'Unauthorized'], 403);
+            return response()->json(['error' => 'Not found'], 403);
         }
 
         return $this->respondWithToken($token);
