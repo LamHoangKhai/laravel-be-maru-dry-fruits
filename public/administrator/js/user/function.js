@@ -33,7 +33,7 @@ const loadData = (storage) => {
                     let level =
                         element.id === "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" &&
                         element.level === 1
-                            ? ["Administrator", "danger"]
+                            ? ["Superadmin", "danger"]
                             : element.level === 1
                             ? ["Admin", "dark"]
                             : element.level === 2

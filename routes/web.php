@@ -28,7 +28,7 @@ Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 
 
-Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function () {
+Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
         Route::get('index', 'index')->name('index');
