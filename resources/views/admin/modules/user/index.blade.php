@@ -86,7 +86,7 @@
                                         </li>
                                     </ul>
                                 </div>
-
+                            </div>
 
                         </ul>
 
@@ -150,5 +150,7 @@
 
 
         </div>
-        <!-- /.card -->
-    @endsection
+    </div>
+
+    <!-- /.card -->
+@endsection

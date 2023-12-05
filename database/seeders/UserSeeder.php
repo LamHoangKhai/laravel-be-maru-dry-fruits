@@ -17,11 +17,15 @@ class UserSeeder extends Seeder
         $idDefault = "maruDr-yfRui-tspRo-jectfORFOU-Rmembe";
         DB::table('users')->insert([
             "id" => $idDefault,
-            'full_name' => "Administrator",
+            'full_name' => "Superadmin",
             'email' => "administrator" . '@gmail.com',
             'password' => Hash::make('administrator'),
             'level' => '1',
             'status' => '1',
         ]);
+
+        
+
+
     }
 }

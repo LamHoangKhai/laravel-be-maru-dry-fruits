@@ -10,7 +10,6 @@
                 </h4>
 
             </div>
-
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.user.update', ['id' => $id]) }}">
                     @csrf
@@ -90,13 +89,21 @@
                         </div>
                         <div class="col mb-2">
                             <label for="level" class="form-label">Level</label>
-                            <select id="level" class="form-select" name="level">
-                                <option value="1" {{ old('level', $data->level) == 1 ? 'selected' : '' }}>Admin
-                                </option>
-                                <option value="2" {{ old('level', $data->level) == 2 ? 'selected' : '' }}>Member
-                                </option>
-                                <option value="3" {{ old('level', $data->level) == 3 ? 'selected' : '' }}>Member VIP
-                                </option>
+                            <select id="level" class="form-select" name="level" {{ $mySelf ? 'disabled' : '' }}>
+                                {{-- note allow admin change level --}}
+                                @if ($mySelf)
+                                    <option>Not change!
+                                    </option>
+                                @else
+                                    <option value="1" {{ old('level', $data->level) == 1 ? 'selected' : '' }}>Admin
+                                    </option>
+                                    <option value="2" {{ old('level', $data->level) == 2 ? 'selected' : '' }}>Member
+                                    </option>
+                                    <option value="3" {{ old('level', $data->level) == 3 ? 'selected' : '' }}>Member
+                                        VIP
+                                    </option>
+                                @endif
+
                             </select>
                         </div>
                     </div>
