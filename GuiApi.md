@@ -2,7 +2,10 @@ Login {
     URL: http://localhost:8000/api/auth/login,
     Method: POST
     Content type: application/json
-
+    Data: {
+        email,
+        password,
+    }
     return: {
         access_tokens,
         token_type,
@@ -14,7 +17,11 @@ Register {
     URL: http://localhost:8000/api/auth/register,
     Method: POST
     Content type: application/json
-
+    Data: {
+        email,
+        password,
+        password_confirmation
+    }
     return: {
        'message': 'User successfuly registered'
     }
