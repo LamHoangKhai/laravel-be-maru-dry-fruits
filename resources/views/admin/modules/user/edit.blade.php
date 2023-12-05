@@ -89,12 +89,12 @@
                         </div>
                         <div class="col mb-2">
                             <label for="level" class="form-label">Level</label>
-                            <select id="level" class="form-select" name="level" {{ $mySelf ? 'disabled' : '' }}>
+                            <select id="level" class="form-select" name="level" >
                                 {{-- note allow admin change level --}}
-                                @if ($mySelf)
+                                {{-- @if ($mySelf)
                                     <option>Not change!
                                     </option>
-                                @else
+                                @else --}}
                                     <option value="1" {{ old('level', $data->level) == 1 ? 'selected' : '' }}>Admin
                                     </option>
                                     <option value="2" {{ old('level', $data->level) == 2 ? 'selected' : '' }}>Member
@@ -102,7 +102,7 @@
                                     <option value="3" {{ old('level', $data->level) == 3 ? 'selected' : '' }}>Member
                                         VIP
                                     </option>
-                                @endif
+                                {{-- @endif --}}
 
                             </select>
                         </div>

@@ -31,17 +31,17 @@
 
                                 <!--/ Show role -->
 
-                                @php
+                                {{-- @php
                                     $text = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'Superadmin' : 'Admin';
                                     $color = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'danger' : 'dark';
 
-                                @endphp
+                                @endphp --}}
 
-                                <div class="flex-grow-1">
+                                {{-- <div class="flex-grow-1">
                                     <span class="fw-semibold d-block">{{ Auth::user()->full_name }}</span>
                                     <small
                                         class="badge rounded-pill  bg-{{ $color }}">{{ $text }}</small>
-                                </div>
+                                </div> --}}
 
                             </div>
                         </a>
