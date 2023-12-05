@@ -17,9 +17,10 @@ class CheckLogin
     public function handle(Request $request, Closure $next): Response
     {
         // handle authentication
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth::check() && Auth::user()->level == 1 && Auth::user()->status == 1) {
             return $next($request);
         }
+
         return redirect()->route("login");
     }
 }
