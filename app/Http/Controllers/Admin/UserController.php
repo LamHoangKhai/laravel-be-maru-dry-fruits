@@ -83,7 +83,7 @@ class UserController extends Controller
         // check permission
         $permission = false;
 
-        // if user is Administrator allows delete all level
+        // if user is Superadmin allows delete all level
         if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }
@@ -142,7 +142,7 @@ class UserController extends Controller
         // check permission
         $permission = false;
 
-        // if user is Administrator allows delete all level
+        // if user is Superadmin allows delete all level
         if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" && $user->id != "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }

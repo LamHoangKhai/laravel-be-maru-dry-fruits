@@ -32,7 +32,7 @@
                                 <!--/ Show role -->
 
                                 @php
-                                    $text = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'Administrator' : 'Admin';
+                                    $text = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'Superadmin' : 'Admin';
                                     $color = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'danger' : 'dark';
 
                                 @endphp
