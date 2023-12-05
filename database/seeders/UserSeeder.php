@@ -23,5 +23,9 @@ class UserSeeder extends Seeder
             'level' => '1',
             'status' => '1',
         ]);
+
+        
+
+
     }
 }
