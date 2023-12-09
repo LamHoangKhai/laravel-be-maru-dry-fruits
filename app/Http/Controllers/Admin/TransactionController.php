@@ -54,7 +54,8 @@ class TransactionController extends Controller
         $export_quantity = $request->export_quantity;
         $export_shipment = $request->export_shipment;
         $products = Product::all();
-        if ($products->contains('id', $export_product)) {
+        $transactions = Transaction::all(); 
+        if ($products->contains('id', $export_product) && $transactions->contains('shipment', $export_shipment) ) {
             $stock_quantity = Product::select('stock_quantity')->where('id', $export_product)->get()[0]->stock_quantity;
             if($stock_quantity < $export_quantity) {
                 return redirect()->route('admin.transaction.index')->with('message', 'This product isn\'t enough to export');
@@ -70,20 +71,19 @@ class TransactionController extends Controller
                     $transactionExportProduct->update([
                         'current_quantity' => $transactionExportProduct->current_quantity - $export_quantity,
                     ]);
-                    $exportProductId = Product::findOrFail($export_product);
-                    $storeInQuantity = $exportProductId->store_in_quantity + $export_quantity;
-                    $exportProductId->update([
-                        'store_in_quantity' => $storeInQuantity
+                    $stockProduct = Product::findOrFail($export_product);
+                    $storeInQuantity = $stockProduct->store_in_quantity + $export_quantity;
+                    $stockProductID = $stockProduct->stock_quantity - $export_quantity;
+                    $stockProduct->update([
+                        'store_in_quantity' => $storeInQuantity,    
+                        'stock_quantity' => $stockProductID
                     ]);
                     return redirect()->route('admin.transaction.index')->with('success', 'Export succesfully');
                 }
             }
         }
         else {
-            return redirect()->route('admin.transaction.index')->with('message', 'This product is not exist');
+            return redirect()->route('admin.transaction.index')->with('message', 'This product or shipment is not exist');
         }
-
-
-        
     }
 }
