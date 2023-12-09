@@ -1,6 +1,8 @@
 <?php
 
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
@@ -34,6 +36,18 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
         Route::get('index', 'index')->name('index');
         Route::post('get-users', 'getUsers')->name('getUsers');
 
+        Route::post('store', 'store')->name('store');
+
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+
+    Route::prefix('product')->name('product.')->controller(ProductController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('get-products', 'getProducts')->name('getProducts');
 
         Route::post('store', 'store')->name('store');
 
@@ -42,4 +56,18 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
 
         Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
+
+    Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+        Route::post('get-categories', 'getCategories')->name('getCategories');
+
+        Route::post('store', 'store')->name('store');
+
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+
 });

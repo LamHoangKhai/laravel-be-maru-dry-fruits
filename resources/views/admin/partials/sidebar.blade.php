@@ -25,6 +25,19 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
         </li>
+        <li class="menu-item  {{ request()->is('admin/category/*') ? 'active' : '' }}">
+            <a href="{{ route('admin.category.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Category</div>
+            </a>
+        </li>
+        <li class="menu-item  {{ request()->is('admin/product/*') ? 'active' : '' }}">
+            <a href="{{ route('admin.product.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Product</div>
+            </a>
+        </li>
+
         <li class="menu-item  {{ request()->is('admin/user/*') ? 'active' : '' }}">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
