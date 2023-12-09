@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->string('address', 100)->nullable();
             $table->tinyInteger('level')->default(2)->comment('1:Admin - 2:Member - 3: Member-VIP');
             $table->tinyInteger('status')->default(1)->comment('1:Show - 2:Hidden');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });

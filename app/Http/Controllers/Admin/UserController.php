@@ -73,7 +73,7 @@ class UserController extends Controller
     {
         // find user
         $user = User::findOrfail($id);
-
+        dd($user->email);
         // check user has edit itself
         // $mySelf = false;
         // if (Auth::user()->id == $user->id) {
