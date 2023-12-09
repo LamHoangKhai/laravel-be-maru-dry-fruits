@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('image');
             $table->text('description')->nullable();
             $table->text('nutrition_detail');
+            $table->integer('store_in_quantity');
             $table->integer('stock_quantity');
             $table->bigInteger('price');
-            $table->tinyInteger('status')->comment('1: Show', '2: Hidden')->default('1');
+            $table->tinyInteger('status')->comment('1: Show - 2: Hidden')->default('1');
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('products');
             $table->softDeletes();

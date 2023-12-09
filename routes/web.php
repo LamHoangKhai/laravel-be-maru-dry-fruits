@@ -1,9 +1,10 @@
 <?php
 
-
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,5 +42,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('update/{id}', 'update')->name('update');
 
         Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('transaction')->name('transaction.')->controller(TransactionController::class)->group(function() {
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        Route::post('store', 'store')->name('store');
+        Route::post('export', 'export')->name('export');
+
+
     });
 });

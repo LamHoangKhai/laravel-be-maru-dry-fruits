@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('parrent_id')->default(0);
             $table->string('name');
-            $table->tinyInteger('status')->comment('1: Show', '2: Hidden' )->default('1');
+            $table->tinyInteger('status')->comment('1: Show - 2: Hidden' )->default('1');
             $table->softDeletes();
             $table->timestamps();
         });

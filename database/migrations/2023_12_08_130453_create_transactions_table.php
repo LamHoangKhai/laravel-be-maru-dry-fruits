@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('quantity');
-            $table->tinyInteger('transaction_type')->comment('1: Import', '2: Export', '3: Delete');
+            $table->unsignedBigInteger('product_id');
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->integer('quantity');
+            $table->bigInteger('current_quantity');
+            $table->tinyInteger('transaction_type')->comment('1: Import - 2: Export - 3: Delete');
             $table->date('transaction_date');
             $table->integer('shipment');
             $table->date('expiration_date');
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->foreign('supplier_id')->references('id')->on('suppliers');
-            $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products');
             $table->softDeletes();
             $table->timestamps();
         });
