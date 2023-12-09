@@ -15,6 +15,7 @@ const loadData = (storage) => {
         success: (res) => {
             let xhtml = "";
             let data = res?.data?.data || [];
+            console.log(res)
             if (data.length === 0) {
                 xhtml += `
                     <tr>

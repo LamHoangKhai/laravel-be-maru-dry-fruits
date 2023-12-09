@@ -26,12 +26,30 @@
         $(document).ready(() => {
             $("#description").summernote();
             $("#nutrition_detail").summernote();
+
         })
     </script>
 @endpush
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
+    <style>
+        .container {
+            padding: 2rem 0rem;
+        }
+
+        h4 {
+            margin: 2rem 0rem 1rem;
+        }
+
+        .table-image {
+
+            td,
+            th {
+                vertical-align: middle;
+            }
+        }
+    </style>
 @endpush
 
 @section('content')

@@ -1,5 +1,5 @@
 import Mydebounce from "../debouce.js";
-import { loadData, setTotalPages } from "./function.js";
+import { loadData } from "./function.js";
 
 //  call api Search
 

@@ -59,7 +59,6 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
 
     Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
         Route::get('index', 'index')->name('index');
-        Route::post('get-categories', 'getCategories')->name('getCategories');
 
         Route::post('store', 'store')->name('store');
 

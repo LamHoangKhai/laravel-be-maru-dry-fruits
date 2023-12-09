@@ -1,5 +1,29 @@
 @extends('admin.master')
+@push('handlejs')
+    <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script>
+        function displaySelectedImage(event, elementId) {
+            const selectedImage = document.getElementById(elementId);
+            const fileInput = event.target;
 
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    selectedImage.src = e.target.result;
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            }
+        }
+
+        $(document).ready(() => {
+            $("#description").summernote();
+            $("#nutrition_detail").summernote();
+
+        })
+    </script>
+@endpush
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
@@ -11,70 +35,47 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.user.update', ['id' => $id]) }}">
+                <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
+
                     <div class="row g-2">
                         <div class="col mb-2">
-                            <label for="full_name" class="form-label">Full Name</label>
-                            <input type="text" id="full_name" class="form-control" placeholder="Enter Name"
-                                name="full_name" value="{{ old('full_name', $data->full_name) }}" />
-                            @if ($errors->has('full_name'))
-                                <span class="text-danger">* {{ $errors->get('full_name')[0] }}</span>
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" class="form-control" placeholder="Enter Name"
+                                name="name" value="{{ old('name', $data->name) }}" />
+                            @if ($errors->has('name'))
+                                <span class="text-danger">* {{ $errors->get('name')[0] }}</span>
                             @endif
                         </div>
 
                         <div class="col mb-2">
-                            <label for="phone" class="form-label">Phone</label>
-                            <input type="text" id="phone" class="form-control" placeholder="Enter phone"
-                                name="phone" value="{{ old('phone', $data->phone) }}" />
-                            @if ($errors->has('phone'))
-                                <span class="text-danger">* {{ $errors->get('phone')[0] }}</span>
+                            <label for="price" class="form-label">Price</label>
+                            <input type="text" id="price" class="form-control" placeholder="Enter price/100gram"
+                                name="price" value="{{ old('price', $data->price) }}" />
+                            @if ($errors->has('price'))
+                                <span class="text-danger">* {{ $errors->get('price')[0] }}</span>
                             @endif
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col mb-2">
-                            <label for="email" class="form-label">Email</label>
-                            <span class="form-control text-danger"
-                                style="cursor:no-drop; background: rgba(0, 0, 0, 0.253);font-weight: 700;">{{ old('email', $data->email) }}</span>
-                            @if ($errors->has('email'))
-                                <span class="text-danger">* {{ $errors->get('email')[0] }}</span>
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" rows="3" name="description">{{ old('description', $data->description) }}</textarea>
+                            @if ($errors->has('description'))
+                                <span class="text-danger">* {{ $errors->get('description')[0] }}</span>
                             @endif
                         </div>
-
-                    </div>
-
-                    <div class="row g-2">
-                        <div class="col mb-2">
-                            <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" id="password" placeholder="Enter password"
-                                name="password">
-                            @if ($errors->has('password'))
-                                <span class="text-danger">* {{ $errors->get('password')[0] }}</span>
-                            @endif
-                        </div>
-                        <div class="col mb-2">
-                            <label for="confirm_password" class="form-label">Confirm Password</label>
-                            <input class="form-control" type="password" id="confirm_password"
-                                placeholder="Enter confirm password" name="confirm_password">
-                            @if ($errors->has('confirm_password'))
-                                <span class="text-danger">* {{ $errors->get('confirm_password')[0] }}</span>
-                            @endif
-                        </div>
-
                     </div>
 
                     <div class="row">
                         <div class="col mb-2">
-                            <label for="address" class="form-label">Address</label>
-                            <input type="text" id="address" class="form-control" placeholder="Enter address"
-                                name="address" value="{{ old('address', $data->address) }}" />
-                            @if ($errors->has('address'))
-                                <span class="text-danger">* {{ $errors->get('address')[0] }}</span>
+                            <label for="nutrition_detail" class="form-label">Nutrition</label>
+                            <textarea class="form-control" id="nutrition_detail" rows="3" name="nutrition_detail">{{ old('nutrition_detail', $data->nutrition_detail) }}</textarea>
+                            @if ($errors->has('nutrition_detail'))
+                                <span class="text-danger">* {{ $errors->get('nutrition_detail')[0] }}</span>
                             @endif
                         </div>
-
                     </div>
 
                     <div class="row g-2">
@@ -88,23 +89,48 @@
                             </select>
                         </div>
                         <div class="col mb-2">
-                            <label for="level" class="form-label">Level</label>
-                            <select id="level" class="form-select" name="level" {{ $mySelf ? 'disabled' : '' }}>
-                                {{-- note allow admin change level --}}
-                                @if ($mySelf)
-                                    <option>Not change!
-                                    </option>
-                                @else
-                                    <option value="1" {{ old('level', $data->level) == 1 ? 'selected' : '' }}>Admin
-                                    </option>
-                                    <option value="2" {{ old('level', $data->level) == 2 ? 'selected' : '' }}>Member
-                                    </option>
-                                @endif
-
+                            <label for="category_id" class="form-label">Parent</label>
+                            <select id="category_id" class="form-select" name="category_id">
+                                @php
+                                    RootCategory($categories, old('category_id', $data->category_id));
+                                @endphp
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-4">Update</button>
+
+                    <div class="row w-px-200 ">
+                        <label for="" class="form-label">Current Image</label>
+                        <div class="mb-4 d-flex justify-content-center">
+                            <img src="{{ asset('uploads/' . $data->image) }}" alt=""
+                                style="width: 150px; height: 150px" />
+                        </div>
+                    </div>
+
+                    @if ($errors->has('image'))
+                        <span class="text-danger">* {{ $errors->get('image')[0] }}</span>
+                    @endif
+                    <div class="row w-px-200 ">
+                        <label for="customFile1" class="form-label">New Image</label>
+                        <div class="mb-4 d-flex justify-content-center">
+                            <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                alt="example placeholder" style="width: 150px; height: 150px" />
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <div class="btn btn-primary btn-rounded">
+                                <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+                                <input type="file" class="form-control d-none" id="customFile1"
+                                    onchange="displaySelectedImage(event, 'selectedImage')" name="image" />
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </div>
                 </form>
             </div>
 
