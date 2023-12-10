@@ -1,4 +1,4 @@
-import Mydebounce from "../debouce.js";
+import { Mydebounce} from "../function.js";
 import { loadProduct } from "./ajax.js";
 //  call api Search
 

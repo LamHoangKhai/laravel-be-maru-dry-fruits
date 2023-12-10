@@ -3,6 +3,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
@@ -62,6 +63,24 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
         Route::get('index', 'index')->name('index');
 
         Route::post('store', 'store')->name('store');
+
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('transaction')->name('transaction.')->controller(TransactionController::class)->group(function () {
+        Route::get('import', 'import')->name('import');
+        Route::get('export', 'export')->name('export');
+        Route::get('supplier', 'supplier')->name('supplier');
+
+        Route::post('get-imports', 'getImports')->name('getImports');
+
+
+        Route::post('store-import', 'importStore')->name('importStore');
+        Route::post('store-export', 'exportStore')->name('exportStore');
+        Route::post('store-supplier', 'supplierStore')->name('supplierStore');
 
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::post('update/{id}', 'update')->name('update');

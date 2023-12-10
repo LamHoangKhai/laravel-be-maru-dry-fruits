@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string("image");
             $table->text("description");
             $table->text("nutrition_detail");
-            $table->bigInteger("stock_quantity")->default(0);
+            $table->mediumInteger("stock_quantity")->default(0);
+            $table->mediumInteger("store_quantity")->default(0);
             $table->unsignedFloat("price", 8, 2);
             $table->tinyInteger("status")->default(1)->comment("1:Show - 2:Hidden");
             $table->foreign('category_id')->references('id')->on('categories');
