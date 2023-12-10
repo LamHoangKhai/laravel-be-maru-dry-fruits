@@ -23,11 +23,10 @@ class StoreRequest extends FormRequest
     {
         return [
             "name" => "required|unique:products,name",
-            "price" => "required|numeric|min:1|max:50",
+            "price" => "required|numeric|max:999999",
             "description" => "required",
             "nutrition_detail" => "required",
             "image" => "required|mimes:png,jpg",
-
         ];
     }
 }

@@ -57,6 +57,17 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="exampleFormControlSelect2" class="form-label"> Weight</label>
+                            <select multiple="" class="form-select" id="exampleFormControlSelect2"
+                                aria-label="Multiple select example" name="weight[]">
+
+                            </select>
+                        </div>
+                    </div>
+
+
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="status" class="form-label ">Stataus</label>
@@ -64,15 +75,17 @@
                                 <option value="1" {{ old('status') == 1 ? 'selected' : '' }}>Show</option>
                                 <option value="2" {{ old('status') == 2 ? 'selected' : '' }}>Hidden</option>
                             </select>
+
                         </div>
                         <div class="col mb-2">
-                            <label for="category_id" class="form-label">Parent</label>
+                            <label for="category_id" class="form-label">Category</label>
                             <select id="category_id" class="form-select" name="category_id">
                                 @php
                                     RootCategory($categories, old('category_id', 0));
                                 @endphp
                             </select>
                         </div>
+
                     </div>
                     @if ($errors->has('image'))
                         <span class="text-danger">* {{ $errors->get('image')[0] }}</span>

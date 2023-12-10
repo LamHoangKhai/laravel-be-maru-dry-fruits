@@ -2,34 +2,12 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-@endpush
-
-@push('handlejs')
     <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
-    <script>
-        function displaySelectedImage(event, elementId) {
-            const selectedImage = document.getElementById(elementId);
-            const fileInput = event.target;
-
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    selectedImage.src = e.target.result;
-                };
-
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
-
-        $(document).ready(() => {
-            $("#description").summernote();
-            $("#nutrition_detail").summernote();
-
-        })
-    </script>
+    <script src="{{ asset('administrator/js/product/general.js') }}"></script>
 @endpush
+
+
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
@@ -49,6 +27,11 @@
                 vertical-align: middle;
             }
         }
+
+        .image {
+            max-width: 50px;
+            max-height: 50px;
+        }
     </style>
 @endpush
 
@@ -56,6 +39,7 @@
     <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
     <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
+    <input type="hidden" id="urlPathUploads" data-url="{{ route('urlPathUploads') }}">
 
 
     <div class="container-fluid flex-grow-1 container-p-y">
@@ -82,12 +66,13 @@
 
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <table class="table  table-bordered">
+                        <table class="table  table-bordered table-image">
                             <thead>
                                 <tr>
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Category</th>
+                                    <th>Image</th>
                                     <th>Price</th>
                                     <th>Stock Quantity</th>
                                     <th>Status</th>
@@ -108,6 +93,7 @@
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Category</th>
+                                    <th>Image</th>
                                     <th>Price</th>
                                     <th>Stock Quantity</th>
                                     <th>Status</th>

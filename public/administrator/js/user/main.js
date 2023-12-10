@@ -1,6 +1,5 @@
 import Mydebounce from "../debouce.js";
-import { loadData, setTotalPages } from "./function.js";
-
+import { loadUser } from "./ajax.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -42,17 +41,6 @@ $(document).ready(() => {
         const name = selecter.name;
         const value = selecter.value;
         storage.page = 1;
-        if (name === "status") {
-            storage.status = isChecked
-                ? [...storage.status, value]
-                : [...storage.status.filter((e) => e !== value)];
-        }
-
-        if (name === "featured") {
-            storage.featured = isChecked
-                ? [...storage.featured, value]
-                : [...storage.featured.filter((e) => e !== value)];
-        }
 
         $(selecter).attr("disabled", true);
         setTimeout(() => {
@@ -61,14 +49,6 @@ $(document).ready(() => {
         $("#pagination").simplePaginator("changePage", 1);
     });
     // end handle filter
-
-    //handle filter category
-    $("#category").change((e) => {
-        storage.category_id = e.target.value;
-        storage.page = 1;
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    //end handle filter category
 
     //choose show entries
     $("#showEntries").change((e) => {
@@ -91,7 +71,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loadData(storage);
+            loadUser(storage);
         },
     });
     // end pagination
@@ -110,4 +90,24 @@ $(document).ready(() => {
         }, 500)
     );
     // end fast page
+
+    $("#renderData").on("click", "#delete", async (e) => {
+        e.preventDefault();
+        const url = e.target.href;
+        const name = e.target.getAttribute("value");
+        // show modal
+        await Swal.fire({
+            title: "Are you sure?",
+            html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                return (window.location.href = url);
+            }
+        });
+    });
 });

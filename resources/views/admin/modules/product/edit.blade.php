@@ -1,28 +1,7 @@
 @extends('admin.master')
 @push('handlejs')
     <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
-    <script>
-        function displaySelectedImage(event, elementId) {
-            const selectedImage = document.getElementById(elementId);
-            const fileInput = event.target;
-
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-
-                reader.onload = function(e) {
-                    selectedImage.src = e.target.result;
-                };
-
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        }
-
-        $(document).ready(() => {
-            $("#description").summernote();
-            $("#nutrition_detail").summernote();
-
-        })
-    </script>
+    <script src="{{ asset('administrator/js/product/general.js') }}" type="module"></script>
 @endpush
 
 @section('content')
@@ -35,7 +14,7 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.product.update', ['id' => $id]) }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row g-2">
@@ -98,38 +77,42 @@
                         </div>
                     </div>
 
-                    <div class="row w-px-200 ">
-                        <label for="" class="form-label">Current Image</label>
-                        <div class="mb-4 d-flex justify-content-center">
-                            <img src="{{ asset('uploads/' . $data->image) }}" alt=""
-                                style="width: 150px; height: 150px" />
+                    <div class="row g-2">
+                        <div class="col ">
+                            <label for="customFile1" class="form-label">New Image</label>
+                            <div class="mb-4 d-flex">
+                                <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
+                                    alt="example placeholder" style="width: 250px; height: 250px" />
+                            </div>
+                            <div class="d-flex">
+                                <div class="btn btn-primary btn-rounded w-px-250">
+                                    <label class="form-label text-white m-1 " for="customFile1">Choose file</label>
+                                    <input type="file" class="form-control d-none " id="customFile1"
+                                        onchange="displaySelectedImage(event, 'selectedImage')" name="image" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col ">
+                            <label for="" class="form-label">Current Image</label>
+                            <div class="mb-4 d-flex ">
+                                <img src="{{ asset('uploads/' . $data->image) }}" alt=""
+                                    style="width: 250px; height: 250px" />
+                            </div>
                         </div>
                     </div>
 
                     @if ($errors->has('image'))
                         <span class="text-danger">* {{ $errors->get('image')[0] }}</span>
                     @endif
-                    <div class="row w-px-200 ">
-                        <label for="customFile1" class="form-label">New Image</label>
-                        <div class="mb-4 d-flex justify-content-center">
-                            <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                alt="example placeholder" style="width: 150px; height: 150px" />
-                        </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="btn btn-primary btn-rounded">
-                                <label class="form-label text-white m-1" for="customFile1">Choose file</label>
-                                <input type="file" class="form-control d-none" id="customFile1"
-                                    onchange="displaySelectedImage(event, 'selectedImage')" name="image" />
-                            </div>
-                        </div>
-                    </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="row ">
+                        <div class="col d-flex  justify-content-end">
+                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
+                            <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
                     </div>
                 </form>
             </div>

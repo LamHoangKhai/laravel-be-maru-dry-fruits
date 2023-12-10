@@ -22,11 +22,11 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|unique:products,name," . $this->name,
-            "price" => "required|regex:/^(?=.+)(?:[1-9]\d*|0)?(?:\.\d+)?$/",
+            "name" => "required|unique:products,name," . $this->id,
+            "price" => "required|numeric|max:999999",
             "description" => "required",
             "nutrition_detail" => "required",
-            "image" => "required|mimes:png,jpg",
+            "image" => "mimes:png,jpg",
         ];
     }
 }
