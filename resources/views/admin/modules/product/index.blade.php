@@ -69,7 +69,7 @@
                         <table class="table  table-bordered table-image">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Image</th>
@@ -90,7 +90,7 @@
 
                             <tfoot>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Name</th>
                                     <th>Category</th>
                                     <th>Image</th>

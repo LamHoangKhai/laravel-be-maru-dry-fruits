@@ -17,6 +17,7 @@ class TransactionController extends Controller
         $products = Product::get();
         return view("admin.modules.transaction.import", ["suppliers" => $suppliers, "products" => $products]);
     }
+    //api get imports for ajax
     public function getImports(Request $request)
     {
         $query = Transaction::where([["transaction_type", "=", 1], ["current_quantity", ">", 0]]);
@@ -27,7 +28,7 @@ class TransactionController extends Controller
         $result = $query->with(['supplier', 'product'])->orderBy("created_at", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
-
+    //create import 
     public function importStore(Request $request)
     {
 
@@ -52,7 +53,7 @@ class TransactionController extends Controller
         $import->updated_at = date("Y-m-d h:i:s");
         $import->save();
 
-        return view("admin.modules.transaction.import");
+        return redirect()->route('admin.transaction.import')->with("success", "Create import success!");
     }
     //  end import
 
@@ -61,13 +62,50 @@ class TransactionController extends Controller
 
     public function export()
     {
-        return view("admin.modules.transaction.export");
+        $products = Product::get();
+        return view("admin.modules.transaction.export", ['products' => $products]);
     }
 
+    //find imports
+    public function findImport(Request $request)
+    {
+        $import = Transaction::with("supplier")
+            ->where([["product_id", $request->product_id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
+            ->get();
 
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $import]);
+    }
+
+    //api get exports for ajax
+    public function getExports(Request $request)
+    {
+        $query = Transaction::where("transaction_type", "=", 2);
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        //return data
+        $result = $query->with(['supplier', 'product'])->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+
+    //create export
     public function exportStore(Request $request)
     {
-        return view("admin.modules.transaction.index");
+        $product = Product::findOrFail($request->product_id);
+        $import = Transaction::where("shipment", $request->shipment)->first();
+
+        $export = new Transaction();
+        $export->supplier_id = $import->supplier_id;
+        $export->expiration_date = $import->expiration_date;
+        $export->product_id = $request->product_id;
+        $export->quantity = $request->quantity;
+        $export->shipment = $request->shipment;
+        $export->transaction_type = 2;
+        $export->transaction_date = date("Y-m-d");
+        $export->created_at = date("Y-m-d h:i:s");
+        $export->save();
+
+        return redirect()->route('admin.transaction.export')->with("success", "Create export success!");
     }
 
     //  end export
@@ -81,6 +119,7 @@ class TransactionController extends Controller
         return view("admin.modules.transaction.supplier", ["suppliers" => $suppliers]);
     }
 
+    //create supplier
     public function supplierStore(Request $request)
     {
         $request->validate([
@@ -99,8 +138,6 @@ class TransactionController extends Controller
 
         return redirect()->route('admin.transaction.supplier')->with("success", "Create supplier success!");
     }
-
-
     //  end supplier
 
 

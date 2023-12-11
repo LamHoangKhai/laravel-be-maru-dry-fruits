@@ -1,4 +1,4 @@
-import { formatDate } from "../function.js";
+import { formatDate, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
     $.ajaxSetup({
@@ -48,7 +48,7 @@ const loadProduct = (storage) => {
 
                     xhtml += `
                     <tr>
-                    <td>${element.id}</td>
+                    <td>${index + 1}</td>
                     <td>${element.name}</td>
                     <td>${element.category.name}</td>
                     <td >
@@ -85,19 +85,6 @@ const loadProduct = (storage) => {
             console.log(error.message);
         },
     });
-};
-
-const setTotalPages = (storage) => {
-    storage.totalPage = storage.totalData
-        ? Math.ceil(storage.totalData / storage.take)
-        : 1;
-    $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
-
-    $(".totalData").text(
-        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
-            storage.totalData
-        } entries`
-    );
 };
 
 export { loadProduct };

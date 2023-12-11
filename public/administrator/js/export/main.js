@@ -1,6 +1,5 @@
 import { Mydebounce } from "../function.js";
-import { loadUser } from "./ajax.js";
-//  call api Search
+import { loadExport, loadShipmentOptions } from "./ajax.js";
 
 $(document).ready(() => {
     let storage = {
@@ -11,6 +10,7 @@ $(document).ready(() => {
         totalPage: 1,
         url: $("#url").data("url"),
     };
+
     //handle search
     $("#search").keypress(
         Mydebounce((e) => {
@@ -58,6 +58,16 @@ $(document).ready(() => {
     });
     //end choose show entries
 
+    //handle change select
+    $("#product_id").change((e) => {
+        const url = $("#url-findImport").attr("data-url");
+        const product_id = e.target.value;
+
+        loadShipmentOptions(url, product_id);
+    });
+
+    //end handle change select
+
     // load pagination
     $("#pagination").simplePaginator({
         totalPages: 1,
@@ -71,7 +81,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loadUser(storage);
+            loadExport(storage);
         },
     });
     // end pagination

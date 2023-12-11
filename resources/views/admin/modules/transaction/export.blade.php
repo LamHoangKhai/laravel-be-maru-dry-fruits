@@ -1,7 +1,14 @@
 @extends('admin.master')
-
+@push('js')
+    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    </script>
+    <script src="{{ asset('administrator/js/export/main.js') }}" type="module"></script>
+@endpush
 
 @section('content')
+    <input type="hidden" id="url" data-url="{{ route('admin.transaction.getExports') }}">
+    <input type="hidden" id="url-findImport" data-url="{{ route('admin.transaction.findImport') }}">
+
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -29,37 +36,33 @@
                         <table class="table  table-bordered table-image">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Stock Quantity</th>
-                                    <th>Status</th>
+                                    <th>#</th>
+                                    <th>Supplier</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Shipment</th>
+                                    <th>Transaction Date</th>
+                                    <th>Expiration Date</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/transaction/main.js -->
+                                    <!-- render form administrator/js/export/main.js -->
                                 </tr>
                             </tbody>
 
                             <tfoot>
                                 <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Category</th>
-                                    <th>Image</th>
-                                    <th>Price</th>
-                                    <th>Stock Quantity</th>
-                                    <th>Status</th>
+                                    <th>#</th>
+                                    <th>Supplier</th>
+                                    <th>Product</th>
+                                    <th>Quantity</th>
+                                    <th>Shipment</th>
+                                    <th>Transaction Date</th>
+                                    <th>Expiration Date</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
-                                    <th>Action</th>
 
                                 </tr>
                             </tfoot>
@@ -73,7 +76,7 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-            @include('admin.modules.transaction.modals.create-import')
+            @include('admin.modules.transaction.modals.create-export')
 
 
         </div>

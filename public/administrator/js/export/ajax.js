@@ -1,5 +1,6 @@
-import { formatDate } from "../function.js";
-const loadUser = (storage) => {
+import { formatDate, setTotalPages } from "../function.js";
+
+const loadExport = (storage) => {
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -24,45 +25,17 @@ const loadUser = (storage) => {
                      `;
             } else {
                 data.forEach((element, index) => {
-                    let urlEdit = $("#url-edit")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    let urlDelete = $("#url-destroy")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-
-                    let level =
-                        element.id === "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" &&
-                        element.level === 1
-                            ? ["Administrator", "danger"]
-                            : element.level === 1
-                            ? ["Admin", "dark"]
-                            : element.level === 2
-                            ? ["Member", "info"]
-                            : ["Member VIP", "warning"];
-
+                    let create_at = formatDate(new Date(element.created_at));
                     xhtml += `
                     <tr>
                     <td>${index + 1}</td>
-                    <td>${element.full_name}</td>
-                    <td>${element.email}</td>
-                    <td>
-                    <span class="badge rounded-pill bg-${level[1]}">${
-                        level[0]
-                    }</span>
-                    </td>
-                    <td>${element.phone}</td>
-                    <td  class="text-wrap" style="min-width:180px">${
-                        element.address
-                    }</td>
-                   
-                    
-                    <td class="g-2">
-                    <a href="${urlEdit}" >Edit</a>
-                    <a style="margin-right:-8px;margin-left:8px;" href="${urlDelete}" id="delete" value="${
-                        element.email
-                    }">Delete</a>
-                    </td>
+                    <td>${element.supplier.name}</td>
+                    <td>${element.product.name}</td>
+                    <td>${element.quantity}</td>
+                    <td>${element.shipment}</td>
+                    <td>${element.transaction_date}</td>
+                    <td>${element.expiration_date}</td>
+                    <td>${create_at}</td>
                     </tr>
                      `;
                 });
@@ -78,17 +51,40 @@ const loadUser = (storage) => {
     });
 };
 
-const setTotalPages = (storage) => {
-    storage.totalPage = storage.totalData
-        ? Math.ceil(storage.totalData / storage.take)
-        : 1;
-    $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
+const loadShipmentOptions = (url, product_id) => {
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
 
-    $(".totalData").text(
-        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
-            storage.totalData
-        } entries`
-    );
+    $("#shipment").html("");
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: { product_id },
+        dataType: "json",
+        success: (res) => {
+            let xhtml = '<option value="">Choose Shipment</option>';
+            let data = res?.data || [];
+
+            if (data) {
+                data.forEach((element) => {
+                    xhtml += `<option value="${element.shipment}">
+                                ${element.supplier.name}
+                                -current_quantity:${element.current_quantity}
+                                -expiration_date:${element.expiration_date}
+                                -shipment:${element.shipment}
+                                </option>`;
+                });
+            }
+            $("#shipment").append(xhtml);
+        },
+        error: function (error) {
+            console.log(error.message);
+        },
+    });
 };
 
-export { loadUser };
+export { loadExport, loadShipmentOptions };

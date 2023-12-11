@@ -9,8 +9,7 @@
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
         <input type="hidden" id="url" data-url="{{ route('admin.transaction.getImports') }}">
-        <input type="hidden" id="url-edit" data-url="{{ route('admin.transaction.edit', 'id') }}">
-        <input type="hidden" id="url-destroy" data-url="{{ route('admin.transaction.destroy', 'id') }}">
+        {{-- <input type="hidden" id="url-edit" data-url="{{ route('admin.transaction.edit', 'id') }}"> --}}
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -38,7 +37,7 @@
                         <table class="table  table-bordered table-image">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
@@ -54,13 +53,13 @@
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/transaction/main.js -->
+                                    <!-- render form administrator/js/import/main.js -->
                                 </tr>
                             </tbody>
 
                             <tfoot>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>

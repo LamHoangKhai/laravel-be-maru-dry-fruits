@@ -1,5 +1,5 @@
-import { formatDate } from "../function.js";
-const loadUser = (storage) => {
+import { formatDate, setTotalPages } from "../function.js";
+const loadImport = (storage) => {
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
@@ -28,27 +28,28 @@ const loadUser = (storage) => {
                     let create_at = formatDate(new Date(element.created_at));
                     let update_at = formatDate(new Date(element.updated_at));
 
-                    let urlEdit = $("#url-edit")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    let urlDelete = $("#url-destroy")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
+                    // let urlEdit = $("#url-edit")
+                    //     .attr("data-url")
+                    //     .replace(/id/g, element.id);
 
                     xhtml += `
                     <tr>
-                    <td>${element.id}</td>
+                    <td>${index + 1}</td>
                     <td>${element.supplier.name}</td>
                     <td>${element.product.name}</td>
                     <td>${element.quantity}</td>
                     <td>${element.current_quantity}</td>
                     <td>${element.shipment}</td>
-                    <td  class="text-wrap" style="min-width:180px">${element.transaction_date}</td>
-                    <td  class="text-wrap" style="min-width:180px">${element.expiration_date}</td>
+                    <td  class="text-wrap" style="min-width:180px">${
+                        element.transaction_date
+                    }</td>
+                    <td  class="text-wrap" style="min-width:180px">${
+                        element.expiration_date
+                    }</td>
                     <td  class="text-wrap" style="min-width:180px">${create_at}</td>
                     <td  class="text-wrap" style="min-width:180px">${update_at}</td>
                     <td class="g-2">
-                    <a href="${urlEdit}" >Edit</a>
+                    <a href="" >Edit</a>
                     </td>
                     </tr>
                      `;
@@ -65,17 +66,4 @@ const loadUser = (storage) => {
     });
 };
 
-const setTotalPages = (storage) => {
-    storage.totalPage = storage.totalData
-        ? Math.ceil(storage.totalData / storage.take)
-        : 1;
-    $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
-
-    $(".totalData").text(
-        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
-            storage.totalData
-        } entries`
-    );
-};
-
-export { loadUser };
+export { loadImport };

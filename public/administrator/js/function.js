@@ -30,4 +30,17 @@ function formatDate(date) {
         seconds
     );
 }
-export { Mydebounce, formatDate };
+
+const setTotalPages = (storage) => {
+    storage.totalPage = storage.totalData
+        ? Math.ceil(storage.totalData / storage.take)
+        : 1;
+    $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
+
+    $(".totalData").text(
+        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
+            storage.totalData
+        } entries`
+    );
+};
+export { Mydebounce, formatDate, setTotalPages };
