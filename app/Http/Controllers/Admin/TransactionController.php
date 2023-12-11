@@ -53,6 +53,8 @@ class TransactionController extends Controller
         $import->updated_at = date("Y-m-d h:i:s");
         $import->save();
 
+        // viết trigger ở đây nha huân
+
         return redirect()->route('admin.transaction.import')->with("success", "Create import success!");
     }
     //  end import
@@ -91,6 +93,13 @@ class TransactionController extends Controller
     //create export
     public function exportStore(Request $request)
     {
+        $request->validate([
+            'product_id' => 'required',
+            'shipment' => 'required',
+            'quantity' => 'required|numeric',
+        ]);
+
+
         $product = Product::findOrFail($request->product_id);
         $import = Transaction::where("shipment", $request->shipment)->first();
 
@@ -104,6 +113,9 @@ class TransactionController extends Controller
         $export->transaction_date = date("Y-m-d");
         $export->created_at = date("Y-m-d h:i:s");
         $export->save();
+
+
+        // viết trigger ở đây nha huân
 
         return redirect()->route('admin.transaction.export')->with("success", "Create export success!");
     }
