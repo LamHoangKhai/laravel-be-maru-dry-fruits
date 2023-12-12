@@ -93,7 +93,6 @@
                             <select id="level" class="form-select" name="level">
                                 <option value="1" {{ old('level') == 1 ? 'selected' : '' }}>Admin</option>
                                 <option value="2" {{ old('level') == 2 ? 'selected' : '' }}>Member</option>
-                                <option value="3" {{ old('level') == 3 ? 'selected' : '' }}>Member VIP</option>
                             </select>
                         </div>
                     </div>

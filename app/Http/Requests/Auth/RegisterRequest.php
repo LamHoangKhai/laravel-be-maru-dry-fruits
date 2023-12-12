@@ -23,7 +23,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6'
+            'password' => 'required'
         ];
     }
 
@@ -34,7 +34,6 @@ class RegisterRequest extends FormRequest
             'email.email' => 'It\'s not an email',
             'email.unique' => 'This email was exist',
             'password.required' => 'Please enter your password',
-            'password.min' => 'Password must be at least 6 charactors',
         ];
     }
 }
