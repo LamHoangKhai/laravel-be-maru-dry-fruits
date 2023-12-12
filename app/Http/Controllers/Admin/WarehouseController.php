@@ -5,22 +5,21 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use App\Models\Supplier;
-use App\Models\Transaction;
+use App\Models\Warehouse;
 use Illuminate\Http\Request;
 
-class TransactionController extends Controller
+class WarehouseController extends Controller
 {
-    //  import
     public function import()
     {
         $suppliers = Supplier::get();
         $products = Product::get();
-        return view("admin.modules.transaction.import", ["suppliers" => $suppliers, "products" => $products]);
+        return view("admin.modules.warehouse.import", ["suppliers" => $suppliers, "products" => $products]);
     }
     //api get imports for ajax
     public function getImports(Request $request)
     {
-        $query = Transaction::where([["transaction_type", "=", 1], ["current_quantity", ">", 0]]);
+        $query = Warehouse::where([["transaction_type", "=", 1], ["current_quantity", ">", 0]]);
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
@@ -39,7 +38,7 @@ class TransactionController extends Controller
             'expiration_date' => 'required',
         ]);
 
-        $import = new Transaction();
+        $import = new Warehouse();
         $import->product_id = $request->product_id;
         $import->supplier_id = $request->supplier_id;
         $import->quantity = $request->quantity;
@@ -55,7 +54,7 @@ class TransactionController extends Controller
 
         // viết trigger ở đây nha huân
 
-        return redirect()->route('admin.transaction.import')->with("success", "Create import success!");
+        return redirect()->route('admin.warehouse.import')->with("success", "Create import success!");
     }
     //  end import
 
@@ -65,13 +64,13 @@ class TransactionController extends Controller
     public function export()
     {
         $products = Product::get();
-        return view("admin.modules.transaction.export", ['products' => $products]);
+        return view("admin.modules.warehouse.export", ['products' => $products]);
     }
 
     //find imports
     public function findImport(Request $request)
     {
-        $import = Transaction::with("supplier")
+        $import = Warehouse::with("supplier")
             ->where([["product_id", $request->product_id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
             ->get();
 
@@ -81,7 +80,7 @@ class TransactionController extends Controller
     //api get exports for ajax
     public function getExports(Request $request)
     {
-        $query = Transaction::where("transaction_type", "=", 2);
+        $query = Warehouse::where("transaction_type", "=", 2);
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
@@ -101,9 +100,9 @@ class TransactionController extends Controller
 
 
         $product = Product::findOrFail($request->product_id);
-        $import = Transaction::where("shipment", $request->shipment)->first();
+        $import = Warehouse::where("shipment", $request->shipment)->first();
 
-        $export = new Transaction();
+        $export = new Warehouse();
         $export->supplier_id = $import->supplier_id;
         $export->expiration_date = $import->expiration_date;
         $export->product_id = $request->product_id;
@@ -117,42 +116,8 @@ class TransactionController extends Controller
 
         // viết trigger ở đây nha huân
 
-        return redirect()->route('admin.transaction.export')->with("success", "Create export success!");
+        return redirect()->route('admin.warehouse.export')->with("success", "Create export success!");
     }
 
     //  end export
-
-
-    //  supplier
-    public function supplier()
-    {
-        $suppliers = Supplier::get();
-
-        return view("admin.modules.transaction.supplier", ["suppliers" => $suppliers]);
-    }
-
-    //create supplier
-    public function supplierStore(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|unique:suppliers,name',
-            'email' => 'required|unique:suppliers,email',
-            'address' => 'required',
-            'phone' => 'required|max:15',
-        ]);
-
-        $supplier = new Supplier();
-        $supplier->name = $request->name;
-        $supplier->email = $request->email;
-        $supplier->address = $request->address;
-        $supplier->phone = $request->phone;
-        $supplier->save();
-
-        return redirect()->route('admin.transaction.supplier')->with("success", "Create supplier success!");
-    }
-    //  end supplier
-
-
-
-
 }

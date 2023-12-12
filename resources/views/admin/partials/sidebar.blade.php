@@ -27,13 +27,13 @@
         </li>
         <li class="menu-item  {{ request()->is('admin/category/*') ? 'active' : '' }}">
             <a href="{{ route('admin.category.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class='menu-icon tf-icons bx bx-category'></i>
                 <div data-i18n="Analytics">Category</div>
             </a>
         </li>
         <li class="menu-item  {{ request()->is('admin/product/*') ? 'active' : '' }}">
             <a href="{{ route('admin.product.index') }}" class="menu-link">
-                <i class="menu-icon tf-icons bx bx-user"></i>
+                <i class='menu-icon tf-icons bx bx-package'></i>
                 <div data-i18n="Analytics">Product</div>
             </a>
         </li>
@@ -46,30 +46,49 @@
         </li>
 
 
-        <li class="menu-item {{ request()->is('admin/transaction/*') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('admin/warehouse/*') ? 'active open' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Transaction</div>
+                <i class="menu-icon tf-icons bx bx-home-alt"></i>
+                <div data-i18n="Account Settings">Warehouse</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item ">
-                    <a href="{{ route('admin.transaction.import') }}" class="menu-link">
+                <li class="menu-item {{ request()->is('admin/warehouse/import') ? 'active' : '' }}">
+                    <a href="{{ route('admin.warehouse.import') }}" class="menu-link">
                         <div data-i18n="Account">Import</div>
                     </a>
                 </li>
-                <li class="menu-item ">
-                    <a href="{{ route('admin.transaction.export') }}" class="menu-link">
+                <li class="menu-item {{ request()->is('admin/warehouse/export') ? 'active' : '' }}">
+                    <a href="{{ route('admin.warehouse.export') }}" class="menu-link">
                         <div data-i18n="Notifications">Export</div>
                     </a>
                 </li>
-                <li class="menu-item ">
-                    <a href="{{ route('admin.transaction.supplier') }}" class="menu-link">
+
+            </ul>
+        </li>
+
+        <li class="menu-item {{ request()->is('admin/other/*') ? 'active open' : '' }} ">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-dock-top"></i>
+                <div data-i18n="Account Settings">Other</div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item {{ request()->is('admin/other/supplier/index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.other.supplier.index') }}" class="menu-link">
                         <div data-i18n="Connections">Supplier</div>
+                    </a>
+                </li>
+                {{-- <li class="menu-item ">
+                    <a href="{{ route('admin.other.banner-silder') }}" class="menu-link">
+                        <div data-i18n="Account">Banner & Silder</div>
+                    </a>
+                </li> --}}
+                <li class="menu-item {{ request()->is('admin/other/weight-tag/index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.other.weight-tag.index') }}" class="menu-link">
+                        <div data-i18n="Notifications">Weigh Tag</div>
                     </a>
                 </li>
             </ul>
         </li>
-
 
     </ul>
 </aside>

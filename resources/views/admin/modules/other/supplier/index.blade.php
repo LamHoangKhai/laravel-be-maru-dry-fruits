@@ -1,5 +1,36 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        .pagi-right nav {
+            display: flex;
+            justify-content: end;
+        }
+    </style>
+@endpush
 
+@push('handlejs')
+    <script>
+        $("#delete").click(async (e) => {
+            e.preventDefault();
+            const url = e.target.href;
+            const name = e.target.getAttribute("value");
+            // show modal
+            await Swal.fire({
+                title: "Are you sure?",
+                html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    return (window.location.href = url);
+                }
+            });
+        });
+    </script>
+@endpush
 
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
@@ -14,8 +45,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
-                        <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
-                            placeholder="Enter name" />
+
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplier"
                             id="showModal">
                             <i class='bx bx-plus-circle'></i>&nbsp; Supplier
@@ -46,7 +76,13 @@
                                         <td>{{ $supplier->email }}</td>
                                         <td>{{ $supplier->address }}</td>
                                         <td>{{ $supplier->phone }}</td>
-                                        <td></td>
+                                        <td class="g-2">
+                                            <a
+                                                href="{{ route('admin.other.supplier.edit', ['id' => $supplier->id]) }}">Edit</a>
+                                            <a style="margin-right:-8px;margin-left:8px;"
+                                                href="{{ route('admin.other.supplier.destroy', ['id' => $supplier->id]) }}"
+                                                id="delete" value="{{ $supplier->name }}">Delete</a>
+                                        </td>
                                     </tr>
                                 @endforeach
 
@@ -64,9 +100,11 @@
                             </tfoot>
                         </table>
                     </div>
+                    <div class="card mt-4  pagi-right"> {{ $suppliers->links() }} </div>
                 </div>
+
             </div>
-            @include('admin.modules.transaction.modals.create-supplier')
+            @include('admin.modules.other.modals.create-supplier')
 
 
         </div>

@@ -10,16 +10,13 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('suplliers', function (Blueprint $table) {
-            $table->id();
-            $table->string("name");
-            $table->string("address");
-            $table->string("email");
-            $table->string("phone", 15);
-            $table->softDeletes();
+        Schema::create('product_weight', function (Blueprint $table) {
+            $table->unsignedBigInteger("product_id");
+            $table->unsignedBigInteger("weight_tag_id");
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('weight_tag_id')->references('id')->on('weight_tag');
             $table->timestamps();
         });
-        Schema::rename('suplliers', 'suppliers');
     }
 
     /**
@@ -27,7 +24,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('suplliers');
+        Schema::dropIfExists('product_weight');
     }
 };

@@ -1,3 +1,4 @@
+
 const Mydebounce = (callback, timeout = 500) => {
     let timer;
     return (...agrs) => {

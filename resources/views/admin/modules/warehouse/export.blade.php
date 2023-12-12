@@ -6,8 +6,8 @@
 @endpush
 
 @section('content')
-    <input type="hidden" id="url" data-url="{{ route('admin.transaction.getExports') }}">
-    <input type="hidden" id="url-findImport" data-url="{{ route('admin.transaction.findImport') }}">
+    <input type="hidden" id="url" data-url="{{ route('admin.warehouse.getExports') }}">
+    <input type="hidden" id="url-findImport" data-url="{{ route('admin.warehouse.findImport') }}">
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
@@ -22,10 +22,10 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
                         <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
-                            placeholder="Enter name" />
+                            placeholder="Enter product, shipment" />
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addExport"
                             id="showModal">
-                            <i class='bx bx-plus-circle'></i>&nbsp; Import
+                            <i class='bx bx-plus-circle'></i>&nbsp; Export
                         </button>
 
                     </div>
@@ -76,7 +76,7 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-            @include('admin.modules.transaction.modals.create-export')
+            @include('admin.modules.warehouse.modals.create-export')
 
 
         </div>

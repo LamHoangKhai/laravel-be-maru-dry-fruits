@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
-        <input type="hidden" id="url" data-url="{{ route('admin.transaction.getImports') }}">
+        <input type="hidden" id="url" data-url="{{ route('admin.warehouse.getImports') }}">
         {{-- <input type="hidden" id="url-edit" data-url="{{ route('admin.transaction.edit', 'id') }}"> --}}
 
         <div class="card">
@@ -23,7 +23,7 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
                         <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
-                            placeholder="Enter name" />
+                            placeholder="Enter product, shipment" />
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addImport"
                             id="showModal">
                             <i class='bx bx-plus-circle'></i>&nbsp; Import
@@ -82,7 +82,7 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-            @include('admin.modules.transaction.modals.create-import')
+            @include('admin.modules.warehouse.modals.create-import')
 
 
         </div>

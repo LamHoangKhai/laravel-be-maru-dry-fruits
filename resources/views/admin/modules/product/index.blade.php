@@ -5,6 +5,8 @@
     <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
     <script src="{{ asset('administrator/js/product/general.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
 @endpush
 
 

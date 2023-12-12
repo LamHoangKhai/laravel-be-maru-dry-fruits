@@ -3,8 +3,10 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\WarehouseController;
+use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
 use Illuminate\Support\Facades\Route;
@@ -86,11 +88,11 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
         Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 
-    Route::prefix('transaction')->name('transaction.')->controller(TransactionController::class)->group(function () {
+    Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
         //view
         Route::get('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
-        Route::get('supplier', 'supplier')->name('supplier');
+
 
         //find and get data
         Route::post('get-imports', 'getImports')->name('getImports');
@@ -100,7 +102,7 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
         //create 
         Route::post('store-import', 'importStore')->name('importStore');
         Route::post('store-export', 'exportStore')->name('exportStore');
-        Route::post('store-supplier', 'supplierStore')->name('supplierStore');
+
 
         // edit and update
         Route::get('edit/{id}', 'edit')->name('edit');
@@ -110,5 +112,35 @@ Route::prefix('admin')->name('admin.')->middleware('checkLogin')->group(function
         Route::get('destroy/{id}', 'destroy')->name('destroy');
     });
 
+
+
+
+    Route::prefix('other')->name('other.')->group(function () {
+        Route::prefix('supplier')->name('supplier.')->controller(SupplierController::class)->group(function () {
+            //view
+            Route::get('index', 'index')->name('index');
+            //create 
+            Route::post('store', 'store')->name('store');
+
+            //edit and update
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update/{id}', 'update')->name('update');
+
+            //destroy
+            Route::get('destroy/{id}', 'destroy')->name('destroy');
+        });
+
+        Route::prefix('weight-tag')->name('weight-tag.')->controller(WeightTagController::class)->group(function () {
+            //view
+            Route::get('index', 'index')->name('index');
+            //create 
+            Route::post('store', 'store')->name('store');
+            //destroy
+            Route::get('destroy/{id}', 'destroy')->name('destroy');
+        });
+
+
+
+    });
 
 });
