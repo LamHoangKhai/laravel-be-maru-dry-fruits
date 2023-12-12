@@ -4,86 +4,155 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\Supplier;
 use App\Models\Transaction;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
 
 class TransactionController extends Controller
 {
-    public function index() {
-        $transactions = Transaction::where('current_quantity', '>', 0)->get();
-        return view('admin.modules.transaction.index', [
-            'transactions' => $transactions
+    //  import
+    public function import()
+    {
+        $suppliers = Supplier::get();
+        $products = Product::get();
+        return view("admin.modules.transaction.import", ["suppliers" => $suppliers, "products" => $products]);
+    }
+    //api get imports for ajax
+    public function getImports(Request $request)
+    {
+        $query = Transaction::where([["transaction_type", "=", 1], ["current_quantity", ">", 0]]);
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        //return data
+        $result = $query->with(['supplier', 'product'])->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+    //create import 
+    public function importStore(Request $request)
+    {
+
+        $request->validate([
+            'product_id' => 'required',
+            'supplier_id' => 'required',
+            'quantity' => 'required|numeric',
+            'expiration_date' => 'required',
         ]);
+
+        $import = new Transaction();
+        $import->product_id = $request->product_id;
+        $import->supplier_id = $request->supplier_id;
+        $import->quantity = $request->quantity;
+        $import->current_quantity = $request->quantity;
+        $import->expiration_date = $request->expiration_date;
+        $import->note = $request->note;
+        $import->shipment = time();
+        $import->transaction_type = 1;
+        $import->transaction_date = date("Y-m-d h:i:s");
+        $import->created_at = date("Y-m-d h:i:s");
+        $import->updated_at = date("Y-m-d h:i:s");
+        $import->save();
+
+        // viết trigger ở đây nha huân
+
+        return redirect()->route('admin.transaction.import')->with("success", "Create import success!");
+    }
+    //  end import
+
+
+    //  export
+
+    public function export()
+    {
+        $products = Product::get();
+        return view("admin.modules.transaction.export", ['products' => $products]);
     }
 
-    public function create() {
-        return view('admin.modules.transaction.create');
+    //find imports
+    public function findImport(Request $request)
+    {
+        $import = Transaction::with("supplier")
+            ->where([["product_id", $request->product_id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
+            ->get();
+
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $import]);
     }
 
-    public function store(Request $request) {
-        $requestTransaction = [
-            'product_id' => $request->product_id,
-            'quantity' => $request->quantity,
-            'current_quantity' => $request->quantity,
-            'transaction_type' => $request->transaction_type,
-            'shipment' => $request->shipment,
-            'transaction_date' => Carbon::now(),
-            'expiration_date' => Carbon::now(),
-            'supplier_id' => 1
-        ];
-        $products = Product::all();
-        foreach($products as $product) {
-            if($request->product_id == $product->id) {
-                $stock_quantity = $product->stock_quantity + $request->quantity;
-                $product->update([
-                    'stock_quantity' => $stock_quantity
-                ]);
-                Transaction::create($requestTransaction);
-                return redirect()->route('admin.transaction.index');
-            }
-        }
-        Session::flash('message');
-        return redirect()->route('admin.transaction.create')->with('message', 'This product is not exist');
-        
+    //api get exports for ajax
+    public function getExports(Request $request)
+    {
+        $query = Transaction::where("transaction_type", "=", 2);
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        //return data
+        $result = $query->with(['supplier', 'product'])->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 
-    public function export(Request $request) {
-        $export_product = $request->export_product;
-        $export_quantity = $request->export_quantity;
-        $export_shipment = $request->export_shipment;
-        $products = Product::all();
-        $transactions = Transaction::all(); 
-        if ($products->contains('id', $export_product) && $transactions->contains('shipment', $export_shipment) ) {
-            $stock_quantity = Product::select('stock_quantity')->where('id', $export_product)->get()[0]->stock_quantity;
-            if($stock_quantity < $export_quantity) {
-                return redirect()->route('admin.transaction.index')->with('message', 'This product isn\'t enough to export');
-            }
-            
-            else {
-                $transactionExportProduct = Transaction::where('product_id', $export_product)
-                ->where('shipment', $export_shipment)->first();
-                if($transactionExportProduct->current_quantity < $export_quantity) {
-                    return redirect()->route('admin.transaction.index')->with('message', 'This shipment isn\t enough to export');
-                }
-                else {
-                    $transactionExportProduct->update([
-                        'current_quantity' => $transactionExportProduct->current_quantity - $export_quantity,
-                    ]);
-                    $stockProduct = Product::findOrFail($export_product);
-                    $storeInQuantity = $stockProduct->store_in_quantity + $export_quantity;
-                    $stockProductID = $stockProduct->stock_quantity - $export_quantity;
-                    $stockProduct->update([
-                        'store_in_quantity' => $storeInQuantity,    
-                        'stock_quantity' => $stockProductID
-                    ]);
-                    return redirect()->route('admin.transaction.index')->with('success', 'Export succesfully');
-                }
-            }
-        }
-        else {
-            return redirect()->route('admin.transaction.index')->with('message', 'This product or shipment is not exist');
-        }
+    //create export
+    public function exportStore(Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required',
+            'shipment' => 'required',
+            'quantity' => 'required|numeric',
+        ]);
+
+
+        $product = Product::findOrFail($request->product_id);
+        $import = Transaction::where("shipment", $request->shipment)->first();
+
+        $export = new Transaction();
+        $export->supplier_id = $import->supplier_id;
+        $export->expiration_date = $import->expiration_date;
+        $export->product_id = $request->product_id;
+        $export->quantity = $request->quantity;
+        $export->shipment = $request->shipment;
+        $export->transaction_type = 2;
+        $export->transaction_date = date("Y-m-d");
+        $export->created_at = date("Y-m-d h:i:s");
+        $export->save();
+
+
+        // viết trigger ở đây nha huân
+
+        return redirect()->route('admin.transaction.export')->with("success", "Create export success!");
     }
+
+    //  end export
+
+
+    //  supplier
+    public function supplier()
+    {
+        $suppliers = Supplier::get();
+
+        return view("admin.modules.transaction.supplier", ["suppliers" => $suppliers]);
+    }
+
+    //create supplier
+    public function supplierStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|unique:suppliers,name',
+            'email' => 'required|unique:suppliers,email',
+            'address' => 'required',
+            'phone' => 'required|max:15',
+        ]);
+
+        $supplier = new Supplier();
+        $supplier->name = $request->name;
+        $supplier->email = $request->email;
+        $supplier->address = $request->address;
+        $supplier->phone = $request->phone;
+        $supplier->save();
+
+        return redirect()->route('admin.transaction.supplier')->with("success", "Create supplier success!");
+    }
+    //  end supplier
+
+
+
+
 }

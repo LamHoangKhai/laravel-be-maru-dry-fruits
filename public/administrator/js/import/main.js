@@ -1,5 +1,5 @@
 import { Mydebounce } from "../function.js";
-import { loadUser } from "./ajax.js";
+import { loadImport } from "./ajax.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -71,7 +71,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loadUser(storage);
+            loadImport(storage);
         },
     });
     // end pagination

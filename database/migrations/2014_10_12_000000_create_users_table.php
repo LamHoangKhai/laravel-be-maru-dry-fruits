@@ -18,7 +18,8 @@ return new class extends Migration {
             $table->string('password');
             $table->string('phone', 15)->nullable();
             $table->string('address', 100)->nullable();
-            $table->tinyInteger('level')->default(2)->comment('1:Admin - 2:Member - 3: Member-VIP');
+            $table->unsignedBigInteger('total_purchase')->default(0);
+            $table->tinyInteger('level')->default(2)->comment('1:Admin - 2:Member');
             $table->tinyInteger('status')->default(1)->comment('1:Show - 2:Hidden');
             $table->softDeletes();
             $table->rememberToken();

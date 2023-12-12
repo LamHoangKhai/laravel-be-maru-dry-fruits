@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,17 +12,17 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger("product_id");
+            $table->unsignedBigInteger("supplier_id");
+            $table->mediumInteger("quantity");
+            $table->mediumInteger("current_quantity")->default(0);
+            $table->tinyInteger("transaction_type")->comment("1: Export - 2: Import");
+            $table->string("note")->nullable();
+            $table->string("shipment");
+            $table->date("transaction_date");
+            $table->date("expiration_date");
             $table->foreign('product_id')->references('id')->on('products');
-            $table->integer('quantity');
-            $table->bigInteger('current_quantity');
-            $table->tinyInteger('transaction_type')->comment('1: Import - 2: Export - 3: Delete');
-            $table->date('transaction_date');
-            $table->integer('shipment');
-            $table->date('expiration_date');
-            $table->unsignedBigInteger('supplier_id')->nullable();
             $table->foreign('supplier_id')->references('id')->on('suppliers');
-            $table->softDeletes();
             $table->timestamps();
         });
     }

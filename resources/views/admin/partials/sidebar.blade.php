@@ -25,6 +25,19 @@
         <li class="menu-header small text-uppercase">
             <span class="menu-header-text">Pages</span>
         </li>
+        <li class="menu-item  {{ request()->is('admin/category/*') ? 'active' : '' }}">
+            <a href="{{ route('admin.category.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Category</div>
+            </a>
+        </li>
+        <li class="menu-item  {{ request()->is('admin/product/*') ? 'active' : '' }}">
+            <a href="{{ route('admin.product.index') }}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">Product</div>
+            </a>
+        </li>
+
         <li class="menu-item  {{ request()->is('admin/user/*') ? 'active' : '' }}">
             <a href="{{ route('admin.user.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-user"></i>
@@ -33,29 +46,29 @@
         </li>
 
 
-        {{-- <li class="menu-item">
+        <li class="menu-item {{ request()->is('admin/transaction/*') ? 'active' : '' }}">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Account Settings</div>
+                <div data-i18n="Account Settings">Transaction</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="pages-account-settings-account.html" class="menu-link">
-                        <div data-i18n="Account">Account</div>
+                <li class="menu-item ">
+                    <a href="{{ route('admin.transaction.import') }}" class="menu-link">
+                        <div data-i18n="Account">Import</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="pages-account-settings-notifications.html" class="menu-link">
-                        <div data-i18n="Notifications">Notifications</div>
+                <li class="menu-item ">
+                    <a href="{{ route('admin.transaction.export') }}" class="menu-link">
+                        <div data-i18n="Notifications">Export</div>
                     </a>
                 </li>
-                <li class="menu-item">
-                    <a href="pages-account-settings-connections.html" class="menu-link">
-                        <div data-i18n="Connections">Connections</div>
+                <li class="menu-item ">
+                    <a href="{{ route('admin.transaction.supplier') }}" class="menu-link">
+                        <div data-i18n="Connections">Supplier</div>
                     </a>
                 </li>
             </ul>
-        </li> --}}
+        </li>
 
 
     </ul>

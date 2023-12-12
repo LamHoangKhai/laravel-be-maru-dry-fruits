@@ -2,11 +2,10 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-@endpush
-
-@push('handlejs')
     <script src="{{ asset('administrator/js/user/main.js') }}" type="module"></script>
 @endpush
+
+
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
@@ -42,7 +41,7 @@
 
                     <div class="nav-item d-flex justify-content-end w-75">
 
-                        <button class="btn btn-secondary dropdown dropdown-toggle" data-toggle="dropdown">
+                        {{-- <button class="btn btn-secondary dropdown dropdown-toggle" data-toggle="dropdown">
                             Filter
                         </button>
 
@@ -88,7 +87,7 @@
                                 </div>
                             </div>
 
-                        </ul>
+                        </ul> --}}
 
                         <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
                             placeholder="Enter name or email,phone..." />
@@ -106,13 +105,12 @@
                         <table class="table  table-bordered">
                             <thead>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Level</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>Total Purchase</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -120,19 +118,18 @@
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/user.js -->
+                                    <!-- render form administrator/js/user/main.js -->
                                 </tr>
                             </tbody>
 
                             <tfoot>
                                 <tr>
-                                    <th>Id</th>
+                                    <th>#</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
                                     <th>Level</th>
                                     <th>Phone</th>
                                     <th>Address</th>
-                                    <th>Total Purchase</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

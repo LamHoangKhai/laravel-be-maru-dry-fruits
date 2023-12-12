@@ -35,7 +35,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('admin.user.index')->with('success', "Login success");
         }
-
         return back();
     }
 }
