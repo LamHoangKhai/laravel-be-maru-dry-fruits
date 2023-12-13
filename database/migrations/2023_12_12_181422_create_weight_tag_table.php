@@ -10,16 +10,11 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('suplliers', function (Blueprint $table) {
+        Schema::create('weight_tag', function (Blueprint $table) {
             $table->id();
-            $table->string("name");
-            $table->string("address");
-            $table->string("email");
-            $table->string("phone", 15);
-            $table->softDeletes();
+            $table->smallInteger("mass");
             $table->timestamps();
         });
-        Schema::rename('suplliers', 'suppliers');
     }
 
     /**
@@ -27,7 +22,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-
-        Schema::dropIfExists('suplliers');
+        Schema::dropIfExists('weight_tag');
     }
 };

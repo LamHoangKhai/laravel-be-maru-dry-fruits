@@ -5,6 +5,19 @@
         </script>
     @endpush
 @endif
+@push('handlejs')
+    <script>
+        $(document).ready(function() {
+            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+                removeItemButton: true,
+                maxItemCount: 5,
+                renderChoiceLimit: 5
+            });
+
+
+        });
+    </script>
+@endpush
 
 <div class="modal fade " id="addProduct" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl" role="document">
@@ -59,9 +72,12 @@
 
                     <div class="row">
                         <div class="mb-3">
-                            <label for="exampleFormControlSelect2" class="form-label"> Weight</label>
-                            <select multiple="" class="form-select" id="exampleFormControlSelect2"
-                                aria-label="Multiple select example" name="weight[]">
+                            <label for="exampleFormControlSelect2" class="form-label">Weight tag</label>
+                            <select id="choices-multiple-remove-button" placeholder="Select upto 5 tags" multiple
+                                name="weights[]">
+                                @foreach ($weights as $weight)
+                                    <option value="{{ $weight->id }}">{{ $weight->mass }}gram</option>
+                                @endforeach
 
                             </select>
                         </div>
@@ -85,6 +101,7 @@
                                 @endphp
                             </select>
                         </div>
+
 
                     </div>
                     @if ($errors->has('image'))

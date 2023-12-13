@@ -6,15 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Category\StoreRequest;
 use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function index()
     {
-        $data = Category::orderBy("created_at", 'DESC')->get();
-
-        return view('admin.modules.category.index', ["categories" => $data]);
+        $categories = Category::orderBy("created_at", 'DESC')->simplePaginate(10);
+        $categories->withPath('/admin/category/index');
+        return view('admin.modules.category.index', ["categories" => $categories]);
     }
 
     public function store(StoreRequest $request)
