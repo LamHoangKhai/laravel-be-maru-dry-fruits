@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ExportController;
+use App\Http\Controllers\APi\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,10 +33,17 @@ Route::group([
     Route::post('register', [AuthController::class, 'register'])->name('register');
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 
-    Route::post('export', [ExportController::class, 'export'])->name('export');
 });
 
-// Route::prefix('admin')->name('api.')->group(function(){
-//     Route::prefix('product')->name('product.')->group(function() {
-//     });
-// });
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'product'
+
+], function () {
+
+    Route::get('category/{parent_id}', [CategoryController::class, 'category'])->name('category');
+    Route::get('product', [ProductController::class, 'product'])->name('product');
+
+});
+
+

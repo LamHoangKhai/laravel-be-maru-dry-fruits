@@ -62,12 +62,12 @@ class AuthController extends Controller
         //     return response()->json(['error' => $validator->errors()], 422);
         // }
 
-        if (!$token = auth()->attempt($credentials)) {
+        if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        $user = auth()->user();
+        $user = auth('api')->user();
         if($user->level == 1) {
-            auth()->logout();
+            auth('api')->logout();
             return response()->json(['error' => 'Not found'], 403);
         }
 
@@ -76,9 +76,9 @@ class AuthController extends Controller
     }
 
     public function profile() {
-        if(auth()->user()) {
+        if(auth('api')->user()) {
             return response()->json([
-                auth()->user()
+                auth('api')->user()
             ]);
         }
         else {
@@ -90,7 +90,7 @@ class AuthController extends Controller
 
     public function logout()
     {
-        auth()->logout();
+        auth('api')->logout();
         return response()->json(['message' => 'Successfully logged out']);
     }
 
@@ -99,7 +99,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
 }
