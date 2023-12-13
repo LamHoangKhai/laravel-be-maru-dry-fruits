@@ -54,8 +54,8 @@
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input type="text" id="quantity" class="form-control" placeholder="Enter quantity"
-                                name="quantity" value="{{ old('quantity') }}" />
+                            <input type="text" id="quantity" class="form-control"
+                                placeholder="Enter quantity (kilogram)" name="quantity" value="{{ old('quantity') }}" />
                             @if ($errors->has('quantity'))
                                 <span class="text-danger">* {{ $errors->get('quantity')[0] }}</span>
                             @endif

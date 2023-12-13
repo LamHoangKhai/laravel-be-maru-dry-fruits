@@ -96,7 +96,7 @@
                                         <td>{{ date_format($category->updated_at, 'Y/m/d H:i:s') }}</td>
                                         <td class="g-2">
                                             <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">Edit</a>
-                                            <a style="margin-right:-8px;margin-left:8px;"
+                                            <a style="margin-right:-8px;margin-left:8px;" class="text-danger"
                                                 href="{{ route('admin.category.destroy', ['id' => $category->id]) }}"
                                                 id="delete" value="{{ $category->name }}">Delete</a>
                                         </td>

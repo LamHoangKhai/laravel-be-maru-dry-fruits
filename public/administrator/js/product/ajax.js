@@ -57,20 +57,21 @@ const loadProduct = (storage) => {
                   }" class="img" alt="Sheep" width="100" height="75" ">
 		             </td>
                     <td>${element.price}</td>
-                    <td>${element.stock_quantity}</td>
+                    <td>${element.stock_quantity}kg</td>
+                    <td>${element.store_quantity}kg</td>
                     <td>
                     <span class="badge rounded-pill bg-${level[1]}">${
                         level[0]
                     }</span>
                     </td>
-                    <td  class="text-wrap" style="min-width:180px">${create_at}</td>
-                    <td  class="text-wrap" style="min-width:180px">${update_at}</td>
+                    <td  class="max">${create_at}</td>
+                    <td  class="max">${update_at}</td>
                     
                     <td class="g-2">
                     <a href="${urlEdit}" >Edit</a>
                     <a style="margin-right:-8px;margin-left:8px;" href="${urlDelete}" id="delete" value="${
                         element.name
-                    }">Delete</a>
+                    }" class="text-danger">Delete</a>
                     </td>
                     </tr>
                      `;

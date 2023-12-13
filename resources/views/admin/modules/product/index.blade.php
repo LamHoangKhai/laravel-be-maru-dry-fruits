@@ -6,7 +6,6 @@
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
     <script src="{{ asset('administrator/js/product/general.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-
 @endpush
 
 
@@ -33,6 +32,11 @@
         .image {
             max-width: 50px;
             max-height: 50px;
+        }
+
+        .max {
+            max-width: 100px !important;
+            white-space: pre-wrap !important;
         }
     </style>
 @endpush
@@ -76,10 +80,11 @@
                                     <th>Category</th>
                                     <th>Image</th>
                                     <th>Price</th>
-                                    <th>Stock Quantity</th>
+                                    <th class="max">Stock Quantity</th>
+                                    <th class="max">Store Quantity</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th >Created At</th>
+                                    <th >Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -97,10 +102,11 @@
                                     <th>Category</th>
                                     <th>Image</th>
                                     <th>Price</th>
-                                    <th>Stock Quantity</th>
+                                    <th class="max">Stock Quantity</th>
+                                    <th class="max">Store Quantity</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
-                                    <th>Updated At</th>
+                                    <th >Created At</th>
+                                    <th >Updated At</th>
                                     <th>Action</th>
 
                                 </tr>

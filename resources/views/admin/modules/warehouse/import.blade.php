@@ -5,11 +5,19 @@
     <script src="{{ asset('administrator/js/import/main.js') }}" type="module"></script>
 @endpush
 
+@push('css')
+    <style>
+        .max {
+            max-width: 140px !important;
+            white-space: pre-wrap !important;
+        }
+    </style>
+@endpush
 
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
         <input type="hidden" id="url" data-url="{{ route('admin.warehouse.getImports') }}">
-        {{-- <input type="hidden" id="url-edit" data-url="{{ route('admin.transaction.edit', 'id') }}"> --}}
+        <input type="hidden" id="url-edit" data-url="{{ route('admin.warehouse.edit', 'id') }}">
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -41,10 +49,10 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Current Quantity</th>
+                                    <th class="max">Current Quantity</th>
                                     <th>Shipment</th>
-                                    <th>Transaction Date</th>
-                                    <th>Expiration Date</th>
+                                    <th class="max">Transaction Date</th>
+                                    <th class="max">Expiration Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -63,10 +71,10 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th>Current Quantity</th>
+                                    <th class="max">Current Quantity</th>
                                     <th>Shipment</th>
-                                    <th>Transaction Date</th>
-                                    <th>Expiration Date</th>
+                                    <th class="max">Transaction Date</th>
+                                    <th class="max">Expiration Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>

@@ -14,8 +14,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('admin.warehouse.importStore') }}"
-                    enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.warehouse.importStore') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -58,8 +57,8 @@
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input type="text" id="quantity" class="form-control" placeholder="Enter quantity"
-                                name="quantity" value="{{ old('quantity') }}" />
+                            <input type="text" id="quantity" class="form-control"
+                                placeholder="Enter quantity (kilogram)" name="quantity" value="{{ old('quantity') }}" />
                             @if ($errors->has('quantity'))
                                 <span class="text-danger">* {{ $errors->get('quantity')[0] }}</span>
                             @endif
@@ -67,7 +66,8 @@
 
                         <div class="col mb-2">
                             <label for="expiration_date" class="form-label">Expiration date</label>
-                            <input class="form-control" type="date" id="expiration_date" name="expiration_date">
+                            <input class="form-control" type="date" id="expiration_date" name="expiration_date"
+                                value="{{ old('expiration_date') }}">
                             @if ($errors->has('expiration_date'))
                                 <span class="text-danger">* {{ $errors->get('expiration_date')[0] }}</span>
                             @endif

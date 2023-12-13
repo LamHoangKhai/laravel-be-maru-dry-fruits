@@ -1,20 +1,17 @@
-@if ($errors->any())
-    @push('handlejs')
-        <script>
-            $("#showModal").trigger("click");
-        </script>
-    @endpush
-@endif
+@extends('admin.master')
 
-<div class="modal fade " id="addImport" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Import</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                    User / Edit
+                </h4>
+
             </div>
-            <div class="modal-body">
-                <form method="POST" action="{{ route('admin.transaction.importStore') }}"
+            <div class="card-body">
+                <form method="POST" action="{{ route('admin.warehouse.update', ['id' => $id]) }}"
                     enctype="multipart/form-data">
                     @csrf
 
@@ -25,7 +22,7 @@
                                 <option value="">Choose Product</option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}"
-                                        {{ old('product_id', 0) === $product->id ? 'selected' : '' }}>
+                                        {{ old('product_id', $data->product_id) == $product->id ? 'selected' : '' }}>
                                         {{ $product->name }}
                                     </option>
                                 @endforeach
@@ -43,7 +40,7 @@
                                 <option value="">Choose Supplier</option>
                                 @foreach ($suppliers as $supplier)
                                     <option value="{{ $supplier->id }}"
-                                        {{ old('supplier_id', 0) === $supplier->id ? 'selected' : '' }}>
+                                        {{ old('supplier_id', $data->supplier_id) == $supplier->id ? 'selected' : '' }}>
                                         {{ $supplier->name }}</option>
                                 @endforeach
                             </select>
@@ -58,8 +55,9 @@
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input type="text" id="quantity" class="form-control" placeholder="Enter quantity"
-                                name="quantity" value="{{ old('quantity') }}" />
+                            <input type="text" id="quantity" class="form-control"
+                                placeholder="Enter quantity (kilogram)" name="quantity"
+                                value="{{ old('quantity', $data->quantity) }}" />
                             @if ($errors->has('quantity'))
                                 <span class="text-danger">* {{ $errors->get('quantity')[0] }}</span>
                             @endif
@@ -67,7 +65,8 @@
 
                         <div class="col mb-2">
                             <label for="expiration_date" class="form-label">Expiration date</label>
-                            <input class="form-control" type="date" id="expiration_date" name="expiration_date">
+                            <input class="form-control" type="date" id="expiration_date" name="expiration_date"
+                                value="{{ old('expiration_date', $data->expiration_date) }}">
                             @if ($errors->has('expiration_date'))
                                 <span class="text-danger">* {{ $errors->get('expiration_date')[0] }}</span>
                             @endif
@@ -79,21 +78,26 @@
                         <div class="col mb-2">
                             <label for="note" class="form-label">Note</label>
                             <input type="text" id="note" class="form-control" placeholder="Enter note"
-                                name="note" value="{{ old('note') }}" />
+                                name="note" value="{{ old('note', $data->note) }}" />
                         </div>
                     </div>
 
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="row ">
+                        <div class="col d-flex  justify-content-end">
+                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
+                            <a href="{{ route('admin.warehouse.import') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
                     </div>
                 </form>
 
             </div>
+
         </div>
+
+
     </div>
-</div>
+    <!-- /.card -->
+@endsection

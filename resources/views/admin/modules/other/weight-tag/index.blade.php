@@ -66,7 +66,7 @@
                                         <td style="width: 20px">
                                             <a style="margin-right:-8px;margin-left:8px;"
                                                 href="{{ route('admin.other.weight-tag.destroy', ['id' => $weight->id]) }}"
-                                                id="delete" value="{{ $weight->name }}">Delete</a>
+                                                id="delete" value="{{ $weight->name }}" class="text-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
