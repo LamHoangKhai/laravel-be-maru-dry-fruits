@@ -2,9 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-
+use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
@@ -14,7 +13,7 @@ return new class extends Migration
     {
         DB::unprepared('
         CREATE TRIGGER import
-        AFTER INSERT ON transactions
+        AFTER INSERT ON warehouse
         FOR EACH ROW
         BEGIN
             if NEW.transaction_type = 1 THEN 
@@ -28,6 +27,7 @@ return new class extends Migration
             END IF;
         END;
         ');
+
     }
 
     /**
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('trigger_import_warehouse');
     }
 };

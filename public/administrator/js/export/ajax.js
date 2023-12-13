@@ -31,7 +31,7 @@ const loadExport = (storage) => {
                     <td>${index + 1}</td>
                     <td>${element.supplier.name}</td>
                     <td>${element.product.name}</td>
-                    <td>${element.quantity}</td>
+                    <td>${element.quantity}kg</td>
                     <td>${element.shipment}</td>
                     <td>${element.transaction_date}</td>
                     <td>${element.expiration_date}</td>

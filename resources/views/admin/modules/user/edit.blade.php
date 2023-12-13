@@ -104,7 +104,14 @@
                             </select>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary mt-4">Update</button>
+
+                    <div class="row ">
+                        <div class="col d-flex  justify-content-end">
+                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
+                            <a href="{{ route('admin.user.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
+                    </div>
                 </form>
             </div>
 

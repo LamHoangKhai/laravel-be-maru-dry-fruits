@@ -60,7 +60,7 @@ const loadUser = (storage) => {
                     <a href="${urlEdit}" >Edit</a>
                     <a style="margin-right:-8px;margin-left:8px;" href="${urlDelete}" id="delete" value="${
                         element.email
-                    }">Delete</a>
+                    }" class="text-danger">Delete</a>
                     </td>
                     </tr>
                      `;

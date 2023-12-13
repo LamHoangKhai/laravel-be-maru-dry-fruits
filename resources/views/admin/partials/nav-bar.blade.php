@@ -31,31 +31,31 @@
 
                                 <!--/ Show role -->
 
-                                {{-- @php
-                                    $text = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'Superadmin' : 'Admin';
-                                    $color = Auth::user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'danger' : 'dark';
+                                @php
+                                    $text = Auth::guard("web")->user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'Superadmin' : 'Admin';
+                                    $color = Auth::guard("web")->user()->id == 'maruDr-yfRui-tspRo-jectfORFOU-Rmembe' ? 'danger' : 'dark';
 
-                                @endphp --}}
+                                @endphp
 
-                                {{-- <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">{{ Auth::user()->full_name }}</span>
+                                <div class="flex-grow-1">
+                                    <span class="fw-semibold d-block">{{ Auth::guard("web")->user()->full_name }}</span>
                                     <small
                                         class="badge rounded-pill  bg-{{ $color }}">{{ $text }}</small>
-                                </div> --}}
+                                </div>
 
                             </div>
                         </a>
                     </li>
-                    {{-- <li>
+                    <li>
                         <div class="dropdown-divider"></div>
-                    </li> --}}
+                    </li>
 
-                    {{-- <li>
-                        <a class="dropdown-item" href="{{ route('admin.user.edit', ['id' => Auth::user()->id]) }}">
+                    <li>
+                        <a class="dropdown-item" href="{{ route('admin.user.edit', ['id' => Auth::guard("web")->user()->id]) }}">
                             <i class="bx bx-user me-2"></i>
                             <span class="align-middle">My Profile</span>
                         </a>
-                    </li> --}}
+                    </li>
 
 
                     <li>

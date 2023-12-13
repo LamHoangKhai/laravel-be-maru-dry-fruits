@@ -1,7 +1,7 @@
-@if ($errors->has(['hello']))
+@if ($errors->any())
     @push('handlejs')
         <script>
-            $("#showModalExport").trigger("click");
+            $("#showModal").trigger("click");
         </script>
     @endpush
 @endif
@@ -15,8 +15,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="{{ route('admin.transaction.exportStore') }}"
-                    enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.warehouse.exportStore') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">
@@ -55,8 +54,8 @@
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="quantity" class="form-label">Quantity</label>
-                            <input type="text" id="quantity" class="form-control" placeholder="Enter quantity"
-                                name="quantity" value="{{ old('quantity') }}" />
+                            <input type="text" id="quantity" class="form-control"
+                                placeholder="Enter quantity (kilogram)" name="quantity" value="{{ old('quantity') }}" />
                             @if ($errors->has('quantity'))
                                 <span class="text-danger">* {{ $errors->get('quantity')[0] }}</span>
                             @endif

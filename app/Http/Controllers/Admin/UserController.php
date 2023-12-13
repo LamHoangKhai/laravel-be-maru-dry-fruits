@@ -73,30 +73,30 @@ class UserController extends Controller
     {
         // find user
         $user = User::findOrfail($id);
-        dd($user->email);
+
         // check user has edit itself
-        // $mySelf = false;
-        // if (Auth::user()->id == $user->id) {
-        //     $mySelf = true;
-        // }
+        $mySelf = false;
+        if (Auth::guard("web")->user()->id == $user->id) {
+            $mySelf = true;
+        }
 
-        // // check permission
-        // $permission = false;
+        // check permission
+        $permission = false;
 
-        // // if user is Superadmin allows delete all level
-        // if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
-        //     $permission = true;
-        // }
+        // if user is Administrator allows delete all level
+        if (Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
+            $permission = true;
+        }
 
         // if admin edit itself allows editing
-        // if ($mySelf) {
-        //     $permission = true;
-        // }
+        if ($mySelf) {
+            $permission = true;
+        }
 
-        // // return if permission = true
-        // if ($permission) {
-            // }
-                return view("admin.modules.user.edit", ["data" => $user, 'id' => $id]);
+        // return if permission = true
+        if ($permission) {
+            return view("admin.modules.user.edit", ["data" => $user, 'id' => $id, "mySelf" => $mySelf]);
+        }
 
         // return if permission =  false
         return redirect()->route("admin.user.index")->with("error", "Not allow edit!");
@@ -142,8 +142,8 @@ class UserController extends Controller
         // check permission
         $permission = false;
 
-        // if user is Superadmin allows delete all level
-        if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" && $user->id != "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
+        // if user is Administrator allows delete all level
+        if (Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" && $user->id != "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }
 

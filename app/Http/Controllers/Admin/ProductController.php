@@ -7,6 +7,8 @@ use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Product_Weight;
+use App\Models\WeighTag;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -15,7 +17,8 @@ class ProductController extends Controller
     {
         $data = Product::with("category")->get();
         $categories = Category::get();
-        return view('admin.modules.product.index', ["products" => $data, "categories" => $categories]);
+        $weights = WeighTag::get();
+        return view('admin.modules.product.index', ["products" => $data, "categories" => $categories, "weights" => $weights]);
     }
 
     public function getProducts()
@@ -27,6 +30,8 @@ class ProductController extends Controller
 
     public function store(StoreRequest $request)
     {
+
+
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -41,8 +46,18 @@ class ProductController extends Controller
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
         $request->image->move(public_path("uploads"), $filename);
         $product->image = $filename;
-
         $product->save();
+
+        if (isset($request->weights)) {
+            $insert = [];
+            foreach ($request->weights as $weight) {
+                $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
+            }
+            Product_Weight::insert($insert);
+        }
+
+
+
         return redirect()->route('admin.product.index')->with("success", "Create product success!");
     }
 
@@ -50,7 +65,8 @@ class ProductController extends Controller
     {
         $data = Product::findOrFail($id);
         $categories = Category::get();
-        return view("admin.modules.product.edit", ["data" => $data, "id" => $id, "categories" => $categories]);
+        $weights = WeighTag::get();
+        return view("admin.modules.product.edit", ["data" => $data, "id" => $id, "categories" => $categories, "weights" => $weights]);
     }
     public function update(UpdateRequest $request, string $id)
     {

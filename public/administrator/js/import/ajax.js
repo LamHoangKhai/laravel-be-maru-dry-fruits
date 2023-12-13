@@ -28,17 +28,17 @@ const loadImport = (storage) => {
                     let create_at = formatDate(new Date(element.created_at));
                     let update_at = formatDate(new Date(element.updated_at));
 
-                    // let urlEdit = $("#url-edit")
-                    //     .attr("data-url")
-                    //     .replace(/id/g, element.id);
+                    let urlEdit = $("#url-edit")
+                        .attr("data-url")
+                        .replace(/id/g, element.id);
 
                     xhtml += `
                     <tr>
                     <td>${index + 1}</td>
                     <td>${element.supplier.name}</td>
                     <td>${element.product.name}</td>
-                    <td>${element.quantity}</td>
-                    <td>${element.current_quantity}</td>
+                    <td>${element.quantity}kg</td>
+                    <td>${element.current_quantity}kg</td>
                     <td>${element.shipment}</td>
                     <td  class="text-wrap" style="min-width:180px">${
                         element.transaction_date
@@ -49,7 +49,7 @@ const loadImport = (storage) => {
                     <td  class="text-wrap" style="min-width:180px">${create_at}</td>
                     <td  class="text-wrap" style="min-width:180px">${update_at}</td>
                     <td class="g-2">
-                    <a href="" >Edit</a>
+                    <a href="${urlEdit}" >Edit</a>
                     </td>
                     </tr>
                      `;

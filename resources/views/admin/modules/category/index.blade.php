@@ -1,5 +1,36 @@
 @extends('admin.master')
+@push('css')
+    <style>
+        .pagi-right nav {
+            display: flex;
+            justify-content: end;
+        }
+    </style>
+@endpush
 
+@push('handlejs')
+    <script>
+        $("#delete").click(async (e) => {
+            e.preventDefault();
+            const url = e.target.href;
+            const name = e.target.getAttribute("value");
+            // show modal
+            await Swal.fire({
+                title: "Are you sure?",
+                html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    return (window.location.href = url);
+                }
+            });
+        });
+    </script>
+@endpush
 
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
@@ -65,9 +96,9 @@
                                         <td>{{ date_format($category->updated_at, 'Y/m/d H:i:s') }}</td>
                                         <td class="g-2">
                                             <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">Edit</a>
-                                            <a style="margin-right:-8px;margin-left:8px;"
+                                            <a style="margin-right:-8px;margin-left:8px;" class="text-danger"
                                                 href="{{ route('admin.category.destroy', ['id' => $category->id]) }}"
-                                                id="delete">Delete</a>
+                                                id="delete" value="{{ $category->name }}">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -86,8 +117,12 @@
                                 </tr>
                             </tfoot>
                         </table>
+
                     </div>
+                    <div class="card mt-4  pagi-right"> {{ $categories->links() }} </div>
+
                 </div>
+
             </div>
             @include('admin.modules.category.modals.add-new')
 
