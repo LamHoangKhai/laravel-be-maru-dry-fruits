@@ -1,10 +1,6 @@
 import { formatDate, setTotalPages } from "../function.js";
 const loadImport = (storage) => {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
+
 
     $("#renderData").html("");
 
@@ -35,20 +31,16 @@ const loadImport = (storage) => {
                     xhtml += `
                     <tr>
                     <td>${index + 1}</td>
-                    <td>${element.supplier.name}</td>
-                    <td>${element.product.name}</td>
+                    <td class="max-250">${element.supplier.name}</td>
+                    <td class="max-250">${element.product.name}</td>
                     <td>${element.quantity}kg</td>
                     <td>${element.current_quantity}kg</td>
-                    <td>${element.shipment}</td>
-                    <td  class="text-wrap" style="min-width:180px">${
-                        element.transaction_date
-                    }</td>
-                    <td  class="text-wrap" style="min-width:180px">${
-                        element.expiration_date
-                    }</td>
-                    <td  class="text-wrap" style="min-width:180px">${create_at}</td>
-                    <td  class="text-wrap" style="min-width:180px">${update_at}</td>
-                    <td class="g-2">
+                    <td  class="max-110">${element.shipment}</td>
+                    <td  class="max-110">${element.transaction_date}</td>
+                    <td  class="max-110">${element.expiration_date}</td>
+                    <td  class="max-110">${create_at}</td>
+                    <td  class="max-110">${update_at}</td>
+                    <td class="g-2" style="width:80px">
                     <a href="${urlEdit}" >Edit</a>
                     </td>
                     </tr>

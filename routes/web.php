@@ -39,6 +39,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
     Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
 
         //find and get data
         Route::post('get-users', 'getUsers')->name('getUsers');
@@ -58,6 +59,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
     Route::prefix('product')->name('product.')->controller(ProductController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
 
         //find and get data
         Route::post('get-products', 'getProducts')->name('getProducts');
@@ -71,12 +73,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
+
+        Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
+        Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
     });
 
     Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
-
+        Route::get('create', 'create')->name('create');
         //create
         Route::post('store', 'store')->name('store');
 
@@ -86,13 +91,17 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
+
+        //check related category before delete
+        Route::post('check-related', 'checkRelatedCategory')->name('checkRelatedCategory');
     });
 
     Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
         //view
         Route::get('import', 'import')->name('import');
         Route::get('export', 'export')->name('export');
-
+        Route::get('create-import/{id}', 'createImport')->name('createImport');
+        Route::get('create-export/{id}', 'createExport')->name('createExport');
 
         //find and get data
         Route::post('get-imports', 'getImports')->name('getImports');

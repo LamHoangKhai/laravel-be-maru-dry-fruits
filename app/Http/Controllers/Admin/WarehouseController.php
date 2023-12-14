@@ -11,12 +11,20 @@ use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
+    //view
     public function import()
     {
         $suppliers = Supplier::get();
-        $products = Product::get();
-        return view("admin.modules.warehouse.import", ["suppliers" => $suppliers, "products" => $products]);
+        return view("admin.modules.warehouse.import", );
     }
+
+    public function createImport(string $id)
+    {
+        $product = Product::findOrFail($id);
+        $suppliers = Supplier::get();
+        return view("admin.modules.import.create", ["product" => $product, "suppliers" => $suppliers]);
+    }
+
     //api get imports for ajax
     public function getImports(Request $request)
     {
@@ -28,6 +36,7 @@ class WarehouseController extends Controller
         $result = $query->with(['supplier', 'product'])->orderBy("current_quantity", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
+
     //create import 
     public function importStore(Request $request)
     {
@@ -38,8 +47,6 @@ class WarehouseController extends Controller
             'quantity' => 'required|numeric',
             'expiration_date' => 'required|date|after:now',
         ]);
-
-
 
 
         $import = new Warehouse();
@@ -57,7 +64,7 @@ class WarehouseController extends Controller
         $import->save();
 
 
-        return redirect()->route('admin.warehouse.import')->with("success", "Create import success!");
+        return redirect()->route('admin.product.index')->with("success", "Create import success!");
     }
 
     //edit and update import
@@ -108,14 +115,13 @@ class WarehouseController extends Controller
         return view("admin.modules.warehouse.export", ['products' => $products]);
     }
 
-    //find imports
-    public function findImport(Request $request)
+    public function createExport(string $id)
     {
-        $import = Warehouse::with("supplier")
-            ->where([["product_id", $request->product_id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
+        $product = Product::findOrFail($id);
+        $imports = Warehouse::with("supplier")
+            ->where([["product_id", $product->id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
             ->get();
-
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $import]);
+        return view("admin.modules.export.create", ["product" => $product, "imports" => $imports]);
     }
 
     //api get exports for ajax

@@ -18,6 +18,13 @@
 <!-- Main JS -->
 <script src="{{ asset('administrator/assets/js/main.js') }}"></script>
 
+<script>
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+</script>
 
 
 

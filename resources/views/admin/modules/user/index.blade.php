@@ -91,10 +91,9 @@
 
                         <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
                             placeholder="Enter name or email,phone..." />
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser"
-                            id="showModal">
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.user.create') }}">
                             <i class='bx bx-plus-circle'></i>&nbsp; Add User
-                        </button>
+                        </a>
 
                     </div>
 
@@ -143,7 +142,6 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-            @include('admin.modules.user.modals.add-new')
 
 
         </div>

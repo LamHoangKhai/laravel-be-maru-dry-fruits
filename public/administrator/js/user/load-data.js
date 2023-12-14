@@ -1,10 +1,4 @@
 const loadUser = (storage) => {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-
     $("#renderData").html("");
 
     $.ajax({
@@ -55,13 +49,26 @@ const loadUser = (storage) => {
                         element.address
                     }</td>
                    
-                    
-                    <td class="g-2">
-                    <a href="${urlEdit}" >Edit</a>
-                    <a style="margin-right:-8px;margin-left:8px;" href="${urlDelete}" id="delete" value="${
-                        element.email
-                    }" class="text-danger">Delete</a>
-                    </td>
+
+
+                    <td class="g-2" >
+                    <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                             <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+
+                        <div class="dropdown-menu" style="">
+                            <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                            
+                            <a  href="${urlDelete}" id="delete" value="${
+                        element.full_name
+                    }" class="text-danger delete dropdown-item"><i class="bx bx-trash me-1"></i> Delete</a>
+                        </div>
+                     </div>
+                </td>
+
+
                     </tr>
                      `;
                 });

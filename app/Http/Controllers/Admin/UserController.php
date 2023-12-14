@@ -22,28 +22,10 @@ class UserController extends Controller
         return view("admin.modules.user.index");
     }
 
-    /**
-     * Get , search , filter form Ajax
-     */
-    public function getUsers(Request $request)
+    public function create()
     {
-        // query filter, search 
-
-        $query = User::where("status", "!=", 3); // just get user when status 1,2
-        $search = $request->search ? $request->search : "";
-        $take = (int) $request->take;
-
-        // search email, phone ,name 
-        $query = $query->where(function ($query) use ($search) {
-            $query->where("full_name", "like", "%" . $search . "%")
-                ->orWhere("email", "like", "%" . $search . "%")
-                ->orWhere("phone", "like", "%" . $search . "%");
-        });
-
-        //return data
-        $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-
+        // render view create user
+        return view("admin.modules.user.create");
     }
 
     /**
@@ -161,5 +143,29 @@ class UserController extends Controller
 
         // return if permission = false
         return redirect()->route("admin.user.index")->with("error", "Not allow delete!");
+    }
+
+    /**
+     * Get , search , filter form Ajax
+     */
+    public function getUsers(Request $request)
+    {
+        // query filter, search 
+
+        $query = User::where("status", "!=", 3); // just get user when status 1,2
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        // search email, phone ,name 
+        $query = $query->where(function ($query) use ($search) {
+            $query->where("full_name", "like", "%" . $search . "%")
+                ->orWhere("email", "like", "%" . $search . "%")
+                ->orWhere("phone", "like", "%" . $search . "%");
+        });
+
+        //return data
+        $result = $query->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+
     }
 }

@@ -1,5 +1,5 @@
-import { Mydebounce} from "../function.js";
-import { loadProduct } from "./ajax.js";
+import { Mydebounce } from "../function.js";
+import { loadProduct } from "./load-data.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -34,30 +34,6 @@ $(document).ready(() => {
     );
     // end handle search
 
-    // handle filter
-    $(".filter").change((e) => {
-        const selecter = e.target;
-        const isChecked = selecter.checked;
-        const name = selecter.name;
-        const value = selecter.value;
-        storage.page = 1;
-
-        $(selecter).attr("disabled", true);
-        setTimeout(() => {
-            $(selecter).removeAttr("disabled");
-        }, 500);
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    // end handle filter
-
-    //choose show entries
-    $("#showEntries").change((e) => {
-        storage.take = e.target.value;
-        storage.page = 1;
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    //end choose show entries
-
     // load pagination
     $("#pagination").simplePaginator({
         totalPages: 1,
@@ -76,38 +52,37 @@ $(document).ready(() => {
     });
     // end pagination
 
-    // move fast page
-    $("#movePage").keypress(
-        Mydebounce((e) => {
-            let page = parseInt(e.target.value);
-            // if user input value > total page
-            if (page > storage.totalPage) {
-                storage.page = storage.totalPage;
-            } else {
-                storage.page = page;
-            }
-            $("#pagination").simplePaginator("changePage", storage.page);
-        }, 500)
-    );
-    // end fast page
-
-    $("#renderData").on("click", "#delete", async (e) => {
+    $("#renderData").on("click", ".delete", async (e) => {
         e.preventDefault();
         const url = e.target.href;
-        const name = e.target.getAttribute("value");
-        // show modal
-        await Swal.fire({
-            title: "Are you sure?",
-            html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                return (window.location.href = url);
-            }
+        const urlCheck = $("#url-check").attr("data-url");
+        const product_id = e.target.getAttribute("value");
+
+        $.ajax({
+            type: "POST",
+            url: urlCheck,
+            data: {
+                product_id,
+            },
+            dataType: "json",
+            success: (res) => {
+                Swal.fire({
+                    title: "Are you sure?",
+                    html: `When deleting this product, related items such as <strong> orders, imports, and exports</strong> cannot be found, and this product still has a total weight of <strong>${res.totalQuantity}kg</strong>.`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        return (window.location.href = url);
+                    }
+                });
+            },
+            error: function (error) {
+                console.log(error.message);
+            },
         });
     });
 });

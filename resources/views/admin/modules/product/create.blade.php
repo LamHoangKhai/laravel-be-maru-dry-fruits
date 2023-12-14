@@ -1,36 +1,24 @@
-@if ($errors->any())
-    @push('handlejs')
-        <script>
-            $("#showModal").trigger("click");
-        </script>
-    @endpush
-@endif
-@push('handlejs')
-    <script>
-        $(document).ready(function() {
-            var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
-                removeItemButton: true,
-                maxItemCount: 5,
-                renderChoiceLimit: 5
-            });
-
-
-        });
-    </script>
+@extends('admin.master')
+@push('js')
+    <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('administrator/js/product/general.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 @endpush
 
-<div class="modal fade " id="addProduct" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-xl" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Add New Product</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                    Product / Create
+                </h4>
+
             </div>
-            <div class="modal-body">
+            <div class="card-body">
                 <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="row g-2">
+                    <div class="row">
                         <div class="col mb-2">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -39,13 +27,24 @@
                                 <span class="text-danger">* {{ $errors->get('name')[0] }}</span>
                             @endif
                         </div>
+                    </div>
 
+                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="price" class="form-label">Price</label>
                             <input type="text" id="price" class="form-control" placeholder="Enter price/100gram"
                                 name="price" value="{{ old('price') }}" />
                             @if ($errors->has('price'))
                                 <span class="text-danger">* {{ $errors->get('price')[0] }}</span>
+                            @endif
+                        </div>
+
+                        <div class="col mb-2">
+                            <label for="discount" class="form-label">Discount</label>
+                            <input type="text" id="discount" class="form-control" placeholder="Enter discount %"
+                                name="discount" value="{{ old('discount', 0) }}" />
+                            @if ($errors->has('discount'))
+                                <span class="text-danger">* {{ $errors->get('discount')[0] }}</span>
                             @endif
                         </div>
                     </div>
@@ -76,14 +75,19 @@
                             <select id="choices-multiple-remove-button" placeholder="Select upto 5 tags" multiple
                                 name="weights[]">
                                 @foreach ($weights as $weight)
-                                    <option value="{{ $weight->id }}">{{ $weight->mass }}gram</option>
+                                    <option value="{{ $weight->id }}"
+                                        {{ in_array($weight->id, old('weights', [])) ? 'selected' : '' }}>
+                                        {{ $weight->mass }}gram
+                                    </option>
                                 @endforeach
 
                             </select>
+                            @if ($errors->has('weights'))
+                                <span class="text-danger">* {{ $errors->get('weights')[0] }}</span>
+                            @endif
                         </div>
                     </div>
-
-
+                    {{ old('weights*') }}
                     <div class="row g-2">
                         <div class="col mb-2">
                             <label for="status" class="form-label ">Stataus</label>
@@ -104,33 +108,44 @@
 
 
                     </div>
-                    @if ($errors->has('image'))
-                        <span class="text-danger">* {{ $errors->get('image')[0] }}</span>
-                    @endif
-                    <div class="row w-px-200 ">
-                        <div class="mb-4 d-flex justify-content-center">
+
+                    <div class="row">
+                        <label for="customFile1" class="form-label">Image</label>
+
+                        <div class="mb-4 d-flex">
                             <img id="selectedImage" src="https://mdbootstrap.com/img/Photos/Others/placeholder.jpg"
-                                alt="example placeholder" style="width: 150px; height: 150px" />
+                                alt="example placeholder" style="width: 250px; height: 250px" />
                         </div>
-                        <div class="d-flex justify-content-center">
-                            <div class="btn btn-primary btn-rounded">
-                                <label class="form-label text-white m-1" for="customFile1">Choose file</label>
-                                <input type="file" class="form-control d-none" id="customFile1"
+                        <div class="d-flex">
+                            <div class="btn btn-primary btn-rounded w-px-250">
+                                <label class="form-label text-white m-1 " for="customFile1">Choose file</label>
+                                <input type="file" class="form-control d-none " id="customFile1"
                                     onchange="displaySelectedImage(event, 'selectedImage')" name="image" />
                             </div>
                         </div>
+                        @if ($errors->has('image'))
+                            <span class="text-danger">* {{ $errors->get('image')[0] }}</span>
+                        @endif
                     </div>
 
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="row ">
+                        <div class="col d-flex  justify-content-end">
+                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Create</button>
+                            <a href="{{ route('admin.product.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
                     </div>
+
+
+
                 </form>
 
             </div>
+
         </div>
+
+
     </div>
-</div>
+    <!-- /.card -->
+@endsection

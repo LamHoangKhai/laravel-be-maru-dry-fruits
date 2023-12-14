@@ -46,25 +46,6 @@
         </li>
 
 
-        <li class="menu-item {{ request()->is('admin/warehouse/*') ? 'active open' : '' }}">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-alt"></i>
-                <div data-i18n="Account Settings">Warehouse</div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/warehouse/import') ? 'active' : '' }}">
-                    <a href="{{ route('admin.warehouse.import') }}" class="menu-link">
-                        <div data-i18n="Account">Import</div>
-                    </a>
-                </li>
-                <li class="menu-item {{ request()->is('admin/warehouse/export') ? 'active' : '' }}">
-                    <a href="{{ route('admin.warehouse.export') }}" class="menu-link">
-                        <div data-i18n="Notifications">Export</div>
-                    </a>
-                </li>
-
-            </ul>
-        </li>
 
         <li class="menu-item {{ request()->is('admin/other/*') ? 'active open' : '' }} ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">

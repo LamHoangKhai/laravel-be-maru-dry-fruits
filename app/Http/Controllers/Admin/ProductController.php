@@ -15,18 +15,17 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::with("category")->get();
+
+        return view('admin.modules.product.index');
+    }
+
+    public function create()
+    {
         $categories = Category::get();
         $weights = WeighTag::get();
-        return view('admin.modules.product.index', ["products" => $data, "categories" => $categories, "weights" => $weights]);
+        return view('admin.modules.product.create', ["categories" => $categories, "weights" => $weights]);
     }
 
-    public function getProducts()
-    {
-        $data = Product::with("category")->orderBy("created_at", "DESC")->paginate(20);
-
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $data]);
-    }
 
     public function store(StoreRequest $request)
     {
@@ -48,13 +47,12 @@ class ProductController extends Controller
         $product->image = $filename;
         $product->save();
 
-        if (isset($request->weights)) {
-            $insert = [];
-            foreach ($request->weights as $weight) {
-                $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
-            }
-            Product_Weight::insert($insert);
+
+        $insert = [];
+        foreach ($request->weights as $weight) {
+            $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
         }
+        Product_Weight::insert($insert);
 
 
 
@@ -63,9 +61,10 @@ class ProductController extends Controller
 
     public function edit(string $id)
     {
-        $data = Product::findOrFail($id);
+        $data = Product::with("weightTags")->findOrFail($id);
         $categories = Category::get();
         $weights = WeighTag::get();
+
         return view("admin.modules.product.edit", ["data" => $data, "id" => $id, "categories" => $categories, "weights" => $weights]);
     }
     public function update(UpdateRequest $request, string $id)
@@ -91,6 +90,17 @@ class ProductController extends Controller
             $product->image = $filename;
         }
 
+
+        $insert = [];
+        foreach ($request->weights as $weight) {
+            $checkExist = Product_Weight::where([["product_id", $product->id], ["weight_tag_id", $weight]])->first();
+            if (!$checkExist) {
+                $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
+            }
+        }
+        Product_Weight::insert($insert);
+
+
         $product->save();
         return redirect()->route('admin.product.index')->with("success", "Edit product success!");
     }
@@ -101,4 +111,43 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('admin.product.index')->with("success", "Delete product success!");
     }
+
+    /**
+     * Get , search , filter form Ajax
+     */
+    public function getProducts(Request $request)
+    {
+        $query = new Product();
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        // search email, phone ,name 
+        $query = $query->where("name", "like", "%" . $search . "%");
+
+        //return data
+        $result = $query->with("category")->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+
+    // check total quantity product
+    public function checkQuantity(Request $request)
+    {
+        $product = Product::findOrFail($request->product_id);
+        $totalQuantity = $product->stock_quantity + $product->store_quantity;
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "totalQuantity" => $totalQuantity]);
+    }
+
+    //remove weight tag
+    public function removeWeightTag(Request $request)
+    {
+        $product_weight = Product_Weight::where([["product_id", $request->product_id], ["weight_tag_id", $request->weightTagId]])->first();
+        if (!$product_weight) {
+            return response()->json(['status_code' => 200, '404' => "Errors"]);
+        }
+        $product_weight->delete();
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+    }
+
+
+
 }

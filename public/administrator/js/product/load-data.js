@@ -1,14 +1,7 @@
 import { formatDate, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
-
     $("#renderData").html("");
-
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -37,7 +30,14 @@ const loadProduct = (storage) => {
                     let urlDelete = $("#url-destroy")
                         .attr("data-url")
                         .replace(/id/g, element.id);
-
+                    //get url import product
+                    let urlImport = $("#url-import")
+                        .attr("data-url")
+                        .replace(/id/g, element.id);
+                    //get url export product
+                    let urlExport = $("#url-export")
+                        .attr("data-url")
+                        .replace(/id/g, element.id);
                     // get path image
                     let urlUploads = $("#urlPathUploads").attr("data-url");
 
@@ -49,7 +49,7 @@ const loadProduct = (storage) => {
                     xhtml += `
                     <tr>
                     <td>${index + 1}</td>
-                    <td>${element.name}</td>
+                    <td class="max-250">${element.name}</td>
                     <td>${element.category.name}</td>
                     <td >
 			      <img src="${
@@ -64,15 +64,27 @@ const loadProduct = (storage) => {
                         level[0]
                     }</span>
                     </td>
-                    <td  class="max">${create_at}</td>
-                    <td  class="max">${update_at}</td>
+                    <td  class="max-110">${create_at}</td>
+                    <td  class="max-110">${update_at}</td>
                     
-                    <td class="g-2">
-                    <a href="${urlEdit}" >Edit</a>
-                    <a style="margin-right:-8px;margin-left:8px;" href="${urlDelete}" id="delete" value="${
-                        element.name
-                    }" class="text-danger">Delete</a>
+                    <td class="g-2" >
+                        <div class="dropdown">
+                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                                 <i class="bx bx-dots-vertical-rounded"></i>
+                            </button>
+
+                            <div class="dropdown-menu" style="">
+                            <a href="${urlImport}" class="dropdown-item"><i class='bx bx-import'></i> Import</a>
+                            <a href="${urlExport}" class="dropdown-item"><i class='bx bx-export'></i> Export</a>
+                            <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                            <a  href="${urlDelete}" id="delete" value="${
+                        element.id
+                    }" class="text-danger delete dropdown-item"><i class="bx bx-trash me-1"></i> Delete</a>
+                            </div>
+                         </div>
                     </td>
+
                     </tr>
                      `;
                 });

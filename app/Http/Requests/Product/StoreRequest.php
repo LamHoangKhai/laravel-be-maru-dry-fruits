@@ -27,6 +27,9 @@ class StoreRequest extends FormRequest
             "description" => "required",
             "nutrition_detail" => "required",
             "image" => "required|mimes:png,jpg",
+            "category_id" => "required",
+            "weights" => "required",
+            "discount" => "numeric|min:0|max:100"
         ];
     }
 }

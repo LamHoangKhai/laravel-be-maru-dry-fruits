@@ -1,11 +1,7 @@
 import { formatDate, setTotalPages } from "../function.js";
 
 const loadExport = (storage) => {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
+
 
     $("#renderData").html("");
 
@@ -52,11 +48,7 @@ const loadExport = (storage) => {
 };
 
 const loadShipmentOptions = (url, product_id) => {
-    $.ajaxSetup({
-        headers: {
-            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-        },
-    });
+  
 
     $("#shipment").html("");
 

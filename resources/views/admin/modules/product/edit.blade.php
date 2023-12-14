@@ -1,11 +1,50 @@
 @extends('admin.master')
-@push('handlejs')
+@push('js')
     <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
     <script src="{{ asset('administrator/js/product/general.js') }}" type="module"></script>
+@endpush
+
+@push('handlejs')
+    <script>
+        // remove weight tag
+        $(document).ready(() => {
+            let previousValues = $("#choices-multiple-remove-button").val();
+
+            $("#choices-multiple-remove-button").change(function() {
+                let currentValues = $(this).val();
+                let url = $("#urlRemoveWeightTag").attr("data-url");
+                let product_id = $("#product_id").val();
+                let weightTagId = arrayDifference(previousValues, currentValues);
+
+                $.ajax({
+                    type: "POST",
+                    url: url,
+                    data: {
+                        product_id,
+                        weightTagId
+                    },
+                    dataType: "json",
+                    success: (res) => {},
+                    error: function(error) {
+                        console.log(error.message);
+                    },
+                });
+
+            })
+        })
+
+        function arrayDifference(arr1, arr2) {
+            return arr1.filter(value => !arr2.includes(value))[0];
+        }
+    </script>
 @endpush
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
+        <input type="hidden" id="product_id" value="{{ $data->id }}">
+        <input type="hidden" id="urlRemoveWeightTag" data-url="{{ route('admin.product.removeWeightTag') }}">
+
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
@@ -14,10 +53,11 @@
 
             </div>
             <div class="card-body">
-                <form method="POST" action="{{ route('admin.product.update', ['id' => $id]) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.product.update', ['id' => $id]) }}"
+                    enctype="multipart/form-data">
                     @csrf
 
-                    <div class="row g-2">
+                    <div class="row ">
                         <div class="col mb-2">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -26,13 +66,26 @@
                                 <span class="text-danger">* {{ $errors->get('name')[0] }}</span>
                             @endif
                         </div>
+                    </div>
 
+
+
+                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="price" class="form-label">Price</label>
                             <input type="text" id="price" class="form-control" placeholder="Enter price/100gram"
                                 name="price" value="{{ old('price', $data->price) }}" />
                             @if ($errors->has('price'))
                                 <span class="text-danger">* {{ $errors->get('price')[0] }}</span>
+                            @endif
+                        </div>
+
+                        <div class="col mb-2">
+                            <label for="discount" class="form-label">Discount</label>
+                            <input type="text" id="discount" class="form-control" placeholder="Enter discount %"
+                                name="discount" value="{{ old('discount', 0) }}" />
+                            @if ($errors->has('discount'))
+                                <span class="text-danger">* {{ $errors->get('discount')[0] }}</span>
                             @endif
                         </div>
                     </div>
@@ -54,6 +107,23 @@
                             @if ($errors->has('nutrition_detail'))
                                 <span class="text-danger">* {{ $errors->get('nutrition_detail')[0] }}</span>
                             @endif
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="mb-3">
+                            <label for="exampleFormControlSelect2" class="form-label">Weight tag</label>
+                            <select id="choices-multiple-remove-button" placeholder="Select upto 5 tags" multiple
+                                name="weights[]">
+                                @foreach ($weights as $weight)
+                                    <option value="{{ $weight->id }}"
+                                        @foreach ($data->weightTags as $weightTag)
+                                        {{ in_array($weight->id, old('weights', [$weightTag->id])) ? 'selected' : '' }} @endforeach>
+                                        {{ $weight->mass }}gram</option>
+                                @endforeach
+
+                            </select>
                         </div>
                     </div>
 

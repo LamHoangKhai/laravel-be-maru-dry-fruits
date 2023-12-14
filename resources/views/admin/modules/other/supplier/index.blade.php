@@ -25,7 +25,9 @@
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                    return (window.location.href = url);
+                     if (result.isConfirmed) {
+                        return (window.location.href = url);
+                    }
                 }
             });
         });

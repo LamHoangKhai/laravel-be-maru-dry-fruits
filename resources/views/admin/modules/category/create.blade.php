@@ -1,19 +1,16 @@
-@if ($errors->any())
-    @push('handlejs')
-        <script>
-            $("#showModal").trigger("click");
-        </script>
-    @endpush
-@endif
+@extends('admin.master')
 
-<div class="modal fade " id="addCategory" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel3">Add New Category</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+@section('content')
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                    Category / Create
+                </h4>
+
             </div>
-            <div class="modal-body">
+            <div class="card-body">
                 <form method="POST" action="{{ route('admin.category.store') }}">
                     @csrf
                     <div class="row ">
@@ -46,15 +43,20 @@
                         </div>
                     </div>
 
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
-                            Close
-                        </button>
-                        <button type="submit" class="btn btn-primary">Create</button>
+                    <div class="row ">
+                        <div class="col d-flex  justify-content-end">
+                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
+                            <a href="{{ route('admin.category.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+
                     </div>
                 </form>
 
             </div>
+
         </div>
+
+
     </div>
-</div>
+    <!-- /.card -->
+@endsection

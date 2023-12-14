@@ -1,5 +1,5 @@
 import { Mydebounce } from "../function.js";
-import { loadUser } from "./ajax.js";
+import { loadUser } from "./load-data.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -34,22 +34,6 @@ $(document).ready(() => {
     );
     // end handle search
 
-    // handle filter
-    $(".filter").change((e) => {
-        const selecter = e.target;
-        const isChecked = selecter.checked;
-        const name = selecter.name;
-        const value = selecter.value;
-        storage.page = 1;
-
-        $(selecter).attr("disabled", true);
-        setTimeout(() => {
-            $(selecter).removeAttr("disabled");
-        }, 500);
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    // end handle filter
-
     //choose show entries
     $("#showEntries").change((e) => {
         storage.take = e.target.value;
@@ -76,22 +60,7 @@ $(document).ready(() => {
     });
     // end pagination
 
-    // move fast page
-    $("#movePage").keypress(
-        Mydebounce((e) => {
-            let page = parseInt(e.target.value);
-            // if user input value > total page
-            if (page > storage.totalPage) {
-                storage.page = storage.totalPage;
-            } else {
-                storage.page = page;
-            }
-            $("#pagination").simplePaginator("changePage", storage.page);
-        }, 500)
-    );
-    // end fast page
-
-    $("#renderData").on("click", "#delete", async (e) => {
+    $("#renderData").on("click", ".delete", async (e) => {
         e.preventDefault();
         const url = e.target.href;
         const name = e.target.getAttribute("value");
@@ -106,7 +75,9 @@ $(document).ready(() => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                return (window.location.href = url);
+                if (result.isConfirmed) {
+                    return (window.location.href = url);
+                }
             }
         });
     });

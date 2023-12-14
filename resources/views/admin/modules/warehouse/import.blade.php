@@ -5,14 +5,7 @@
     <script src="{{ asset('administrator/js/import/main.js') }}" type="module"></script>
 @endpush
 
-@push('css')
-    <style>
-        .max {
-            max-width: 140px !important;
-            white-space: pre-wrap !important;
-        }
-    </style>
-@endpush
+
 
 @section('content')
     <div class="container-fluid flex-grow-1 container-p-y">
@@ -49,10 +42,10 @@
                                     <th>Supplier</th>
                                     <th>Product</th>
                                     <th>Quantity</th>
-                                    <th class="max">Current Quantity</th>
+                                    <th class="max-110">Current Quantity</th>
                                     <th>Shipment</th>
-                                    <th class="max">Transaction Date</th>
-                                    <th class="max">Expiration Date</th>
+                                    <th class="max-110">Transaction Date</th>
+                                    <th class="max-110">Expiration Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -70,11 +63,11 @@
                                     <th>#</th>
                                     <th>Supplier</th>
                                     <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th class="max">Current Quantity</th>
+                                    <th class="max-110">Quantity</th>
+                                    <th class="max-110">Current Quantity</th>
                                     <th>Shipment</th>
-                                    <th class="max">Transaction Date</th>
-                                    <th class="max">Expiration Date</th>
+                                    <th class="max-110">Transaction Date</th>
+                                    <th class="max-110">Expiration Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>

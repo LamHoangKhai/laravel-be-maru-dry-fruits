@@ -2,50 +2,21 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
-    <script src="{{ asset('administrator/js/product/general.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 @endpush
-
-
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
-    <style>
-        .container {
-            padding: 2rem 0rem;
-        }
-
-        h4 {
-            margin: 2rem 0rem 1rem;
-        }
-
-        .table-image {
-
-            td,
-            th {
-                vertical-align: middle;
-            }
-        }
-
-        .image {
-            max-width: 50px;
-            max-height: 50px;
-        }
-
-        .max {
-            max-width: 100px !important;
-            white-space: pre-wrap !important;
-        }
-    </style>
 @endpush
 
 @section('content')
     <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
     <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
+    <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkQuantity') }}">
     <input type="hidden" id="urlPathUploads" data-url="{{ route('urlPathUploads') }}">
+    <input type="hidden" id="url-import" data-url="{{ route('admin.warehouse.createImport', 'id') }}">
+    <input type="hidden" id="url-export" data-url="{{ route('admin.warehouse.createExport', 'id') }}">
 
 
     <div class="container-fluid flex-grow-1 container-p-y">
@@ -61,11 +32,10 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
                         <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
-                            placeholder="Enter name" />
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addProduct"
-                            id="showModal">
+                            placeholder="Enter product name" />
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.product.create') }}">
                             <i class='bx bx-plus-circle'></i>&nbsp; Add Product
-                        </button>
+                        </a>
 
                     </div>
                 </div>
@@ -80,11 +50,11 @@
                                     <th>Category</th>
                                     <th>Image</th>
                                     <th>Price</th>
-                                    <th class="max">Stock Quantity</th>
-                                    <th class="max">Store Quantity</th>
+                                    <th class="max-110">Stock Quantity</th>
+                                    <th class="max-110">Store Quantity</th>
                                     <th>Status</th>
-                                    <th >Created At</th>
-                                    <th >Updated At</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -102,11 +72,11 @@
                                     <th>Category</th>
                                     <th>Image</th>
                                     <th>Price</th>
-                                    <th class="max">Stock Quantity</th>
-                                    <th class="max">Store Quantity</th>
+                                    <th class="max-110">Stock Quantity</th>
+                                    <th class="max-110">Store Quantity</th>
                                     <th>Status</th>
-                                    <th >Created At</th>
-                                    <th >Updated At</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -121,8 +91,6 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-            @include('admin.modules.product.modals.add-new')
-
 
         </div>
     </div>

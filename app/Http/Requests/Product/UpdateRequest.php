@@ -27,6 +27,9 @@ class UpdateRequest extends FormRequest
             "description" => "required",
             "nutrition_detail" => "required",
             "image" => "mimes:png,jpg",
+            "category_id" => "required",
+            "weights" => "required",
+            "discount" => "numeric|min:0|max:100"
         ];
     }
 }

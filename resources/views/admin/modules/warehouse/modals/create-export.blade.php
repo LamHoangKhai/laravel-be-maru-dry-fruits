@@ -24,8 +24,7 @@
                             <select id="product_id" class="form-select" name="product_id">
                                 <option value="">Choose Product</option>
                                 @foreach ($products as $product)
-                                    <option value="{{ $product->id }}"
-                                        {{ old('product_id', 0) === $product->id ? 'selected' : '' }}>
+                                    <option value="{{ $product->id }}">
                                         {{ $product->name }}
                                     </option>
                                 @endforeach

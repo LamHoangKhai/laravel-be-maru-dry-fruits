@@ -1,6 +1,21 @@
 $(document).ready(() => {
-    $("#description").summernote();
-    $("#nutrition_detail").summernote();
+    let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
+        removeItemButton: true,
+        maxItemCount: 5,
+        renderChoiceLimit: 5,
+    });
+
+    $("#description").summernote({
+        placeholder: "Enter description",
+        tabsize: 4,
+        height: 160,
+    });
+
+    $("#nutrition_detail").summernote({
+        placeholder: "Enter nutrition detail",
+        tabsize: 4,
+        height: 160,
+    });
     $("#customFile1").change((e) => {
         displaySelectedImage(e, "selectedImage");
     });
