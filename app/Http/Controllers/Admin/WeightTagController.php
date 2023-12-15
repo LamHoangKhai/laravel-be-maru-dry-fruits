@@ -17,6 +17,10 @@ class WeightTagController extends Controller
         return view("admin.modules.other.weight-tag.index", ["weights" => $weights]);
     }
 
+    public function create()
+    {
+        return view("admin.modules.other.weight-tag.create");
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -32,6 +36,27 @@ class WeightTagController extends Controller
         $weight->save();
         return redirect()->route("admin.other.weight-tag.index")->with("success", "Create success!");
     }
+
+    public function edit(string $id)
+    {
+        $data = WeighTag::findOrFail($id);
+        return view("admin.modules.other.weight-tag.edit", ["data" => $data, "id" => $id]);
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'mass' => 'required|numeric',
+        ]);
+        $weight = WeighTag::findOrFail($id);
+
+
+        $weight->mass = $request->mass;
+        $weight->update();
+
+        return redirect()->route("admin.other.weight-tag.index")->with("success", "Create success!");
+    }
+
 
     /**
      * Remove the specified resource from storage.

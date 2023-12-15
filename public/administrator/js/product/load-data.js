@@ -1,7 +1,6 @@
 import { formatDate, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
-    $("#renderData").html("");
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -14,7 +13,7 @@ const loadProduct = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td class="text-red">No result!</td>
+                    <td valign="top" colspan="12" class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
@@ -38,8 +37,10 @@ const loadProduct = (storage) => {
                     let urlExport = $("#url-export")
                         .attr("data-url")
                         .replace(/id/g, element.id);
-                    // get path image
-                    let urlUploads = $("#urlPathUploads").attr("data-url");
+                    //get url export product
+                    let urlLog = $("#url-log")
+                        .attr("data-url")
+                        .replace(/id/g, element.id);
 
                     let level =
                         element.status === 1
@@ -53,7 +54,7 @@ const loadProduct = (storage) => {
                     <td>${element.category.name}</td>
                     <td >
 			      <img src="${
-                      urlUploads + "/" + element.image
+                      element.image
                   }" class="img" alt="Sheep" width="100" height="75" ">
 		             </td>
                     <td>${element.price}</td>
@@ -77,6 +78,7 @@ const loadProduct = (storage) => {
                             <div class="dropdown-menu" style="">
                             <a href="${urlImport}" class="dropdown-item"><i class='bx bx-import'></i> Import</a>
                             <a href="${urlExport}" class="dropdown-item"><i class='bx bx-export'></i> Export</a>
+                            <a href="${urlLog}" class="dropdown-item"><i class='bx bx-history'></i> Log I/E</a>
                             <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
                             <a  href="${urlDelete}" id="delete" value="${
                         element.id
@@ -90,7 +92,7 @@ const loadProduct = (storage) => {
                 });
             }
 
-            $("#renderData").append(xhtml);
+            setTimeout(() => $("#renderData").html(xhtml), 300);
             storage.totalData = res.data.total;
             setTotalPages(storage);
         },

@@ -16,6 +16,11 @@ class SupplierController extends Controller
         return view("admin.modules.other.supplier.index", ["suppliers" => $suppliers]);
     }
 
+    public function create()
+    {
+        return view("admin.modules.other.supplier.create");
+    }
+
     public function store(Request $request)
     {
         $request->validate([

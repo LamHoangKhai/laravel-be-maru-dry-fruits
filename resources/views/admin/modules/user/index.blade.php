@@ -5,12 +5,6 @@
     <script src="{{ asset('administrator/js/user/main.js') }}" type="module"></script>
 @endpush
 
-
-
-@push('css')
-    <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
-@endpush
-
 @section('content')
     <input type="hidden" id="url" data-url="{{ route('admin.user.getUsers') }}">
     <input type="hidden" id="url-edit" data-url="{{ route('admin.user.edit', 'id') }}">
@@ -116,6 +110,8 @@
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
+
+
                                 <tr>
                                     <!-- render form administrator/js/user/main.js -->
                                 </tr>

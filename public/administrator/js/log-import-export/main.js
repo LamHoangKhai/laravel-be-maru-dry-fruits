@@ -1,5 +1,5 @@
-import { Mydebounce } from "../function.js";
-import { loadImport } from "./load-data.js";
+import { Mydebounce, loading } from "../function.js";
+import { loadProduct } from "./load-data.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -9,8 +9,11 @@ $(document).ready(() => {
         take: 25,
         totalData: 0,
         totalPage: 1,
+        select: 1,
         url: $("#url").data("url"),
+        product_id: $("#product_id").val(),
     };
+    console.log(storage);
     //handle search
     $("#search").keypress(
         Mydebounce((e) => {
@@ -19,6 +22,7 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
+            loading(12);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
@@ -27,6 +31,7 @@ $(document).ready(() => {
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
+                loading(12);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -47,7 +52,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loadImport(storage);
+            loadProduct(storage);
         },
     });
     // end pagination

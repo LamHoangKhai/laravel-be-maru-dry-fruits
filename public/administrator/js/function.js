@@ -1,4 +1,3 @@
-
 const Mydebounce = (callback, timeout = 500) => {
     let timer;
     return (...agrs) => {
@@ -44,4 +43,16 @@ const setTotalPages = (storage) => {
         } entries`
     );
 };
-export { Mydebounce, formatDate, setTotalPages };
+
+const loading = (colspan) => {
+    let loading = `<tr>
+    <td valign="top" colspan="${colspan}" class="text-center">
+        <div class="spinner-border text-primary" role="status" id="loadingTable">
+         <span class="visually-hidden">Loading...</span>
+         </div>
+    </td>
+</tr>`;
+    $("#renderData").html(loading);
+};
+
+export { Mydebounce, formatDate, setTotalPages, loading };

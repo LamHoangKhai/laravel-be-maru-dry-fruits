@@ -11,30 +11,21 @@ use Illuminate\Http\Request;
 
 class WarehouseController extends Controller
 {
-    //view
-    public function import()
+
+
+    //view log import/export
+    public function log(string $id)
     {
-        $suppliers = Supplier::get();
-        return view("admin.modules.warehouse.import", );
+        return view("admin.modules.product.log", ["id" => $id]);
     }
 
+
+    //view create import
     public function createImport(string $id)
     {
         $product = Product::findOrFail($id);
         $suppliers = Supplier::get();
         return view("admin.modules.import.create", ["product" => $product, "suppliers" => $suppliers]);
-    }
-
-    //api get imports for ajax
-    public function getImports(Request $request)
-    {
-        $query = Warehouse::where([["transaction_type", "=", 1]]);
-        $search = $request->search ? $request->search : "";
-        $take = (int) $request->take;
-
-        //return data
-        $result = $query->with(['supplier', 'product'])->orderBy("current_quantity", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 
     //create import 
@@ -47,7 +38,6 @@ class WarehouseController extends Controller
             'quantity' => 'required|numeric',
             'expiration_date' => 'required|date|after:now',
         ]);
-
 
         $import = new Warehouse();
         $import->product_id = $request->product_id;
@@ -63,27 +53,27 @@ class WarehouseController extends Controller
         $import->updated_at = date("Y-m-d h:i:s");
         $import->save();
 
-
         return redirect()->route('admin.product.index')->with("success", "Create import success!");
     }
 
-    //edit and update import
-    public function edit(string $id)
+    //view edit import
+    public function editImport(string $id)
     {
         $import = Warehouse::findOrfail($id);
         $suppliers = Supplier::get();
         $products = Product::get();
 
         $checkExport = Warehouse::where([["shipment", "=", $import->shipment], ["transaction_type", "=", 2]])->first();
-
+        // allowed edit if Superadmin 
         if (is_null($checkExport) && Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
-            return view("admin.modules.warehouse.edit-import", ["data" => $import, "id" => $id, "suppliers" => $suppliers, "products" => $products]);
+            return view("admin.modules.product.edit-import", ["data" => $import, "id" => $id, "suppliers" => $suppliers, "products" => $products]);
         }
 
         $mess = $checkExport ? "Cannot edit import has export ticket!" : "Not allow edit!";
-        return redirect()->route("admin.warehouse.import")->with("error", $mess);
+        return redirect()->route("admin.product.index")->with("error", $mess);
     }
-    public function update(Request $request, string $id)
+    // update import
+    public function updateImport(Request $request, string $id)
     {
         $request->validate([
             'product_id' => 'required',
@@ -101,20 +91,10 @@ class WarehouseController extends Controller
         $import->updated_at = date("Y-m-d h:i:s");
         $import->update();
 
-        return redirect()->route('admin.warehouse.import')->with("success", "Update success!");
+        return redirect()->route('admin.product.index')->with("success", "Update success!");
     }
 
-    //  end import
-
-
-    //  export
-
-    public function export()
-    {
-        $products = Product::get();
-        return view("admin.modules.warehouse.export", ['products' => $products]);
-    }
-
+    // view create export
     public function createExport(string $id)
     {
         $product = Product::findOrFail($id);
@@ -124,42 +104,19 @@ class WarehouseController extends Controller
         return view("admin.modules.export.create", ["product" => $product, "imports" => $imports]);
     }
 
-    //api get exports for ajax
-    public function getExports(Request $request)
-    {
-        $query = Warehouse::where("transaction_type", "=", 2);
-        $search = $request->search ? $request->search : "";
-        $take = (int) $request->take;
-
-        //return data
-        $result = $query->with(['supplier', 'product'])->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-    }
-
     //create export
     public function exportStore(Request $request)
     {
-        $request->validate([
-            'product_id' => 'required',
-            'shipment' => 'required',
-            'quantity' => 'required|numeric',
-        ]);
-
-
         $import = Warehouse::where("shipment", $request->shipment)->first();
 
         $request->validate([
             'product_id' => 'required',
             'shipment' => 'required',
-            'quantity' => 'required|numeric|gt:0|lte:' . $import->current_quantity,
+            'quantity' => 'required|numeric|gt:0|lte:' . (isset($import) ? $import->current_quantity : 0),
         ]);
-
-
-
-        if ($import->current_quantity < $request->quantity) {
-
+        if (!$import) {
+            abort(404);
         }
-
 
         $export = new Warehouse();
         $export->supplier_id = $import->supplier_id;
@@ -172,8 +129,6 @@ class WarehouseController extends Controller
         $export->created_at = date("Y-m-d h:i:s");
         $export->save();
 
-
-
         // update current quantity import
         $findLastestExport = Warehouse::where([["shipment", "=", $request->shipment]
             , ["transaction_type", "=", 2]
@@ -183,8 +138,21 @@ class WarehouseController extends Controller
         $import->update();
 
 
-        return redirect()->route('admin.warehouse.export')->with("success", "Create export success!");
+        return redirect()->route('admin.product.index')->with("success", "Create export success!");
     }
 
-    //  end export
+    //api log import/export 
+    public function getLog(Request $request)
+    {
+        $query = Warehouse::where([["transaction_type", "=", $request->select], ["product_id", "=", $request->product_id]]);
+
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        //return data
+        $result = $query->with(['supplier', 'product'])->orderBy("current_quantity", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+
+
 }

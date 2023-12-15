@@ -8,17 +8,20 @@ use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Product_Weight;
+use App\Models\Supplier;
+use App\Models\Warehouse;
 use App\Models\WeighTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    //view product
     public function index()
     {
-
         return view('admin.modules.product.index');
     }
-
+    //view create product
     public function create()
     {
         $categories = Category::get();
@@ -26,11 +29,9 @@ class ProductController extends Controller
         return view('admin.modules.product.create', ["categories" => $categories, "weights" => $weights]);
     }
 
-
+    //create product
     public function store(StoreRequest $request)
     {
-
-
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -46,19 +47,16 @@ class ProductController extends Controller
         $request->image->move(public_path("uploads"), $filename);
         $product->image = $filename;
         $product->save();
-
-
+        //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
             $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
         }
         Product_Weight::insert($insert);
 
-
-
         return redirect()->route('admin.product.index')->with("success", "Create product success!");
     }
-
+    //view edit product
     public function edit(string $id)
     {
         $data = Product::with("weightTags")->findOrFail($id);
@@ -67,6 +65,7 @@ class ProductController extends Controller
 
         return view("admin.modules.product.edit", ["data" => $data, "id" => $id, "categories" => $categories, "weights" => $weights]);
     }
+    // update product
     public function update(UpdateRequest $request, string $id)
     {
         $product = Product::findOrFail($id);
@@ -78,6 +77,7 @@ class ProductController extends Controller
         $product->category_id = $request->category_id;
         $product->updated_at = date("Y-m-d h:i:s");
 
+        // save image
         if (isset($request->image)) {
             $file = public_path("uploads/") . $product->image;
 
@@ -87,10 +87,10 @@ class ProductController extends Controller
 
             $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
             $request->image->move(public_path("uploads"), $filename);
-            $product->image = $filename;
+            $product->image = route("uploads") . "/" . $filename;
         }
 
-
+        //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
             $checkExist = Product_Weight::where([["product_id", $product->id], ["weight_tag_id", $weight]])->first();
@@ -100,11 +100,10 @@ class ProductController extends Controller
         }
         Product_Weight::insert($insert);
 
-
         $product->save();
         return redirect()->route('admin.product.index')->with("success", "Edit product success!");
     }
-
+    //delete product
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
@@ -112,12 +111,12 @@ class ProductController extends Controller
         return redirect()->route('admin.product.index')->with("success", "Delete product success!");
     }
 
-    /**
-     * Get , search , filter form Ajax
-     */
+
+    // API get , search , filter 
     public function getProducts(Request $request)
     {
         $query = new Product();
+      
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
@@ -147,6 +146,10 @@ class ProductController extends Controller
         $product_weight->delete();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
+
+
+
+
 
 
 

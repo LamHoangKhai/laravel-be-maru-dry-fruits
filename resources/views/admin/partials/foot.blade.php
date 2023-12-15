@@ -19,6 +19,18 @@
 <script src="{{ asset('administrator/assets/js/main.js') }}"></script>
 
 <script>
+    const loading = () => {
+        const loadingEl = $("#loading");
+
+        // Show page loading
+
+        // Hide after 3 seconds
+        setTimeout(function() {
+            loadingEl.remove();
+        }, 1000);
+    };
+    loading();
+
     $.ajaxSetup({
         headers: {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

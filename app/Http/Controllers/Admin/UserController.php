@@ -146,7 +146,7 @@ class UserController extends Controller
     }
 
     /**
-     * Get , search , filter form Ajax
+     * API get , search , filter 
      */
     public function getUsers(Request $request)
     {

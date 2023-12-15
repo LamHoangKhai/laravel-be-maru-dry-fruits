@@ -5,19 +5,17 @@
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
 @endpush
 
-@push('css')
-    <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
-@endpush
+
 
 @section('content')
     <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
     <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
     <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkQuantity') }}">
-    <input type="hidden" id="urlPathUploads" data-url="{{ route('urlPathUploads') }}">
-    <input type="hidden" id="url-import" data-url="{{ route('admin.warehouse.createImport', 'id') }}">
-    <input type="hidden" id="url-export" data-url="{{ route('admin.warehouse.createExport', 'id') }}">
 
+    <input type="hidden" id="url-import" data-url="{{ route('admin.product.warehouse.createImport', 'id') }}">
+    <input type="hidden" id="url-export" data-url="{{ route('admin.product.warehouse.createExport', 'id') }}">
+    <input type="hidden" id="url-log" data-url="{{ route('admin.product.warehouse.log', 'id') }}">
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">

@@ -1,6 +1,4 @@
 const loadUser = (storage) => {
-    $("#renderData").html("");
-
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -12,7 +10,7 @@ const loadUser = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td class="text-red">No result!</td>
+                    <td valign="top" colspan="7" class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
@@ -74,7 +72,10 @@ const loadUser = (storage) => {
                 });
             }
 
-            $("#renderData").append(xhtml);
+            setTimeout(() => {
+                $("#loadingTable").remove();
+                $("#renderData").html(xhtml);
+            }, 300);
             storage.totalData = res.data.total;
             setTotalPages(storage);
         },

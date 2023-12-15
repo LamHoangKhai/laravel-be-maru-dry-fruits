@@ -5,11 +5,11 @@
         $("#delete").click(async (e) => {
             e.preventDefault();
             const url = e.target.href;
-            const name = e.target.getAttribute("value");
+
             // show modal
             await Swal.fire({
                 title: "Are you sure?",
-                html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+                html: `Do you want to delete it or not?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -17,7 +17,7 @@
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                     if (result.isConfirmed) {
+                    if (result.isConfirmed) {
                         return (window.location.href = url);
                     }
                 }
@@ -40,10 +40,9 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addWeightTag"
-                            id="showModal">
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.other.weight-tag.create') }}">
                             <i class='bx bx-plus-circle'></i>&nbsp; Weight Tag
-                        </button>
+                        </a>
 
                     </div>
                 </div>
@@ -54,8 +53,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Mass</th>
-
+                                    <th class="text-center">Mass</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -63,12 +61,25 @@
                             <tbody class="table-border-bottom-0" id="renderData">
                                 @foreach ($weights as $weight)
                                     <tr>
-                                        <td style="width: 20px">{{ $loop->iteration }}</td>
-                                        <td>{{ $weight->mass }}</td>
-                                        <td style="width: 20px">
-                                            <a style="margin-right:-8px;margin-left:8px;"
-                                                href="{{ route('admin.other.weight-tag.destroy', ['id' => $weight->id]) }}"
-                                                id="delete" value="{{ $weight->name }}" class="text-danger">Delete</a>
+                                        <td style="width: 30px">{{ $loop->iteration }}</td>
+                                        <td class="text-center">
+                                            {{ $weight->mass >= 1000 ? number_format($weight->mass / 1000, 1, ',', '') . 'kg' : $weight->mass . 'gram' }}
+                                        </td>
+                                        <td style="width: 30px">
+                                            <div class="dropdown">
+                                                <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </button>
+                                                <div class="dropdown-menu" style="">
+                                                    <a href="{{ route('admin.other.weight-tag.edit', ['id' => $weight->id]) }}"
+                                                        class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                                    <a class="text-danger delete dropdown-item"
+                                                        href="{{ route('admin.other.weight-tag.destroy', ['id' => $weight->id]) }}"><i
+                                                            class="bx bx-trash me-1"></i>
+                                                        Delete</a>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -78,7 +89,7 @@
                             <tfoot>
                                 <tr>
                                     <th>#</th>
-                                    <th>Mass</th>
+                                    <th class="text-center">Mass</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>
@@ -87,7 +98,7 @@
                 </div>
 
             </div>
-            @include('admin.modules.other.modals.create-weight-tag')
+
 
 
         </div>

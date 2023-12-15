@@ -12,7 +12,7 @@
             </div>
             <div class="card-body">
 
-                <form method="POST" action="{{ route('admin.warehouse.importStore') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.product.warehouse.importStore') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="row">

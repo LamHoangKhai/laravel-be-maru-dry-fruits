@@ -166,8 +166,7 @@
                         <div class="col ">
                             <label for="" class="form-label">Current Image</label>
                             <div class="mb-4 d-flex ">
-                                <img src="{{ asset('uploads/' . $data->image) }}" alt=""
-                                    style="width: 250px; height: 250px" />
+                                <img src="{{ $data->image }}" alt="" style="width: 250px; height: 250px" />
                             </div>
                         </div>
                     </div>

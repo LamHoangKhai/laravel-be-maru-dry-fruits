@@ -13,11 +13,11 @@
         $("#delete").click(async (e) => {
             e.preventDefault();
             const url = e.target.href;
-            const name = e.target.getAttribute("value");
+
             // show modal
             await Swal.fire({
                 title: "Are you sure?",
-                html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+                html: `Do you want to delete it or not?`,
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -25,7 +25,7 @@
                 confirmButtonText: "Yes, delete it!",
             }).then((result) => {
                 if (result.isConfirmed) {
-                     if (result.isConfirmed) {
+                    if (result.isConfirmed) {
                         return (window.location.href = url);
                     }
                 }
@@ -48,10 +48,9 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100">
 
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSupplier"
-                            id="showModal">
+                        <a type="button" class="btn btn-primary" href="{{ route('admin.other.supplier.create') }}">
                             <i class='bx bx-plus-circle'></i>&nbsp; Supplier
-                        </button>
+                        </a>
 
                     </div>
                 </div>
@@ -106,7 +105,7 @@
                 </div>
 
             </div>
-            @include('admin.modules.other.modals.create-supplier')
+
 
 
         </div>

@@ -1,4 +1,4 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, loading } from "../function.js";
 import { loadProduct } from "./load-data.js";
 //  call api Search
 
@@ -19,6 +19,7 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
+            loading(12);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
@@ -27,6 +28,7 @@ $(document).ready(() => {
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
+                loading(12);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;

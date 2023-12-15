@@ -1,4 +1,4 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, loading } from "../function.js";
 import { loadUser } from "./load-data.js";
 //  call api Search
 
@@ -19,6 +19,7 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
+            loading(7);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
@@ -27,6 +28,7 @@ $(document).ready(() => {
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
+                loading(7);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -67,7 +69,7 @@ $(document).ready(() => {
         // show modal
         await Swal.fire({
             title: "Are you sure?",
-            html: `Bạn có muốn xóa <strong>${name}</strong> hay không`,
+            html: `Do you want to delete user <strong>${name}</strong>?`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

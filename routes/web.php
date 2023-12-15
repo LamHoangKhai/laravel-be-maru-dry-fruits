@@ -25,7 +25,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route("admin.user.index");
 });
-Route::get('uploads/')->name("urlPathUploads");
+Route::get('uploads/')->name("uploads");
 
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
@@ -41,7 +41,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
 
-        //find and get data
+        //api
         Route::post('get-users', 'getUsers')->name('getUsers');
 
         //create
@@ -57,11 +57,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
 
     Route::prefix('product')->name('product.')->controller(ProductController::class)->group(function () {
-        //view
+        //view 
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
 
-        //find and get data
+        //api
         Route::post('get-products', 'getProducts')->name('getProducts');
 
         //create
@@ -71,11 +71,34 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('edit/{id}', 'edit')->name('edit');
         Route::post('update/{id}', 'update')->name('update');
 
+
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
+
+
+        Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
+            //view
+            Route::get('log/{id}', 'log')->name('log');
+
+            Route::get('create-import/{id}', 'createImport')->name('createImport');
+            Route::get('create-export/{id}', 'createExport')->name('createExport');
+
+            //create 
+            Route::post('store-import', 'importStore')->name('importStore');
+            Route::post('store-export', 'exportStore')->name('exportStore');
+
+            // edit and update import
+            Route::get('edit-import/{id}', 'editImport')->name('editImport');
+            Route::post('update-import/{id}', 'updateImport')->name('updateImport');
+
+            //api 
+            Route::post('get-log', 'getLog')->name('getLog');
+
+        });
+
     });
 
     Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
@@ -92,34 +115,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
-        //check related category before delete
+        //api
         Route::post('check-related', 'checkRelatedCategory')->name('checkRelatedCategory');
     });
 
-    Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
-        //view
-        Route::get('import', 'import')->name('import');
-        Route::get('export', 'export')->name('export');
-        Route::get('create-import/{id}', 'createImport')->name('createImport');
-        Route::get('create-export/{id}', 'createExport')->name('createExport');
-
-        //find and get data
-        Route::post('get-imports', 'getImports')->name('getImports');
-        Route::post('find-import', 'findImport')->name('findImport');
-        Route::post('get-export', 'getExports')->name('getExports');
-
-        //create 
-        Route::post('store-import', 'importStore')->name('importStore');
-        Route::post('store-export', 'exportStore')->name('exportStore');
-
-
-        // edit and update import
-        Route::get('edit/{id}', 'edit')->name('edit');
-        Route::post('update/{id}', 'update')->name('update');
-
-        //destroy
-        Route::get('destroy/{id}', 'destroy')->name('destroy');
-    });
 
 
 
@@ -128,6 +127,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::prefix('supplier')->name('supplier.')->controller(SupplierController::class)->group(function () {
             //view
             Route::get('index', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+
             //create 
             Route::post('store', 'store')->name('store');
 
@@ -142,8 +143,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::prefix('weight-tag')->name('weight-tag.')->controller(WeightTagController::class)->group(function () {
             //view
             Route::get('index', 'index')->name('index');
+            Route::get('create', 'create')->name('create');
+
             //create 
             Route::post('store', 'store')->name('store');
+
+            //edit and update
+            Route::get('edit/{id}', 'edit')->name('edit');
+            Route::post('update/{id}', 'update')->name('update');
+
             //destroy
             Route::get('destroy/{id}', 'destroy')->name('destroy');
         });
