@@ -85,6 +85,11 @@
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
+                                @if (!count($categories))
+                                    <tr>
+                                        <td valign="top" colspan="7" class="text-center">No matching records found</td>
+                                    </tr>
+                                @endif
 
                                 @foreach ($categories as $category)
                                     <tr>
@@ -125,7 +130,7 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        
+
                                     </tr>
                                 @endforeach
 

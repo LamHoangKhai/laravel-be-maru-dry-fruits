@@ -38,15 +38,6 @@
                                 <span class="text-danger">* {{ $errors->get('price')[0] }}</span>
                             @endif
                         </div>
-
-                        <div class="col mb-2">
-                            <label for="discount" class="form-label">Discount</label>
-                            <input type="text" id="discount" class="form-control" placeholder="Enter discount %"
-                                name="discount" value="{{ old('discount', 0) }}" />
-                            @if ($errors->has('discount'))
-                                <span class="text-danger">* {{ $errors->get('discount')[0] }}</span>
-                            @endif
-                        </div>
                     </div>
 
                     <div class="row">
@@ -88,7 +79,7 @@
                         </div>
                     </div>
                     {{ old('weights*') }}
-                    <div class="row g-2">
+                    <div class="row g-3">
                         <div class="col mb-2">
                             <label for="status" class="form-label ">Stataus</label>
                             <select id="status" class="form-select" name="status">
@@ -105,7 +96,13 @@
                                 @endphp
                             </select>
                         </div>
-
+                        <div class="col mb-2">
+                            <label for="feature" class="form-label">Feature</label>
+                            <select id="feature" class="form-select" name="feature">
+                                <option value="1" {{ old('feature') == 1 ? 'selected' : '' }}>Featured</option>
+                                <option value="2" {{ old('feature') == 2 ? 'selected' : '' }}>Unfeatured</option>
+                            </select>
+                        </div>
 
                     </div>
 

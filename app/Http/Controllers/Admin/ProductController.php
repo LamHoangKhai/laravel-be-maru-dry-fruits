@@ -39,6 +39,7 @@ class ProductController extends Controller
         $product->nutrition_detail = $request->nutrition_detail;
         $product->status = $request->status;
         $product->category_id = $request->category_id;
+        $product->feature = $request->feature;
         $product->created_at = date("Y-m-d h:i:s");
         $product->updated_at = date("Y-m-d h:i:s");
 
@@ -74,6 +75,7 @@ class ProductController extends Controller
         $product->description = $request->description;
         $product->nutrition_detail = $request->nutrition_detail;
         $product->status = $request->status;
+        $product->feature = $request->feature;
         $product->category_id = $request->category_id;
         $product->updated_at = date("Y-m-d h:i:s");
 
@@ -116,7 +118,7 @@ class ProductController extends Controller
     public function getProducts(Request $request)
     {
         $query = new Product();
-      
+
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 

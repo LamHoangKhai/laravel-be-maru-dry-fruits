@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,8 +15,8 @@ return new class extends Migration
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('status_order_id')->default(1)->comment('1: Pending - 2: Prepare - 3: Delivery - 4: Finish - 5: Cancel');
-            $table->integer('total');
-            $table->integer('grand_total');
+            $table->unsignedFloat("total", 8, 2);
+            $table->unsignedFloat("grand_total", 8, 2);
             $table->tinyInteger('transaction')->comment('1: Cash/ShipCOD - 2: VNPAY');
             $table->tinyInteger('transaction_status')->comment('1: Completed - 2: Pending payment');
             $table->string('email');

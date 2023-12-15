@@ -39,7 +39,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
-                    Transaction / Supplier
+                    Other / Supplier
                 </h4>
 
             </div>
@@ -70,6 +70,12 @@
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
+                                @if (!count($suppliers))
+                                    <tr>
+                                        <td valign="top" colspan="7" class="text-center">No matching records found</td>
+                                    </tr>
+                                @endif
+
                                 @foreach ($suppliers as $supplier)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>

@@ -59,6 +59,12 @@
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
+                                @if (!count($weights))
+                                    <tr>
+                                        <td valign="top" colspan="7" class="text-center">No matching records found</td>
+                                    </tr>
+                                @endif
+
                                 @foreach ($weights as $weight)
                                     <tr>
                                         <td style="width: 30px">{{ $loop->iteration }}</td>

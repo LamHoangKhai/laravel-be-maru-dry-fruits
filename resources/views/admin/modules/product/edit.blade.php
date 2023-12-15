@@ -127,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="row g-2">
+                    <div class="row g-3">
                         <div class="col mb-2">
                             <label for="status" class="form-label ">Stataus</label>
                             <select id="status" class="form-select" name="status">
@@ -138,11 +138,20 @@
                             </select>
                         </div>
                         <div class="col mb-2">
-                            <label for="category_id" class="form-label">Parent</label>
+                            <label for="category_id" class="form-label">Category</label>
                             <select id="category_id" class="form-select" name="category_id">
                                 @php
                                     RootCategory($categories, old('category_id', $data->category_id));
                                 @endphp
+                            </select>
+                        </div>
+                        <div class="col mb-2">
+                            <label for="feature" class="form-label">Feature</label>
+                            <select id="feature" class="form-select" name="feature">
+                                <option value="1" {{ old('feature', $data->feature) == 1 ? 'selected' : '' }}>Featured
+                                </option>
+                                <option value="2" {{ old('feature', $data->feature) == 2 ? 'selected' : '' }}>
+                                    Unfeatured</option>
                             </select>
                         </div>
                     </div>
