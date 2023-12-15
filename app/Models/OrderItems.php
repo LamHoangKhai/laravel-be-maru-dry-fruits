@@ -7,16 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class OrderItems extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = 'categories';
-    protected $guarded = [];
+    public $table = 'order_items';
+    public $guarded = [];
 
     public function product()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Product::class, 'product_id');
     }
-
 }

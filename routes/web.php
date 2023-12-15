@@ -36,7 +36,7 @@ Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {
 
-    Route::prefix('user')->name('user.')->controller(UserController::class)->group(function () {
+    Route::prefix('user')->middleware('checkLogin')->name('user.')->controller(UserController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
