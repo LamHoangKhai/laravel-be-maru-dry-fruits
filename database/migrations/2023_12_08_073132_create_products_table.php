@@ -21,6 +21,8 @@ return new class extends Migration {
             $table->mediumInteger("store_quantity")->default(0);
             $table->unsignedFloat("price", 8, 2);
             $table->tinyInteger("status")->default(1)->comment("1:Show - 2:Hidden");
+            $table->float("star")->default(0);
+            $table->tinyInteger("feature")->default(2)->comment('1: Featured - 2: Unfeatured');
             $table->foreign('category_id')->references('id')->on('categories');
             $table->softDeletes();
             $table->timestamps();
