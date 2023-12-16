@@ -167,4 +167,50 @@ Comment, Rating: Trả lên FE {
     }
 }
 
+Top 5 product co sao cao nhat  theo category {
+    URL: http://localhost:8000/api/product/highest_rating_products/{category_id}
+    Method: get
+    Content type: application/json
+
+    return {
+       "id"
+            "category_id",
+            "name":
+            "image":
+            "description":
+            "nutrition_detail": 
+            "stock_quantity": 
+            "store_quantity": 
+            "price":
+            "star": 
+            "status": 
+            "feature": 
+            "deleted_at": 
+            "created_at": 
+            "updated_at": 
+    }
+}
+
+Top 5 product noi bat  theo category {
+    URL: http://localhost:8000/api/product/featured_products/{category_id}
+    Content type: application/json
+
+    return {
+       "id"
+            "category_id",
+            "name":
+            "image":
+            "description":
+            "nutrition_detail": 
+            "stock_quantity": 
+            "store_quantity": 
+            "price":
+            "star": 
+            "status": 
+            "feature": 
+            "deleted_at": 
+            "created_at": 
+            "updated_at": 
+    }
+}
 
