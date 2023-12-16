@@ -45,8 +45,9 @@ class ProductController extends Controller
 
         //save  image
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
+        // dd($request->image);
         $request->image->move(public_path("uploads"), $filename);
-        $product->image = $filename;
+        $product->image = route("uploads") . "/" . $filename;
         $product->save();
         //insert in table Product_Weight
         $insert = [];

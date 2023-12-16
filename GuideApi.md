@@ -55,7 +55,7 @@ Category {
 }
 
 Product {
-    URL1: http://localhost:8000/api/product/allProduct,
+    URL1: http://localhost:8000/api/product/allproduct,
     URL2: http//localhost:8000/api/product/product/{category_id}
     Method: GET
     Content type: application/json
@@ -159,7 +159,7 @@ Comment, Rating: Trả lên FE {
     Content type: application/json
 
     return {
-         'full_name'
+        'full_name'
         'content'
         'star'
         'date'
