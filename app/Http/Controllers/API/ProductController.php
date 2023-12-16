@@ -30,13 +30,13 @@ class ProductController extends Controller
         ->get();
         return response()->json([
             'top5Product' => $highestRatingProducts
-        ]);
+        ],200);
     }
 
     public function featured_products($category_id) {
         $featured_products = Product::where([['feature', 1], ['category_id', $category_id]])->limit(5)->get();
         return response()->json([
             'featuredProduct' => $featured_products
-        ]);
+        ],200);
     }
 }
