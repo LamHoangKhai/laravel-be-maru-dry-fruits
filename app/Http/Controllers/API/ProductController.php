@@ -23,9 +23,9 @@ class ProductController extends Controller
         ],200);
     }
 
-    public function highest_rating_products ($category_id) {
+    public function highest_rating_products () {
         $highestRatingProducts = Product::orderBy('star', 'desc')
-        ->where('category_id', $category_id)
+        ->whereIn('star', [4,5])
         ->limit(5)
         ->get();
         return response()->json([
@@ -34,7 +34,7 @@ class ProductController extends Controller
     }
 
     public function featured_products() {
-        $featured_products = Product::where(['feature', 1])->limit(5)->get();
+        $featured_products = Product::where('feature', 1)->limit(5)->get();
         return response()->json([
             'featuredProduct' => $featured_products
         ],200);
