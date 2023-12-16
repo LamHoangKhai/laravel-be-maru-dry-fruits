@@ -49,7 +49,7 @@ Route::group([
     Route::get('allproduct', [ProductController::class, 'allProduct'])->name('all_product');
     Route::get('product/{category_id}', [ProductController::class, 'product'])->name('product');
     Route::get('highest_rating_products/{category_id}', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
-    Route::get('featured_products/{category_id}', [ProductController::class, 'featured_products'])->name('featured_products');
+    Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
 });
 
 Route::group([
