@@ -78,7 +78,12 @@ class AuthController extends Controller
     public function profile() {
         if(auth('api')->user()) {
             return response()->json([
-                auth('api')->user()
+                'email' => auth('api')->user()->email,
+                'full_name' => auth('api')->user()->full_name,
+                'phone' => auth('api')->user()->phone,
+                'address' => auth('api')->user()->address,
+                'level' => auth('api')->user()->level,
+                'status' => auth('api')->user()->status,
             ]);
         }
         else {

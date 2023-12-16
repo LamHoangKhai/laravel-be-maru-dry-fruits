@@ -22,4 +22,21 @@ class ProductController extends Controller
             'product' => $products
         ],200);
     }
+
+    public function highest_rating_products ($category_id) {
+        $highestRatingProducts = Product::orderBy('star', 'desc')
+        ->where('category_id', $category_id)
+        ->limit(5)
+        ->get();
+        return response()->json([
+            'top5Product' => $highestRatingProducts
+        ]);
+    }
+
+    public function featured_products($category_id) {
+        $featured_products = Product::where([['feature', 1], ['category_id', $category_id]])->limit(5)->get();
+        return response()->json([
+            'featuredProduct' => $featured_products
+        ]);
+    }
 }
