@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class BannerAndSlide extends Model
 {
     use HasFactory;
-    use SoftDeletes;
     public $table = 'banners_and_slides';
     public $guarded = [];
 }
