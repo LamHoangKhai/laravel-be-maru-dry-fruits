@@ -191,7 +191,7 @@ Top 5 product co sao cao nhat  theo category {
     }
 }
 
-Top 5 product noi bat  theo category {
+Top 5 san pham chat luong nhat  {
     URL: http://localhost:8000/api/product/featured_products/{category_id}
     Content type: application/json
 
