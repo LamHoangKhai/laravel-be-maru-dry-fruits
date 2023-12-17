@@ -13,7 +13,8 @@ class Order extends Model
     public $table = 'orders';
     public $guarded = [];
 
-    public function order() : HasMany {
+    public function order(): HasMany
+    {
         return $this->hasMany(Order::class, 'order_id');
     }
 }

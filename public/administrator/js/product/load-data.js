@@ -9,7 +9,7 @@ const loadProduct = (storage) => {
         success: (res) => {
             let xhtml = "";
             let data = res?.data?.data || [];
-
+            console.log(data);
             if (data.length === 0) {
                 xhtml += `
                     <tr>

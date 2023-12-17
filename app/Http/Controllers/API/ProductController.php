@@ -23,6 +23,7 @@ class ProductController extends Controller
         ],200);
     }
 
+<<<<<<< HEAD
     public function highest_rating_products () {
         $highestRatingProducts = Product::orderBy('star', 'desc')
         ->whereIn('star', [4,5])
@@ -38,5 +39,22 @@ class ProductController extends Controller
         return response()->json([
             'featuredProduct' => $featured_products
         ],200);
+=======
+    public function highest_rating_products() {
+        $highestRatingProducts = Product::orderBy('star', 'desc')
+        ->whereIn('star', [4,5])
+        ->limit(10)
+        ->get();
+        return response()->json([
+            'top10Product' => $highestRatingProducts
+        ]);
+    }
+
+    public function featured_products() {
+        $featured_products = Product::where('feature', 1 )->limit(5)->get();
+        return response()->json([
+            'featuredProduct' => $featured_products
+        ]);
+>>>>>>> d503836b442e664755c5a101663445f77b4cf4a9
     }
 }

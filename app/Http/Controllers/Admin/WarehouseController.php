@@ -144,13 +144,24 @@ class WarehouseController extends Controller
     //api log import/export 
     public function getLog(Request $request)
     {
-        $query = Warehouse::where([["transaction_type", "=", $request->select], ["product_id", "=", $request->product_id]]);
 
+        $request->validate([
+            'product_id' => 'required',
+            'select' => 'required|numeric',
+
+        ]);
+
+        $query = Warehouse::where([["transaction_type", "=", $request->select], ["product_id", "=", $request->product_id]]);
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
+        $query = $query->with(['supplier', 'product']);
+        $query = $query->where("shipment", "like", "%" . $search . "%");
+
+        $query = $request->select == 1 ? $query->orderBy("current_quantity", "desc") : $query->orderBy("created_at", "desc");
+
         //return data
-        $result = $query->with(['supplier', 'product'])->orderBy("current_quantity", "desc")->paginate($take);
+        $result = $query->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 

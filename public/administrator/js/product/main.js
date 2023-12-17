@@ -10,6 +10,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         url: $("#url").data("url"),
+        tableCols: 12,
     };
     //handle search
     $("#search").keypress(
@@ -19,16 +20,24 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
-            loading(12);
+            loading(storage.tableCols);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
+
+    $("#search").bind("paste", (e) => {
+        // access the clipboard using the api
+        storage.search = e.originalEvent.clipboardData.getData("text");
+        storage.page = 1;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
 
     $("#search").keyup(
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
-                loading(12);
+                loading(storage.tableCols);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -69,7 +78,7 @@ $(document).ready(() => {
             dataType: "json",
             success: (res) => {
                 Swal.fire({
-                    title: "Are you sure?",
+                    title: "<strong>Please read the warning carefully!!!</strong>",
                     html: `When deleting this product, related items such as <strong> orders, imports, and exports</strong> cannot be found, and this product still has a total weight of <strong>${res.totalQuantity}kg</strong>.`,
                     icon: "warning",
                     showCancelButton: true,

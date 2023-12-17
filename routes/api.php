@@ -50,6 +50,10 @@ Route::group([
     Route::get('product/{category_id}', [ProductController::class, 'product'])->name('product');
     Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
     Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
+<<<<<<< HEAD
+=======
+
+>>>>>>> d503836b442e664755c5a101663445f77b4cf4a9
 });
 
 Route::group([

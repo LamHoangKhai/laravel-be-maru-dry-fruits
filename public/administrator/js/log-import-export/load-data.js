@@ -1,7 +1,8 @@
 import { formatDate, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
-    console.log("run");
+    let text = storage.select == 1 ? "Import Quantity" : "Export Quantity";
+    $("#quantity").html(text);
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -21,7 +22,6 @@ const loadProduct = (storage) => {
                 data.forEach((element, index) => {
                     let create_at = formatDate(new Date(element.created_at));
                     let update_at = formatDate(new Date(element.updated_at));
-                    console.log(update_at);
                     // get url edit
                     let urlEdit = $("#url-edit-import")
                         .attr("data-url")
@@ -48,15 +48,20 @@ const loadProduct = (storage) => {
                         <td  class="max-110">${create_at}</td>
                         <td  class="max-110">${update_at}</td>
                         <td class="g-2" >
-                            <div class="dropdown">
+                            <div class="dropdown ">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
                                 data-bs-toggle="dropdown" aria-expanded="false">
                                      <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
-
-                                <div class="dropdown-menu" style="">
-                                <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                </div>
+                                ${
+                                    storage.select == 1
+                                        ? `<div class="dropdown-menu" style="">
+                                             <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a> 
+                                            </div>`
+                                        : ""
+                                }
+                              
+                               
                              </div>
                         </td>
 

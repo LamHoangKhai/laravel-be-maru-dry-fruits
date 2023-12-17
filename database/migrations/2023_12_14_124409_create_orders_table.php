@@ -14,15 +14,21 @@ return new class extends Migration {
             $table->id();
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->tinyInteger('status_order_id')->default(1)->comment('1: Pending - 2: Prepare - 3: Delivery - 4: Finish - 5: Cancel');
+            $table->tinyInteger('status')->default(1)->comment('1: Pending - 2: Prepare - 3: Delivery - 4: Finish - 5: Cancel');
+            $table->unsignedFloat("subtotal", 8, 2);
+            $table->tinyInteger("discount")->default(0);
             $table->unsignedFloat("total", 8, 2);
-            $table->unsignedFloat("grand_total", 8, 2);
             $table->tinyInteger('transaction')->comment('1: Cash/ShipCOD - 2: VNPAY');
             $table->tinyInteger('transaction_status')->comment('1: Completed - 2: Pending payment');
             $table->string('email');
             $table->string('full_name');
             $table->string('address');
+<<<<<<< HEAD
             $table->string('phone');
+=======
+            $table->string('phone', 15);
+            $table->string('note')->nullable();
+>>>>>>> d503836b442e664755c5a101663445f77b4cf4a9
             $table->softDeletes();
             $table->timestamps();
         });

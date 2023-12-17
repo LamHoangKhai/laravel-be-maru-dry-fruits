@@ -4,14 +4,14 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        DB::unprepared('
+
+return new class extends Migration {
+	/**
+	 * Run the migrations.
+	 */
+	public function up(): void
+	{
+		DB::unprepared('
         CREATE TRIGGER export
 	BEFORE INSERT ON warehouse
 	FOR EACH ROW
@@ -37,7 +37,7 @@ return new class extends Migration
     			SET MESSAGE_TEXT = "Error: Expiration date does not exist.";
     		END IF;
     		
-    		IF NOT EXISTS (SELECT 1 FROM warehouse WHERE(transaction_type = 1  AND shipment = NEW.shipment AND product_id = NEW.product_id AND transaction_date < NEW.transaction_date)) THEN
+    		IF NOT EXISTS(SELECT 1 FROM warehouse WHERE(transaction_type = 1 AND transaction_date = NEW.transaction_date AND product_id = NEW.product_id)) THEN
 	   		SIGNAL SQLSTATE "45000"
     			SET MESSAGE_TEXT = "Error: Transaction date does not exist.";
     		END IF;
@@ -60,13 +60,13 @@ return new class extends Migration
 		END IF;
 	END;
         ');
-    }
+	}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-    
-    }
+	/**
+	 * Reverse the migrations.
+	 */
+	public function down(): void
+	{
+
+	}
 };

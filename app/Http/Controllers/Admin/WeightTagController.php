@@ -14,12 +14,12 @@ class WeightTagController extends Controller
     public function index()
     {
         $weights = WeighTag::get();
-        return view("admin.modules.other.weight-tag.index", ["weights" => $weights]);
+        return view("admin.modules.weight-tag.index", ["weights" => $weights]);
     }
 
     public function create()
     {
-        return view("admin.modules.other.weight-tag.create");
+        return view("admin.modules.weight-tag.create");
     }
 
     /**
@@ -34,13 +34,13 @@ class WeightTagController extends Controller
 
         $weight->mass = $request->mass;
         $weight->save();
-        return redirect()->route("admin.other.weight-tag.index")->with("success", "Create success!");
+        return redirect()->route("admin.weight-tag.index")->with("success", "Create success!");
     }
 
     public function edit(string $id)
     {
         $data = WeighTag::findOrFail($id);
-        return view("admin.modules.other.weight-tag.edit", ["data" => $data, "id" => $id]);
+        return view("admin.modules.weight-tag.edit", ["data" => $data, "id" => $id]);
     }
 
     public function update(Request $request, string $id)
@@ -54,7 +54,7 @@ class WeightTagController extends Controller
         $weight->mass = $request->mass;
         $weight->update();
 
-        return redirect()->route("admin.other.weight-tag.index")->with("success", "Create success!");
+        return redirect()->route("admin.weight-tag.index")->with("success", "Create success!");
     }
 
 
@@ -65,6 +65,6 @@ class WeightTagController extends Controller
     {
         $weight = WeighTag::findOrFail($id);
         $weight->delete();
-        return redirect()->route("admin.other.weight-tag.index")->with("success", "Delete success!");
+        return redirect()->route("admin.weight-tag.index")->with("success", "Delete success!");
     }
 }

@@ -13,12 +13,12 @@ class SupplierController extends Controller
     {
         $suppliers = Supplier::simplePaginate(10);
         $suppliers->withPath('/admin/other/supplier/index');
-        return view("admin.modules.other.supplier.index", ["suppliers" => $suppliers]);
+        return view("admin.modules.supplier.index", ["suppliers" => $suppliers]);
     }
 
     public function create()
     {
-        return view("admin.modules.other.supplier.create");
+        return view("admin.modules.supplier.create");
     }
 
     public function store(Request $request)
@@ -37,13 +37,13 @@ class SupplierController extends Controller
         $supplier->phone = $request->phone;
         $supplier->save();
 
-        return redirect()->route('admin.other.supplier.index')->with("success", "Create supplier success!");
+        return redirect()->route('admin.supplier.index')->with("success", "Create supplier success!");
     }
 
     public function edit(string $id)
     {
         $supplier = Supplier::findOrFail($id);
-        return view("admin.modules.other.supplier.edit", ["data" => $supplier, "id" => $id]);
+        return view("admin.modules.supplier.edit", ["data" => $supplier, "id" => $id]);
     }
     public function update(Request $request, string $id)
     {
@@ -61,13 +61,13 @@ class SupplierController extends Controller
         $supplier->phone = $request->phone;
         $supplier->save();
 
-        return redirect()->route('admin.other.supplier.index')->with("success", "Create supplier success!");
+        return redirect()->route('admin.supplier.index')->with("success", "Create supplier success!");
     }
 
     public function destroy(string $id)
     {
         $category = Supplier::findOrFail($id);
         $category->delete();
-        return redirect()->route('admin.other.supplier.index')->with("success", "Delete category success!");
+        return redirect()->route('admin.supplier.index')->with("success", "Delete category success!");
     }
 }

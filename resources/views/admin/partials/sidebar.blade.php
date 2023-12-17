@@ -19,12 +19,10 @@
             </a>
         </li>
 
-
-
-
         <li class="menu-header small text-uppercase">
-            <span class="menu-header-text">Pages</span>
+            <span class="menu-header-text">Manage </span>
         </li>
+
         <li class="menu-item  {{ request()->is('admin/category/*') ? 'active' : '' }}">
             <a href="{{ route('admin.category.index') }}" class="menu-link">
                 <i class='menu-icon tf-icons bx bx-category'></i>
@@ -45,31 +43,48 @@
             </a>
         </li>
 
-
-
-        <li class="menu-item {{ request()->is('admin/other/*') ? 'active open' : '' }} ">
+        <li class="menu-item {{ request()->is('admin/order/*') ? 'active open' : '' }} ">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-dock-top"></i>
-                <div data-i18n="Account Settings">Other</div>
+                <div data-i18n="Account Settings">Order</div>
             </a>
             <ul class="menu-sub">
-                <li class="menu-item {{ request()->is('admin/other/supplier/index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.other.supplier.index') }}" class="menu-link">
-                        <div data-i18n="Connections">Supplier</div>
+                <li class="menu-item {{ request()->is('admin/order/index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.index') }}" class="menu-link">
+                        <div data-i18n="Connections">List</div>
                     </a>
                 </li>
-                {{-- <li class="menu-item ">
-                    <a href="{{ route('admin.other.banner-silder') }}" class="menu-link">
-                        <div data-i18n="Account">Banner & Silder</div>
-                    </a>
-                </li> --}}
-                <li class="menu-item {{ request()->is('admin/other/weight-tag/index') ? 'active' : '' }}">
-                    <a href="{{ route('admin.other.weight-tag.index') }}" class="menu-link">
-                        <div data-i18n="Notifications">Weigh Tag</div>
+                <li class="menu-item {{ request()->is('admin/order/history') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.history') }}" class="menu-link">
+                        <div data-i18n="Notifications">History</div>
                     </a>
                 </li>
             </ul>
         </li>
+
+
+
+        <li class="menu-header small text-uppercase">
+            <span class="menu-header-text">Other</span>
+        </li>
+
+        <li class="menu-item {{ request()->is('admin/supplier/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.supplier.index') }}" class="menu-link">
+                <div data-i18n="Connections"><i class='bx  tf-icons bx-detail'></i> Supplier</div>
+            </a>
+        </li>
+        {{-- <li class="menu-item ">
+            <a href="{{ route('admin.banner-silder') }}" class="menu-link">
+                <div data-i18n="Account">Banner & Silder</div>
+            </a>
+        </li> --}}
+        <li class="menu-item {{ request()->is('admin/weight-tag/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.weight-tag.index') }}" class="menu-link">
+                <div data-i18n="Notifications"><i class='bx  tf-icons bx-tag'></i> Weigh Tag</div>
+            </a>
+        </li>
+
+
 
     </ul>
 </aside>
