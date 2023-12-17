@@ -23,12 +23,7 @@ return new class extends Migration {
             $table->string('email');
             $table->string('full_name');
             $table->string('address');
-<<<<<<< HEAD
             $table->string('phone');
-=======
-            $table->string('phone', 15);
-            $table->string('note')->nullable();
->>>>>>> d503836b442e664755c5a101663445f77b4cf4a9
             $table->softDeletes();
             $table->timestamps();
         });
