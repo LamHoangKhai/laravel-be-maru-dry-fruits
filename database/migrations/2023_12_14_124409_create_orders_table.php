@@ -22,7 +22,7 @@ return new class extends Migration {
             $table->string('email');
             $table->string('full_name');
             $table->string('address');
-            $table->integer('phone');
+            $table->string('phone');
             $table->softDeletes();
             $table->timestamps();
         });
