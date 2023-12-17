@@ -5,7 +5,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
                     Product / Export
                 </h4>
 
@@ -31,7 +31,7 @@
                                 <option value="">Choose Shipment</option>
                                 @foreach ($imports as $import)
                                     <option class="d-flex justify-content-between " value="{{ $import->shipment }}"
-                                        {{ old('shipment', 0) == $import->id ? 'selected' : '' }}>
+                                        {{ old('shipment', 0) == $import->shipment ? 'selected' : '' }}>
                                         Supplier: {{ $import->supplier->name }} &nbsp;&nbsp;--&nbsp;&nbsp;
                                         Current Quantity : {{ $import->current_quantity }} &nbsp;&nbsp;--&nbsp;&nbsp;
                                         Expiration Date : {{ $import->expiration_date }} &nbsp;&nbsp;--&nbsp;&nbsp;

@@ -12,7 +12,6 @@ use App\Models\Supplier;
 use App\Models\Warehouse;
 use App\Models\WeighTag;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {

@@ -12,8 +12,8 @@ $(document).ready(() => {
         select: 1,
         url: $("#url").data("url"),
         product_id: $("#product_id").val(),
+        tableCols: 12,
     };
-    console.log(storage);
     //handle search
     $("#search").keypress(
         Mydebounce((e) => {
@@ -22,22 +22,40 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
-            loading(12);
+            loading(storage.tableCols);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
+
+    $("#search").bind("paste", (e) => {
+        // access the clipboard using the api
+        storage.search = e.originalEvent.clipboardData.getData("text");
+        storage.page = 1;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
 
     $("#search").keyup(
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
-                loading(12);
+                storage.page = 1;
+                loading(storage.tableCols);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
         }, 500)
     );
     // end handle search
+
+    //handle select
+    $("#select").change((e) => {
+        storage.select = e.target.value;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
+
+    //end handle select
 
     // load pagination
     $("#pagination").simplePaginator({

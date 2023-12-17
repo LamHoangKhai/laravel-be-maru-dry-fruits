@@ -16,7 +16,6 @@
             const url = e.target.href;
             const urlCheck = $("#url-check").attr("data-url");
             const category_id = e.target.getAttribute("value");
-
             $.ajax({
                 type: "POST",
                 url: urlCheck,
@@ -26,8 +25,8 @@
                 dataType: "json",
                 success: (res) => {
                     Swal.fire({
-                        title: "Are you sure?",
-                        html: `This category has ${res.countProduct} products and ${res.countProductInStock} product is in stock`,
+                        title: "<strong>Please read the warning carefully!!!</strong>",
+                        html: `This category has products <strong>${res.countProduct}</strong> and products <strong>${res.countProductInStock}</strong> that are in stock.<strong>If you delete them, the product and related products cannot be found.</strong>`,
                         icon: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#3085d6",
@@ -53,7 +52,7 @@
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
                     Categories
                 </h4>
 

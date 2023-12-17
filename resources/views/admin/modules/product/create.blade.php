@@ -9,7 +9,7 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
                     Product / Create
                 </h4>
 
@@ -68,17 +68,16 @@
                                 @foreach ($weights as $weight)
                                     <option value="{{ $weight->id }}"
                                         {{ in_array($weight->id, old('weights', [])) ? 'selected' : '' }}>
-                                        {{ $weight->mass }}gram
+                                        {{ $weight->mass >= 1000 ? number_format($weight->mass / 1000, 1, ',', '') . 'kg' : $weight->mass . 'gram' }}
                                     </option>
                                 @endforeach
-
                             </select>
                             @if ($errors->has('weights'))
                                 <span class="text-danger">* {{ $errors->get('weights')[0] }}</span>
                             @endif
                         </div>
                     </div>
-                    {{ old('weights*') }}
+
                     <div class="row g-3">
                         <div class="col mb-2">
                             <label for="status" class="form-label ">Stataus</label>

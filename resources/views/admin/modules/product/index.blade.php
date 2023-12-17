@@ -20,7 +20,7 @@
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light"><a href="">Dashboard</a> /</span>
+                <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
                     Products
                 </h4>
 
@@ -28,9 +28,12 @@
 
             <div class="card">
                 <div class="card-header">
-                    <div class="nav-item d-flex justify-content-end w-100">
-                        <input type="text" class="form-control  w-25" style="margin:0 12px " id="search"
-                            placeholder="Enter product name" />
+                    <div class="nav-item d-flex justify-content-end w-100 h-px-40">
+                        <div class="input-group w-25" style="margin:0 12px ">
+                            <span class="input-group-text" h-px-40>Search</span>
+                            <input type="text" class="form-control  w-25" id="search" placeholder="Enter product name" />
+                        </div>
+
                         <a type="button" class="btn btn-primary" href="{{ route('admin.product.create') }}">
                             <i class='bx bx-plus-circle'></i>&nbsp; Add Product
                         </a>

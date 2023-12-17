@@ -2,6 +2,7 @@
 
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
+use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,14 +38,10 @@ Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {
 
-    Route::prefix('user')->middleware('checkLogin')->name('user.')->controller(UserController::class)->group(function () {
+    Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
-
-        //api
-        Route::post('get-users', 'getUsers')->name('getUsers');
-
         //create
         Route::post('store', 'store')->name('store');
 
@@ -53,8 +51,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
-    });
 
+        //api
+        Route::post('check-related', 'checkRelatedCategory')->name('checkRelatedCategory');
+    });
 
     Route::prefix('product')->name('product.')->controller(ProductController::class)->group(function () {
         //view 
@@ -101,10 +101,33 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
     });
 
-    Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
+
+    Route::prefix('user')->middleware('checkLogin')->name('user.')->controller(UserController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
+
+        //api
+        Route::post('get-users', 'getUsers')->name('getUsers');
+
+        //create
+        Route::post('store', 'store')->name('store');
+
+        //edit and update
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        //destroy
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('order')->name('order.')->controller(OrderController::class)->group(function () {
+        //view
+        Route::get('index', 'index')->name('index');
+        Route::get('history', 'history')->name('history');
+        Route::get('create', 'create')->name('create');
+        Route::post('checking', 'checking')->name('checking');
+
         //create
         Route::post('store', 'store')->name('store');
 
@@ -116,48 +139,50 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
         //api
-        Route::post('check-related', 'checkRelatedCategory')->name('checkRelatedCategory');
-    });
-
-
-
-
-
-    Route::prefix('other')->name('other.')->group(function () {
-        Route::prefix('supplier')->name('supplier.')->controller(SupplierController::class)->group(function () {
-            //view
-            Route::get('index', 'index')->name('index');
-            Route::get('create', 'create')->name('create');
-
-            //create 
-            Route::post('store', 'store')->name('store');
-
-            //edit and update
-            Route::get('edit/{id}', 'edit')->name('edit');
-            Route::post('update/{id}', 'update')->name('update');
-
-            //destroy
-            Route::get('destroy/{id}', 'destroy')->name('destroy');
-        });
-
-        Route::prefix('weight-tag')->name('weight-tag.')->controller(WeightTagController::class)->group(function () {
-            //view
-            Route::get('index', 'index')->name('index');
-            Route::get('create', 'create')->name('create');
-
-            //create 
-            Route::post('store', 'store')->name('store');
-
-            //edit and update
-            Route::get('edit/{id}', 'edit')->name('edit');
-            Route::post('update/{id}', 'update')->name('update');
-
-            //destroy
-            Route::get('destroy/{id}', 'destroy')->name('destroy');
-        });
-
-
+        Route::post('get-product', 'product')->name('product');
 
     });
 
+
+
+    Route::prefix('supplier')->name('supplier.')->controller(SupplierController::class)->group(function () {
+        //view
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+
+        //create 
+        Route::post('store', 'store')->name('store');
+
+        //edit and update
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        //destroy
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+    Route::prefix('weight-tag')->name('weight-tag.')->controller(WeightTagController::class)->group(function () {
+        //view
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+
+        //create 
+        Route::post('store', 'store')->name('store');
+
+        //edit and update
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        //destroy
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+    });
+
+
+    Route::fallback(function () {
+        abort(404);
+    });
+});
+
+Route::fallback(function () {
+    abort(404);
 });

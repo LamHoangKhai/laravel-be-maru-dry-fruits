@@ -10,6 +10,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         url: $("#url").data("url"),
+        tableCols: 7,
     };
     //handle search
     $("#search").keypress(
@@ -19,16 +20,24 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
-            loading(7);
+            loading(storage.tableCols);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
+
+    $("#search").bind("paste", (e) => {
+        // access the clipboard using the api
+        storage.search = e.originalEvent.clipboardData.getData("text");
+        storage.page = 1;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
 
     $("#search").keyup(
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
-                loading(7);
+                loading(storage.tableCols);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -68,8 +77,9 @@ $(document).ready(() => {
         const name = e.target.getAttribute("value");
         // show modal
         await Swal.fire({
-            title: "Are you sure?",
-            html: `Do you want to delete user <strong>${name}</strong>?`,
+            title: "<strong>Please read the warning carefully!!!</strong>",
+            html: `
+            Do you want to delete user <strong>${name}, If you delete this user, things related to reviews and orders cannot be found?</strong>`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

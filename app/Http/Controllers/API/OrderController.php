@@ -11,17 +11,18 @@ use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
 {
-    public function order(Request $request) {
+    public function order(Request $request)
+    {
         $infoUserCheckout = [
             'email' => $request->email,
             'full_name' => $request->full_name,
             'address' => $request->address,
             'phone' => $request->phone,
             'transaction' => $request->transaction,
-            'total' => $request->total,
+            'subtotal' => $request->subtotal,
             'user_id' => auth('api')->user()->id,
             'status_order_id' => 1,
-            'grand_total' => $request->total + 35000,
+            'total' => $request->subtotal + 35000,
             'transaction_status' => 1,
             'created_at' => Carbon::now(),
         ];
@@ -34,32 +35,31 @@ class OrderController extends Controller
         ], 200);
     }
 
-    public function order_items(Request $request) {
+    public function order_items(Request $request)
+    {
         $latestOrder = Order::latest()->first();
 
         $product_id = $request->product_id;
         $price = $request->price;
         $weight = $request->weight;
         $quantity = $request->quantity;
-        if(is_array($product_id)) {
-            foreach($product_id as $product) {
-                    $id = $product['id'];
-                    $price = $product['price'];
-                    $weight = $product['weight'];
-                    $quantity = $product['quantity'];
+        if (is_array($product_id)) {
+            foreach ($product_id as $product) {
+                $id = $product['id'];
+                $price = $product['price'];
+                $weight = $product['weight'];
+                $quantity = $product['quantity'];
 
-                    $orderDetail = [
-                        'product_id' => $id,
-                        'order_id' => $latestOrder->id,
-                        'price' => $price,
-                        'weight' => $weight,
-                        'quantity' => $quantity
-                    ];
-                    OrderItems::insert($orderDetail);
+                $orderDetail = [
+                    'product_id' => $id,
+                    'order_id' => $latestOrder->id,
+                    'price' => $price,
+                    'weight' => $weight,
+                    'quantity' => $quantity
+                ];
+                OrderItems::insert($orderDetail);
             }
-        }
-
-        else {
+        } else {
             $orderDetail = [
                 'product_id' => $product_id,
                 'order_id' => $latestOrder->id,

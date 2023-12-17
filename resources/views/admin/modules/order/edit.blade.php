@@ -120,7 +120,7 @@
                                     <option value="{{ $weight->id }}"
                                         @foreach ($data->weightTags as $weightTag)
                                         {{ in_array($weight->id, old('weights', [$weightTag->id])) ? 'selected' : '' }} @endforeach>
-                                        {{ $weight->mass >= 1000 ? number_format($weight->mass / 1000, 1, ',', '') . 'kg' : $weight->mass . 'gram' }}
+                                        {{ $weight->mass }}gram</option>
                                 @endforeach
 
                             </select>
