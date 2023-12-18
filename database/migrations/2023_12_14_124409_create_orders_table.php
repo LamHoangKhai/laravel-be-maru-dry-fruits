@@ -24,6 +24,7 @@ return new class extends Migration {
             $table->string('full_name');
             $table->string('address');
             $table->string('phone');
+            $table->string('note')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -7,6 +7,7 @@ use App\Http\Controllers\API\OrderController as APIOrderController;
 use App\Http\Controllers\APi\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
+use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -78,6 +79,13 @@ Route::group([
     Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
 
     Route::get('return_review', [ReviewController::class, 'return_review'])->name('return_review');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'review'
+], function () {
+    Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
 });
 
 
