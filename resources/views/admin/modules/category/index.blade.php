@@ -111,13 +111,8 @@
                                                 class="badge rounded-pill bg-{{ $category->status == 1 ? 'info' : 'dark' }}">
                                                 {{ $category->status == 1 ? 'Show' : 'Hidden' }}</span>
                                         </td>
-<<<<<<< HEAD
-                                        <td>{{ date("d/m/Y - H:i:s" ,strtotime($category->created_at)) }}</td>
-                                        <td>{{ date("d/m/Y - H:i:s" ,strtotime($category->updated_at)) }}</td>
-=======
                                         <td>{{ date('Y/m/d H:i:s', strtotime($category->created_at)) }}</td>
                                         <td>{{ date('Y/m/d H:i:s', strtotime($category->updated_at)) }}</td>
->>>>>>> d503836b442e664755c5a101663445f77b4cf4a9
                                         <td class="g-2">
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
