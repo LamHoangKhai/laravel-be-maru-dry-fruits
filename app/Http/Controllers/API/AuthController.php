@@ -71,7 +71,12 @@ class AuthController extends Controller
             return response()->json(['error' => 'Not found'], 403);
         }
 
-        return $this->respondWithToken($token);
+        return [
+            $this->respondWithToken($token),
+            response()->json([
+                'email' => auth('api')->user()->email
+            ])
+        ];
         
     }
 
