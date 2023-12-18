@@ -83,7 +83,7 @@ Route::group([
 
 Route::group([
     'middleware' => 'api',
-    'prefix' => 'review'
+    'prefix' => 'feedback'
 ], function () {
     Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
 });

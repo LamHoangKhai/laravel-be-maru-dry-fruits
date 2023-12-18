@@ -15,6 +15,7 @@ class FeedbackController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'content' => $request->content,
+            'timestamps' => now()
         ];
 
         Feedback::create($feedback);

@@ -21,7 +21,7 @@ class OrderController extends Controller
             'transaction' => $request->transaction,
             'subtotal' => $request->subtotal,
             'user_id' => auth('api')->user()->id,
-            'status_order_id' => 1,
+            'status' => 1,
             'total' => $request->subtotal + 35000,
             'transaction_status' => 1,
             'created_at' => Carbon::now(),
