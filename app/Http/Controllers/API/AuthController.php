@@ -71,12 +71,7 @@ class AuthController extends Controller
             return response()->json(['error' => 'Not found'], 403);
         }
 
-        return [
-            $this->respondWithToken($token),
-            response()->json([
-                'email' => auth('api')->user()->email
-            ])
-        ];
+        return $this->respondWithToken($token);
         
     }
 
@@ -109,7 +104,8 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60
+            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'email' => auth('api')->user()->email
         ]);
     }
 }
