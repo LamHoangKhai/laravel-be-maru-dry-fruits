@@ -13,7 +13,7 @@ class WeightTagController extends Controller
      */
     public function index()
     {
-        $weights = WeighTag::get();
+        $weights = WeighTag::orderBy("mass","ASC")->get();
         return view("admin.modules.weight-tag.index", ["weights" => $weights]);
     }
 

@@ -16,7 +16,9 @@ class WarehouseController extends Controller
     //view log import/export
     public function log(string $id)
     {
-        return view("admin.modules.product.log", ["id" => $id]);
+        $product = Product::findOrFail($id);
+        $inputPrice = Warehouse::where("product_id", $id)->max("input_price");
+        return view("admin.modules.product.log", ["id" => $id, "product" => $product, "inputPrice" => $inputPrice]);
     }
 
 
@@ -36,6 +38,7 @@ class WarehouseController extends Controller
             'product_id' => 'required',
             'supplier_id' => 'required',
             'quantity' => 'required|numeric',
+            'input_price' => 'required|numeric',
             'expiration_date' => 'required|date|after:now',
         ]);
 
@@ -45,12 +48,13 @@ class WarehouseController extends Controller
         $import->quantity = $request->quantity;
         $import->current_quantity = $request->quantity;
         $import->expiration_date = $request->expiration_date;
+        $import->input_price = $request->input_price;
         $import->note = $request->note;
         $import->shipment = time();
         $import->transaction_type = 1;
-        $import->transaction_date = date("Y-m-d h:i:s");
-        $import->created_at = date("Y-m-d h:i:s");
-        $import->updated_at = date("Y-m-d h:i:s");
+        $import->transaction_date = date("Y-m-d H:i:s");
+        $import->created_at = date("Y-m-d H:i:s");
+        $import->updated_at = date("Y-m-d H:i:s");
         $import->save();
 
         return redirect()->route('admin.product.index')->with("success", "Create import success!");
@@ -61,12 +65,12 @@ class WarehouseController extends Controller
     {
         $import = Warehouse::findOrfail($id);
         $suppliers = Supplier::get();
-        $products = Product::get();
+        $product = Product::findOrFail($import->product_id);
 
         $checkExport = Warehouse::where([["shipment", "=", $import->shipment], ["transaction_type", "=", 2]])->first();
         // allowed edit if Superadmin 
         if (is_null($checkExport) && Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
-            return view("admin.modules.product.edit-import", ["data" => $import, "id" => $id, "suppliers" => $suppliers, "products" => $products]);
+            return view("admin.modules.import.edit", ["data" => $import, "id" => $id, "suppliers" => $suppliers, "product" => $product]);
         }
 
         $mess = $checkExport ? "Cannot edit import has export ticket!" : "Not allow edit!";
@@ -84,12 +88,13 @@ class WarehouseController extends Controller
 
         $import = Warehouse::findOrfail($id);
         $import->product_id = $request->product_id;
+        $import->input_price = $request->input_price;
         $import->supplier_id = $request->supplier_id;
         $import->quantity = $request->quantity;
         $import->expiration_date = $request->expiration_date;
         $import->note = $request->note;
-        $import->updated_at = date("Y-m-d h:i:s");
-        $import->update();
+        $import->updated_at = date("Y-m-d H:i:s");
+        $import->save();
 
         return redirect()->route('admin.product.index')->with("success", "Update success!");
     }
@@ -99,7 +104,7 @@ class WarehouseController extends Controller
     {
         $product = Product::findOrFail($id);
         $imports = Warehouse::with("supplier")
-            ->where([["product_id", $product->id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])
+            ->where([["product_id", $product->id], ["transaction_type", "=", 1], ["current_quantity", ">", 0]])->orderBy("expiration_date", "ASC")
             ->get();
         return view("admin.modules.export.create", ["product" => $product, "imports" => $imports]);
     }
@@ -121,12 +126,13 @@ class WarehouseController extends Controller
         $export = new Warehouse();
         $export->supplier_id = $import->supplier_id;
         $export->expiration_date = $import->expiration_date;
+        $export->input_price = $import->input_price;
         $export->product_id = $request->product_id;
         $export->quantity = $request->quantity;
         $export->shipment = $request->shipment;
         $export->transaction_type = 2;
         $export->transaction_date = date("Y-m-d");
-        $export->created_at = date("Y-m-d h:i:s");
+        $export->created_at = date("Y-m-d H:i:s");
         $export->save();
 
         // update current quantity import
@@ -136,8 +142,6 @@ class WarehouseController extends Controller
             orderBy("created_at", "DESC")->first();
         $import->current_quantity = $findLastestExport->current_quantity;
         $import->update();
-
-
         return redirect()->route('admin.product.index')->with("success", "Create export success!");
     }
 
@@ -146,22 +150,19 @@ class WarehouseController extends Controller
     {
 
         $request->validate([
-            'product_id' => 'required',
-            'select' => 'required|numeric',
-
+            'product_id' => 'required'
         ]);
 
-        $query = Warehouse::where([["transaction_type", "=", $request->select], ["product_id", "=", $request->product_id]]);
+        $query = Warehouse::where("product_id", "=", $request->product_id);
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
         $query = $query->with(['supplier', 'product']);
         $query = $query->where("shipment", "like", "%" . $search . "%");
 
-        $query = $request->select == 1 ? $query->orderBy("current_quantity", "desc") : $query->orderBy("created_at", "desc");
 
         //return data
-        $result = $query->paginate($take);
+        $result = $query->orderBy("created_at", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 

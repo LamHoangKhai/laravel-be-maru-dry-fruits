@@ -29,8 +29,8 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->status = $request->status;
         $category->parent_id = $request->parent_id;
-        $category->created_at = date("Y-m-d h:i:s");
-        $category->updated_at = date("Y-m-d h:i:s");
+        $category->created_at = date("Y-m-d H:i:s");
+        $category->updated_at = date("Y-m-d H:i:s");
         $category->save();
         return redirect()->route('admin.category.index')->with("success", "Create category success!");
     }
@@ -47,7 +47,7 @@ class CategoryController extends Controller
         $category->name = $request->name;
         $category->status = $request->status;
         $category->parent_id = $request->parent_id;
-        $category->updated_at = date("Y-m-d h:i:s");
+        $category->updated_at = date("Y-m-d H:i:s");
         $category->save();
         return redirect()->route('admin.category.index')->with("success", "Edit category success!");
     }

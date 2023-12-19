@@ -55,4 +55,20 @@ const loading = (colspan) => {
     $("#renderData").html(loading);
 };
 
-export { Mydebounce, formatDate, setTotalPages, loading };
+const statusText = (text) => {
+    switch (text) {
+        case 1:
+            return ["Pending", "primary"];
+        case 2:
+            return ["Prepare", "info"];
+        case 3:
+            return ["Delivery", "secondary"];
+        case 4:
+            return ["Complete", "success"];
+        case 5:
+            return ["Cancel", "danger"];
+    }
+};
+
+
+export { Mydebounce, formatDate, setTotalPages, loading, statusText };

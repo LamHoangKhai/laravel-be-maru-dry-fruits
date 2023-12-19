@@ -23,7 +23,4 @@ class Product extends Model
     {
         return $this->belongsToMany(WeighTag::class, 'product_weight', 'product_id', 'weight_tag_id');
     }
-
-
-
 }

@@ -2,14 +2,21 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    {{-- <script src="{{ asset('administrator/js/order/main.js') }}" type="module"></script> --}}
+    <script src="{{ asset('administrator/js/order/main.js') }}" type="module"></script>
+@endpush
+@push('css')
+    <style>
+        .detail:hover {
+            background-color: #f5f5f5;
+        }
+    </style>
 @endpush
 
 
-
 @section('content')
-    {{-- <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
-    <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
+    <input type="hidden" id="url" data-url="{{ route('admin.order.getListOrder') }}">
+    <input type="hidden" id="url-detail" data-url="{{ route('admin.order.getOrderDetail') }}">
+    {{-- <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
     <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkQuantity') }}">
 
@@ -21,7 +28,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
-                    Products
+                    List Order
                 </h4>
 
             </div>
@@ -29,6 +36,15 @@
             <div class="card">
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
+                        <div class="input-group w-px-200">
+                            <label class="input-group-text" for="inputGroupSelect01">Status</label>
+                            <select id="select" class="form-select ">
+                                <option value="0" selected>All</option>
+                                <option value="1">Pending</option>
+                                <option value="2">Prepare</option>
+                                <option value="3">Delivery</option>
+                            </select>
+                        </div>
 
                         <div class="input-group w-25" style="margin:0 12px ">
                             <span class="input-group-text" h-px-40>Search</span>
@@ -45,7 +61,7 @@
 
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
-                        <table class="table  table-bordered table-image">
+                        <table class="table  table-hover " id="table">
                             <thead>
                                 <tr>
                                     <th>Order #</th>
@@ -56,13 +72,12 @@
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/prodcut/main.js -->
+                                    <!-- render form administrator/js/other/main.js -->
                                 </tr>
                             </tbody>
 
@@ -76,7 +91,6 @@
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
-                                    <th>Action</th>
                                 </tr>
                             </tfoot>
                         </table>

@@ -44,6 +44,15 @@
 
                     <div class="row g-2">
                         <div class="col mb-2">
+                            <label for="input_price" class="form-label">Input Price</label>
+                            <input type="text" id="input_price" class="form-control" placeholder="Enter input price"
+                                name="input_price" value="{{ old('input_price') }}" />
+                            @if ($errors->has('input_price'))
+                                <span class="text-danger">* {{ $errors->get('input_price')[0] }}</span>
+                            @endif
+                        </div>
+
+                        <div class="col mb-2">
                             <label for="quantity" class="form-label">Quantity</label>
                             <input type="text" id="quantity" class="form-control"
                                 placeholder="Enter quantity (kilogram)" name="quantity" value="{{ old('quantity') }}" />
@@ -51,6 +60,7 @@
                                 <span class="text-danger">* {{ $errors->get('quantity')[0] }}</span>
                             @endif
                         </div>
+
 
                         <div class="col mb-2">
                             <label for="expiration_date" class="form-label">Expiration date</label>

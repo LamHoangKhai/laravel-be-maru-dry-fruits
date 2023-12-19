@@ -57,7 +57,10 @@
                     enctype="multipart/form-data">
                     @csrf
 
-                    <div class="row ">
+
+
+
+                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -66,26 +69,12 @@
                                 <span class="text-danger">* {{ $errors->get('name')[0] }}</span>
                             @endif
                         </div>
-                    </div>
-
-
-
-                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="price" class="form-label">Price</label>
                             <input type="text" id="price" class="form-control" placeholder="Enter price/100gram"
                                 name="price" value="{{ old('price', $data->price) }}" />
                             @if ($errors->has('price'))
                                 <span class="text-danger">* {{ $errors->get('price')[0] }}</span>
-                            @endif
-                        </div>
-
-                        <div class="col mb-2">
-                            <label for="discount" class="form-label">Discount</label>
-                            <input type="text" id="discount" class="form-control" placeholder="Enter discount %"
-                                name="discount" value="{{ old('discount', 0) }}" />
-                            @if ($errors->has('discount'))
-                                <span class="text-danger">* {{ $errors->get('discount')[0] }}</span>
                             @endif
                         </div>
                     </div>

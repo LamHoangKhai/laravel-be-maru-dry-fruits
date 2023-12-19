@@ -139,7 +139,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
         //api
-        Route::post('get-product', 'product')->name('product');
+        Route::post('get-list-order', 'getListOrder')->name('getListOrder');
+        Route::post('get-product', 'getProduct')->name('getProduct');
+        Route::post('get-order-detail', 'getOrderDetail')->name('getOrderDetail');
 
     });
 

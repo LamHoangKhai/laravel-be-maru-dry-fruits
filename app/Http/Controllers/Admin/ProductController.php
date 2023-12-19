@@ -24,7 +24,7 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::get();
-        $weights = WeighTag::get();
+        $weights = WeighTag::orderBy("mass", "ASC")->get();
         return view('admin.modules.product.create', ["categories" => $categories, "weights" => $weights]);
     }
 
@@ -39,14 +39,15 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->category_id = $request->category_id;
         $product->feature = $request->feature;
-        $product->created_at = date("Y-m-d h:i:s");
-        $product->updated_at = date("Y-m-d h:i:s");
+        $product->created_at = date("Y-m-d H:i:s");
+        $product->updated_at = date("Y-m-d H:i:s");
 
         //save  image
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
         $request->image->move(public_path("uploads"), $filename);
         $product->image = route("uploads") . "/" . $filename;
         $product->save();
+
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
@@ -76,7 +77,7 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->feature = $request->feature;
         $product->category_id = $request->category_id;
-        $product->updated_at = date("Y-m-d h:i:s");
+        $product->updated_at = date("Y-m-d H:i:s");
 
         // save image
         if (isset($request->image)) {
@@ -121,7 +122,7 @@ class ProductController extends Controller
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
 
-        // search email, phone ,name 
+        // search name 
         $query = $query->where("name", "like", "%" . $search . "%");
 
         //return data
@@ -147,11 +148,5 @@ class ProductController extends Controller
         $product_weight->delete();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
-
-
-
-
-
-
 
 }

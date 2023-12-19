@@ -37,10 +37,7 @@ return new class extends Migration {
     			SET MESSAGE_TEXT = "Error: Expiration date does not exist.";
     		END IF;
     		
-    		IF NOT EXISTS(SELECT 1 FROM warehouse WHERE transaction_type = 1 AND product_id = NEW.product_id  AND shipment = NEW.shipment AND transaction_date < NEW.transaction_date) THEN
-                       SIGNAL SQLSTATE "45000"
-                        SET MESSAGE_TEXT = "Error: Transaction date does not exist.";
-                    END IF;
+    		
     		
 	   	IF(NEW.quantity > (SELECT stock_quantity FROM products WHERE id = NEW.product_id)) THEN
 	   		SIGNAL SQLSTATE "45000"

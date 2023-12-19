@@ -19,19 +19,20 @@
                     Products / Log
                 </h4>
             </div>
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="mb-0 text-center"> {{ $product->name }}</h2>
+                </div>
+                <div class="card-body">
+                    <h5><strong>Total Quantity</strong>: {{ $product->store_quantity + $product->stock_quantity }}kg</h5>
+                    <h5><strong>Input Price</strong>: ${{ $inputPrice }}</h5>
+                </div>
+
+            </div>
 
             <div class="card">
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40 ">
-                        <div class="input-group w-px-200">
-                            <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                            <select id="select" class="form-select ">
-                                <option value="1" selected>Import</option>
-                                <option value="2">Export</option>
-                            </select>
-                        </div>
-
-
                         <div class="input-group w-25" style="margin:0 0 0 16px">
                             <span class="input-group-text" h-px-40>Search</span>
                             <input type="text" class="form-control" id="search" placeholder="Enter shipment" />
@@ -47,13 +48,12 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Supplier</th>
-                                    <th>Product</th>
-                                    <th class="max-110" id="quantity"></th>
-                                    <th class="max-110">Current Quantity</th>
+                                    <th>Quantity</th>
+                                    <th>Input Price</th>
                                     <th>Shipment</th>
                                     <th>Type</th>
-                                    <th class="max-110">Expiration Date</th>
-                                    <th class="max-110">Transaction Date</th>
+                                    <th>Expiration Date</th>
+                                    <th>Transaction Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -70,13 +70,12 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Supplier</th>
-                                    <th>Product</th>
                                     <th>Quantity</th>
-                                    <th class="max-110">Current Quantity</th>
+                                    <th>Input Price</th>
                                     <th>Shipment</th>
                                     <th>Type</th>
-                                    <th class="max-110">Expiration Date</th>
-                                    <th class="max-110">Transaction Date</th>
+                                    <th>Expiration Date</th>
+                                    <th>Transaction Date</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>

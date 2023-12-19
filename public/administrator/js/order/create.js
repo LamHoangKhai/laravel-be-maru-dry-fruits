@@ -1,22 +1,37 @@
 $(document).ready(() => {
-    let listItem = [];
-    let optionItem = "";
-    let optionWeights = "";
-    let innerHTML = "";
+    ajax();
+    //handle click add item
+    $("#add-item").click(() => {
+        ajax();
+    });
+    // remove item
+    $("#list-item").on("click", ".remove-item", (e) => {
+        $(e.target).parent().parent().remove();
+    });
 
-    // call get product and weight tags
+    $("#discount").keyup((e) => {
+        if (!e.target.value || e.target.value < 0) {
+            e.target.value = 0;
+        }
+        if (e.target.value > 100) {
+            e.target.value = 100;
+        }
+    });
+});
+
+const ajax = () => {
     $.ajax({
         type: "POST",
         url: $("#url").data("url"),
         dataType: "json",
         success: (res) => {
             let data = res?.data || [];
+            let optionItem = "";
+            let optionWeights = "";
+            let innerHTML = "";
+            let listItem = [];
             for (const item of data.products) {
-                optionItem += `<option value="${item.id}">${
-                    item.name
-                } --- price: ${item.price} ---  quantity: ${
-                    item.stock_quantity + item.store_quantity
-                }</option>`;
+                optionItem += `<option  value="${item.id}">${item.name} </option>`;
                 listItem = [...listItem, item.id];
             }
             for (const item of data.weights) {
@@ -26,16 +41,16 @@ $(document).ready(() => {
                         : item.mass + "gram"
                 }</option>`;
             }
+
             innerHTML = `<div class="row item">
                         <div class="row">
                          <i class='bx bx-x remove-item w-px-20'></i>
                          </div>
                          <div class="col mb-2">
-                            <input class="form-control item_id" list="datalistOptions" id="exampleDataList"f
-                            placeholder="Type to search..." name="product[]">
-                            <datalist id="datalistOptions">
-                                ${optionItem}
-                            </datalist>
+                            <select class="form-select js-example-basic-single item_id" name="product[]" >
+                            ${optionItem}
+                            <option value="" disabled selected></option>
+                            </select>
                         </div>
 
                         <div class="col mb-2">
@@ -51,55 +66,12 @@ $(document).ready(() => {
             </div>`;
             //append 1 product
             $("#list-item").append(innerHTML);
+            $(".js-example-basic-single").select2({
+                theme: "bootstrap4",
+            });
         },
         error: function (error) {
             console.log(error.message);
         },
     });
-
-    //handle click add item
-    $("#add-item").click(() => {
-        $("#list-item").append(innerHTML);
-    });
-    // remove item
-    $("#list-item").on("click", ".remove-item", (e) => {
-        $(e.target).parent().parent().remove();
-    });
-
-    $("#discount").keyup((e) => {
-        if (!e.target.value || e.target.value < 0) {
-            e.target.value = 0;
-        }
-        if (e.target.value > 100) {
-            e.target.value = 100;
-        }
-    });
-
-    //submit form
-    $("#form").submit(function (e) {
-        let isTrue = true;
-        $(".item").each(function () {
-            let selecterProduct = $(this).children().children(".item_id");
-            let itemId = selecterProduct.val()
-                ? parseInt(selecterProduct.val())
-                : 0;
-            let checkExistItem = listItem.find((e) => itemId === e);
-            let removeTextDanger = selecterProduct.parent();
-            if (!checkExistItem) {
-                removeTextDanger.find(".text-danger").remove();
-                selecterProduct
-                    .parent()
-                    .append(
-                        `<span class="text-danger">* Not found product</span>`
-                    );
-                isTrue = false;
-            } else {
-                removeTextDanger.find(".text-danger").remove();
-            }
-        });
-        if (!isTrue) {
-            return e.preventDefault();
-        }
-        $(this).submit();
-    });
-});
+};

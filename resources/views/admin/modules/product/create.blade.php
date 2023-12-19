@@ -18,7 +18,8 @@
                 <form method="POST" action="{{ route('admin.product.store') }}" enctype="multipart/form-data">
                     @csrf
 
-                    <div class="row">
+
+                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="name" class="form-label">Name</label>
                             <input type="text" id="name" class="form-control" placeholder="Enter Name"
@@ -27,9 +28,7 @@
                                 <span class="text-danger">* {{ $errors->get('name')[0] }}</span>
                             @endif
                         </div>
-                    </div>
 
-                    <div class="row g-2">
                         <div class="col mb-2">
                             <label for="price" class="form-label">Price</label>
                             <input type="text" id="price" class="form-control" placeholder="Enter price/100gram"
@@ -63,7 +62,7 @@
                     <div class="row">
                         <div class="mb-3">
                             <label for="exampleFormControlSelect2" class="form-label">Weight tag</label>
-                            <select id="choices-multiple-remove-button" placeholder="Select upto 5 tags" multiple
+                            <select id="choices-multiple-remove-button" placeholder="Select" multiple
                                 name="weights[]">
                                 @foreach ($weights as $weight)
                                     <option value="{{ $weight->id }}"

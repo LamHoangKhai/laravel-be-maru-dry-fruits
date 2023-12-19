@@ -5,6 +5,9 @@
     <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
 @endpush
 
+@push('handlejs')
+@endpush
+
 
 
 @section('content')
@@ -31,7 +34,8 @@
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
                         <div class="input-group w-25" style="margin:0 12px ">
                             <span class="input-group-text" h-px-40>Search</span>
-                            <input type="text" class="form-control  w-25" id="search" placeholder="Enter product name" />
+                            <input type="text" class="form-control  w-25" id="search"
+                                placeholder="Enter product name" />
                         </div>
 
                         <a type="button" class="btn btn-primary" href="{{ route('admin.product.create') }}">

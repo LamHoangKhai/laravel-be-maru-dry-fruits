@@ -1,8 +1,8 @@
 $(document).ready(() => {
     let multipleCancelButton = new Choices("#choices-multiple-remove-button", {
         removeItemButton: true,
-        maxItemCount: 5,
-        renderChoiceLimit: 5,
+        maxItemCount: 20,
+        renderChoiceLimit: 20,
     });
 
     $("#description").summernote({

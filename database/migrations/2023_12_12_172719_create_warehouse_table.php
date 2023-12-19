@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->mediumInteger("quantity");
             $table->mediumInteger("current_quantity")->default(0);
             $table->tinyInteger("transaction_type")->comment("1: Export - 2: Import");
-            $table->string("note")->nullable();
+            $table->unsignedFloat("input_price", 8, 2);
             $table->string("shipment");
             $table->date("transaction_date");
             $table->date("expiration_date");
