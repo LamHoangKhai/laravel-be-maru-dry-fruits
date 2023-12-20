@@ -58,13 +58,33 @@ Content type: application/json
 }
 
 Product {
-URL1: http://localhost:8000/api/product/allProduct,
+URL1: http://localhost:8000/api/product/allproduct  theo category
+METHOD: POST
+    Data: 
+        "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
+    return: {
+        if(category != 0) {
+            Tat ca san pham co trong category do
+        }
+        else {
+            Tat ca san pham
+        }
+
+    }
+
 URL2: http//localhost:8000/api/product/product/{category_id}
 Method: GET
 Content type: application/json
-
-    URL1: Trả về tất cả product
     URL2: Trả về tất cả các product có trong category
+
+
+Product Details
+URL3: http//localhost:8000/api/product/product_details
+METHOD: POST
+    Data gửi xuống: product_id
+    return: {
+        Tất cả thông tin của sản phẩm
+    }
 
 }
 
@@ -81,12 +101,23 @@ Content type: application/json
         'transaction' => $request->transaction,
         'subtotal' => $request->subtotal,
     }
-    Data cua order_items {
-        $product_id = $request->product_id;
-        $price = $request->price;
-        $weight = $request->weight;
-        $quantity = $request->quantity;
-    }
+    Data
+    "order_items": [
+        {
+            $product_id = 1;
+            $price = 123;
+            $weight = 2;
+            $quantity = 3;
+        },
+
+        {
+            $product_id = 1;
+            $price = 123;
+            $weight = 2;
+            $quantity = 3;
+        }
+        ...
+        ]
 
     return cua order: {
         'message' : "Checkout successfully",
