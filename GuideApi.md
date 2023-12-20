@@ -223,12 +223,13 @@ Content type: application/json
             "created_at":
             "updated_at":
     }
+
 }
 
 Feedback {
-    URL: http://localhost:8000/api/feedback/feedback
-    Method: POST
-    Content type: application/json
+URL: http://localhost:8000/api/feedback/feedback
+Method: POST
+Content type: application/json
 
         data {
             'full_name'
@@ -237,14 +238,14 @@ Feedback {
             'content'
         }
         return {
-            'message' => 'Feedback is sent successfully'    
+            'message' => 'Feedback is sent successfully'
         }
     }
 
 Edit profile {
-    URL: http://localhost:8000/api/edit_profile/edit_profile
-    Method: POST
-    Content type: application/json
+URL: http://localhost:8000/api/edit_profile/edit_profile
+Method: POST
+Content type: application/json
 
         data {
             'full_name'
@@ -254,7 +255,6 @@ Edit profile {
             password và password_confirmation nếu user có đổi password
         }
         return {
-            'message' => 'Edit successfully'    
+            'message' => 'Edit successfully'
         }
     }
-

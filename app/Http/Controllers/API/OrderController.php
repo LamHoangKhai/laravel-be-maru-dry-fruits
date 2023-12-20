@@ -28,6 +28,8 @@ class OrderController extends Controller
         ];
 
         Order::insert($infoUserCheckout);
+
+        
         unset($infoUserCheckout['user_id']);
         return response()->json([
             'message' => 'Checkout successfully',

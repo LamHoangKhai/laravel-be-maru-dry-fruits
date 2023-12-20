@@ -25,6 +25,17 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
+
+    public function detail(string $id)
+    {
+        $product = Product::with("category")->findOrFail($id);
+        $exparationDate = Warehouse::select("expiration_date")->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
+            ->first();
+            
+        return view('admin.modules.product.detail', [
+            'product' => $product, 'exparationDate' => $exparationDate
+        ]);
+    }
     //view create product
     public function create()
     {
@@ -52,16 +63,15 @@ class ProductController extends Controller
         // dd($request->image);
         $request->image->move(public_path("uploads"), $filename);
         $product->image = route("uploads") . "/" . $filename;
-
-        // save qr code
-        $lastestID = Product::latest()->first();
-        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $lastestID->id + 1]));
-        $qrFilename = rand(1, 10000) . time() . "." . $lastestID->id + 1 . '.svg';
-        file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
-        $product->qrcode = route("qrcode") . "/" . $qrFilename;
-
         $product->save();
 
+        // save qr code
+
+        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $product->id, 'scan' => $product->id]));
+        $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
+        file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
+        $product->qrcode = route("qrcode") . "/" . $qrFilename;
+        $product->save();
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {

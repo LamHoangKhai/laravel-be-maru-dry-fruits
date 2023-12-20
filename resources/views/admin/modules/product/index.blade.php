@@ -48,7 +48,7 @@
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <table class="table  table-bordered table-image">
-                        
+
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -59,14 +59,9 @@
                                     <th class="max-110">Stock Quantity</th>
                                     <th class="max-110">Store Quantity</th>
                                     <th>Status</th>
-                                    <th>QRCode</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
-                                    <th>
-                                        {{-- <img src="data:image/png;base64,{{$product[0]->qrcode}} " alt="Product QR Code"> --}}
-                                    </th>
-
                                 </tr>
                             </thead>
 

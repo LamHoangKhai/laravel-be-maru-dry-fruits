@@ -24,7 +24,7 @@ return new class extends Migration {
             $table->tinyInteger("status")->default(1)->comment("1:Show - 2:Hidden");
             $table->tinyInteger("feature")->default(2)->comment('1: Featured - 2: Unfeatured');
             $table->foreign('category_id')->references('id')->on('categories');
-            $table->longText('qrcode');
+            $table->longText('qrcode')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

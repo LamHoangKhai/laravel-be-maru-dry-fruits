@@ -62,8 +62,7 @@
                     <div class="row">
                         <div class="mb-3">
                             <label for="exampleFormControlSelect2" class="form-label">Weight tag</label>
-                            <select id="choices-multiple-remove-button" placeholder="Select" multiple
-                                name="weights[]">
+                            <select id="choices-multiple-remove-button" placeholder="Select" multiple name="weights[]">
                                 @foreach ($weights as $weight)
                                     <option value="{{ $weight->id }}"
                                         {{ in_array($weight->id, old('weights', [])) ? 'selected' : '' }}>

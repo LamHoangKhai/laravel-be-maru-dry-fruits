@@ -62,6 +62,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //view 
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
+        Route::get('detail/{id}', 'detail')->name('detail');
 
         //api
         Route::post('get-products', 'getProducts')->name('getProducts');
@@ -80,11 +81,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
 
-        // QR
-        Route::get('details/{id}', 'details')->name('details');
-        Route::get('scan-qr', function() {
-            return view('admin.modules.product.scan');
-        });
+
 
 
         Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {

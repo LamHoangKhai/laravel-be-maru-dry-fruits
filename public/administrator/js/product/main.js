@@ -96,4 +96,12 @@ $(document).ready(() => {
             },
         });
     });
+
+    $("#renderData").on("click", ".qr", async (e) => {
+        Swal.fire({
+            imageUrl: e.target.value,
+            imageHeight: 100,
+            imageAlt: "A tall image",
+        });
+    });
 });

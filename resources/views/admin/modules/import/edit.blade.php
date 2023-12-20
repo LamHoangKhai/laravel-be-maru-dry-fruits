@@ -74,13 +74,7 @@
 
                     </div>
 
-                    <div class="row">
-                        <div class="col mb-2">
-                            <label for="note" class="form-label">Note</label>
-                            <input type="text" id="note" class="form-control" placeholder="Enter note"
-                                name="note" value="{{ old('note', $data->note) }}" />
-                        </div>
-                    </div>
+                 
 
                     <div class="row ">
                         <div class="col d-flex  justify-content-end">

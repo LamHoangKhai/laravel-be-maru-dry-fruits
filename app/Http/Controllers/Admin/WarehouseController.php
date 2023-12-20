@@ -49,7 +49,6 @@ class WarehouseController extends Controller
         $import->current_quantity = $request->quantity;
         $import->expiration_date = $request->expiration_date;
         $import->input_price = $request->input_price;
-        $import->note = $request->note;
         $import->shipment = time();
         $import->transaction_type = 1;
         $import->transaction_date = date("Y-m-d H:i:s");
@@ -92,7 +91,6 @@ class WarehouseController extends Controller
         $import->supplier_id = $request->supplier_id;
         $import->quantity = $request->quantity;
         $import->expiration_date = $request->expiration_date;
-        $import->note = $request->note;
         $import->updated_at = date("Y-m-d H:i:s");
         $import->save();
 

@@ -19,7 +19,6 @@ const loadProduct = (storage) => {
                 data.forEach((element, index) => {
                     let created_at = formatDate(new Date(element.created_at));
                     let updated_at = formatDate(new Date(element.updated_at));
-
                     // get url edit
                     let urlEdit = $("#url-edit")
                         .attr("data-url")
@@ -60,12 +59,12 @@ const loadProduct = (storage) => {
                     <td>${element.stock_quantity}kg</td>
                     <td>${element.store_quantity}kg</td>
                     <td>
-                    <span class="badge rounded-pill bg-${level[1]}">${
-                        level[0]
+                    <span class="badge rounded-pill bg-${type[1]}">${
+                        type[0]
                     }</span>
                     </td>
-                    <td  class="max-110">${create_at}</td>
-                    <td  class="max-110">${update_at}</td>
+                    <td  class="max-110">${created_at}</td>
+                    <td  class="max-110">${updated_at}</td>
                     
                     <td class="g-2" >
                         <div class="dropdown">
@@ -75,6 +74,9 @@ const loadProduct = (storage) => {
                             </button>
 
                             <div class="dropdown-menu" style="">
+                            <button value="${
+                                element.qrcode
+                            }" class="dropdown-item qr" i><i class='bx bx-qr'></i> QR</button>
                             <a href="${urlImport}" class="dropdown-item"><i class='bx bx-import'></i> Import</a>
                             <a href="${urlExport}" class="dropdown-item"><i class='bx bx-export'></i> Export</a>
                             <a href="${urlLog}" class="dropdown-item"><i class='bx bx-history'></i> Log I/E</a>
