@@ -52,14 +52,13 @@ class ProductController extends Controller
         // dd($request->image);
         $request->image->move(public_path("uploads"), $filename);
         $product->image = route("uploads") . "/" . $filename;
-        
+        $product->qrcode = 0;
+        $product->save();
         // save qr code
-        $lastestID = Product::latest()->first();
-        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $lastestID->id + 1]));
-        $qrFilename = rand(1, 10000) . time() . "." . $lastestID->id + 1 . '.svg';
+        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $product->id]));
+        $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
         file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
         $product->qrcode = route("qrcode") . "/" . $qrFilename;
-
         $product->save();
         //insert in table Product_Weight
         $insert = [];
