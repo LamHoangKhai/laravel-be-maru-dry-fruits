@@ -8,11 +8,15 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function allProduct() {
+    public function allproduct() {
         $products = Product::all();
         return response()->json([
             'product' => $products
         ],200);
+    }
+
+    public function product_details(Request $request) {
+        
     }
 
     public function product($category_id) {
