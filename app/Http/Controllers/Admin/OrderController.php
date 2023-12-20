@@ -80,7 +80,7 @@ class OrderController extends Controller
         $order->total = $request->total;
         $order->transaction = 1;
         $order->transaction_status = 1;
-        // $order->note = $request->note;
+        $order->note = $request->note;
         $order->status = 4;
         $order->created_at = date("Y-m-d H:i:s");
         $order->updated_at = date("Y-m-d H:i:s");

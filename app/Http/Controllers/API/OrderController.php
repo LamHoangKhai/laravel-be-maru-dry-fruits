@@ -13,33 +13,25 @@ class OrderController extends Controller
 {
     public function order(Request $request)
     {
-        $infoUserCheckout = [
-            'email' => $request->email,
-            'full_name' => $request->full_name,
-            'address' => $request->address,
-            'phone' => $request->phone,
-            'transaction' => $request->transaction,
-            'subtotal' => $request->subtotal,
-            'user_id' => auth('api')->user()->id,
-            'status' => 1,
-            'total' => $request->subtotal + 35000,
-            'transaction_status' => 1,
-            'created_at' => Carbon::now(),
-        ];
-
-        Order::insert($infoUserCheckout);
-
+        // Save order
+        $order = new Order();
+        $order->email =  $request->email;
+        $order->full_name = $request->full_name;
+        $order->address = $request->address;
+        $order->phone = $request->phone;
+        $order->transaction = $request->transaction;
+        $order->subtotal = $request->subtotal;
+        $order->user_id = auth('api')->user()->id;
+        $order->status = 1;
+        $order->total = $request->subtotal + 35000;
+        $order->transaction_status = 1;
+        $order->created_at = date("Y-m-d h:i:s");
+        $order->updated_at = date("Y-m-d h:i:s");
+        $order->save();
         
-        unset($infoUserCheckout['user_id']);
-        return response()->json([
-            'message' => 'Checkout successfully',
-            'order' => $infoUserCheckout
-        ], 200);
-    }
 
-    public function order_items(Request $request)
-    {
-        $latestOrder = Order::latest()->first();
+        // Save order item
+        $orderID = $order->id;
 
         $product_id = $request->product_id;
         $price = $request->price;
@@ -54,7 +46,7 @@ class OrderController extends Controller
 
                 $orderDetail = [
                     'product_id' => $id,
-                    'order_id' => $latestOrder->id,
+                    'order_id' => $orderID,
                     'price' => $price,
                     'weight' => $weight,
                     'quantity' => $quantity
@@ -64,7 +56,7 @@ class OrderController extends Controller
         } else {
             $orderDetail = [
                 'product_id' => $product_id,
-                'order_id' => $latestOrder->id,
+                'order_id' => $orderID,
                 'price' => $price,
                 'weight' => $weight,
                 'quantity' => $quantity
@@ -72,8 +64,9 @@ class OrderController extends Controller
             OrderItems::insert($orderDetail);
         }
         return response()->json([
+            'message' => 'Checkout successfully',
+            'order' => $order,
             'orderDetail' => $orderDetail
-        ]);
+        ], 200);
     }
-
 }

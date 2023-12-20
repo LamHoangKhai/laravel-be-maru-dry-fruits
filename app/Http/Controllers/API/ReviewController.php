@@ -102,6 +102,6 @@ class ReviewController extends Controller
         }
         return response()->json([
             'comment' => $dataComment
-        ]);
+        ],200);
     }
 }

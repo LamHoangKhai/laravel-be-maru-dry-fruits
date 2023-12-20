@@ -61,7 +61,6 @@ Route::group([
 ], function () {
 
     Route::post('order',[OrderController::class, 'order'])->name('order');
-    Route::post('order_items', [OrderController::class, 'order_items'])->name('order_items');
 
 });
 
