@@ -4,9 +4,10 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ExportController;
 use App\Http\Controllers\API\OrderController as APIOrderController;
-use App\Http\Controllers\APi\ProductController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
+use App\Http\Controllers\API\FeedbackController;
 use App\Http\Controllers\API\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::group([
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('edit_profile', [AuthController::class, 'edit_profile'])->name('edit_profile');
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 
 });
@@ -50,7 +52,6 @@ Route::group([
     Route::get('product/{category_id}', [ProductController::class, 'product'])->name('product');
     Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
     Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
-
 });
 
 Route::group([
@@ -79,6 +80,13 @@ Route::group([
     Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
 
     Route::get('return_review', [ReviewController::class, 'return_review'])->name('return_review');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'feedback'
+], function () {
+    Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
 });
 
 

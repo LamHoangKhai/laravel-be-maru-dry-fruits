@@ -70,7 +70,6 @@ class AuthController extends Controller
             auth('api')->logout();
             return response()->json(['error' => 'Not found'], 403);
         }
-
         return $this->respondWithToken($token);
         
     }
@@ -84,7 +83,7 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ]);
+            ],200);
         }
         else {
             return response()->json([
@@ -105,6 +104,38 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
+
         ]);
+    }
+
+    public function edit_profile(Request $request) {
+        if(auth('api')->user()) {
+            $infoAfterEdit = [
+                'address' => $request->address,
+                'full_name' => $request->full_name,
+                'phone' => $request->phone,
+            ];
+            $password = $request->password;
+            if(!empty($password)) {
+                $validator = Validator::make($request->all(), [
+                'password' => 'confirmed'
+                ], [
+                'password.confirmed' => 'Password confirmation is not correct'  
+                ]);
+            
+                $infoAfterEdit = ['password' => bcrypt($request->password)];
+                if($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()], 422);
+                }
+            }
+            User::where('id',auth('api')->user()->id)->update($infoAfterEdit);
+            return response()->json([
+                'message' => 'Edit successfully'
+            ],200);
+        }
+        
+        return response()->json([
+            'message' => 'Error'
+        ],401);
     }
 }

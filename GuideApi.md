@@ -91,7 +91,7 @@ Content type: application/json
         'transaction'
         'subtotal'
         'total' => $request->subtotal + 35000,
-        'status_order_id' => 1,
+        'status' => 1,
         'transaction_status' => 1,
         'created_at' => Carbon::now(),
     }
@@ -223,5 +223,38 @@ Content type: application/json
             "created_at":
             "updated_at":
     }
-
 }
+
+Feedback {
+    URL: http://localhost:8000/api/feedback/feedback
+    Method: POST
+    Content type: application/json
+
+        data {
+            'full_name'
+            'email'
+            'phone'
+            'content'
+        }
+        return {
+            'message' => 'Feedback is sent successfully'    
+        }
+    }
+
+Edit profile {
+    URL: http://localhost:8000/api/edit_profile/edit_profile
+    Method: POST
+    Content type: application/json
+
+        data {
+            'full_name'
+            'email'
+            'phone'
+            'address'
+            password và password_confirmation nếu user có đổi password
+        }
+        return {
+            'message' => 'Edit successfully'    
+        }
+    }
+

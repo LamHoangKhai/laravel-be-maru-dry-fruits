@@ -11,14 +11,19 @@ use App\Models\Product_Weight;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use App\Models\WeighTag;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class ProductController extends Controller
 {
     //view product
     public function index()
     {
-        return view('admin.modules.product.index');
+        $product = Product::all();
+        return view('admin.modules.product.index', [
+            'product' => $product
+        ]);
     }
     //view create product
     public function create()
@@ -44,8 +49,17 @@ class ProductController extends Controller
 
         //save  image
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
+        // dd($request->image);
         $request->image->move(public_path("uploads"), $filename);
         $product->image = route("uploads") . "/" . $filename;
+
+        // save qr code
+        $lastestID = Product::latest()->first();
+        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $lastestID->id + 1]));
+        $qrFilename = rand(1, 10000) . time() . "." . $lastestID->id + 1 . '.svg';
+        file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
+        $product->qrcode = route("qrcode") . "/" . $qrFilename;
+
         $product->save();
 
         //insert in table Product_Weight
@@ -148,5 +162,19 @@ class ProductController extends Controller
         $product_weight->delete();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
+
+    public function details($id)
+    {
+        $product_details = Product::where('id', $id)->get();
+        return view('admin.modules.product.details', [
+            'product' => $product_details
+        ]);
+
+    }
+
+
+
+
+
 
 }
