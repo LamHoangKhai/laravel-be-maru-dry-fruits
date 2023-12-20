@@ -73,7 +73,7 @@ URL: http://localhost:8000/api/order/order
 Method: POST
 Content type: application/json
 
-    Data: {
+    Data cua ORder: {
         'email' => $request->email,
         'full_name' => $request->full_name,
         'address' => $request->address,
@@ -81,8 +81,14 @@ Content type: application/json
         'transaction' => $request->transaction,
         'subtotal' => $request->subtotal,
     }
+    Data cua order_items {
+        $product_id = $request->product_id;
+        $price = $request->price;
+        $weight = $request->weight;
+        $quantity = $request->quantity;
+    }
 
-    return: {
+    return cua order: {
         'message' : "Checkout successfully",
         'email'
         'full_name'
@@ -95,30 +101,15 @@ Content type: application/json
         'transaction_status' => 1,
         'created_at' => Carbon::now(),
     }
-
-}
-
-Order_Item {
-URL: http://localhost:8000/api/order/order_items
-Method: POST
-Content type: application/json
-
-    Data: {
-        $product_id = $request->product_id;
-        $price = $request->price;
-        $weight = $request->weight;
-        $quantity = $request->quantity;
-    }
-
-    return: {
-        'product_id' => $product_id,
+    return cua order items: {
+     'product_id' => $product_id,
         'order_id' => $latestOrder->id,
         'price' => $price,
         'weight' => $weight,
         'quantity' => $quantity
     }
-
 }
+
 
 Banner_Slide {
 URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
