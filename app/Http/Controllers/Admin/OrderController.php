@@ -22,6 +22,18 @@ class OrderController extends Controller
         return view("admin.modules.order.index");
     }
 
+    public function history()
+    {
+        return view("admin.modules.order.history");
+    }
+
+    public function invoice(string $id)
+    {
+        $order = Order::with(["order_items", "user"])->findOrFail($id);
+        dd($order);
+        return view("admin.modules.order.invoice", ['order' => $order]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */
@@ -99,37 +111,7 @@ class OrderController extends Controller
         return redirect()->route("admin.order.index")->with("success", "Create order success!");
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 
     // API get list order according to status , search order No. ,user email,phone  ,name
     public function getListOrder(Request $request)
@@ -158,6 +140,35 @@ class OrderController extends Controller
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 
+    public function getHistoryOrder(Request $request)
+    {
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+        $select = $request->select;
+
+        $query = Order::with(["product", "user"]);
+
+        // if select  0 get  all status order else  status order  = select
+        $query = $select > 0
+            ? $query->where("status", "=", $select)
+            : $query->where("status", ">", 3);
+
+        // search order No.,user phone ,email , name 
+        $query = $query
+            ->whereHas("user", function ($query) use ($search) {
+                $query->where("full_name", "like", "%" . $search . "%")
+                    ->orWhere("email", "like", "%" . $search . "%")
+                    ->orWhere("phone", "like", "%" . $search . "%")
+                    ->orWhere("orders.id", "like", "%" . $search . "%");
+            });
+        //return data
+        $result = $query->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+
+
+
+
 
     //API get products, weight tags
     public function getProduct(Request $request)
@@ -171,8 +182,26 @@ class OrderController extends Controller
     //API get order details
     public function getOrderDetail(Request $request)
     {
-        $order = Order::with(["product", "user"])->findOrFail($request->id);
-
+        $order = Order::with(["order_items", "user"])->findOrFail($request->id);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $order]);
+    }
+
+    public function cancelOrder(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        $order->status = 5;
+        $order->updated_at = date("Y-m-d H:i:s");
+        $order->save();
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $order = Order::findOrFail($request->id);
+        $currentStatus = $order->status;
+        $order->status = $currentStatus + 1;
+        $order->updated_at = date("Y-m-d H:i:s");
+        $order->save();
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
 }

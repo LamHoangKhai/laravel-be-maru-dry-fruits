@@ -131,6 +131,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('index', 'index')->name('index');
         Route::get('history', 'history')->name('history');
         Route::get('create', 'create')->name('create');
+        Route::get('invoice/{id}', 'invoice')->name('invoice');
         Route::post('checking', 'checking')->name('checking');
 
         //create
@@ -145,9 +146,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         //api
         Route::post('get-list-order', 'getListOrder')->name('getListOrder');
+        Route::post('get-history-order', 'getHistoryOrder')->name('getHistoryOrder');
         Route::post('get-product', 'getProduct')->name('getProduct');
         Route::post('get-order-detail', 'getOrderDetail')->name('getOrderDetail');
-
+        Route::post('update-status', 'updateStatus')->name('updateStatus');
+        Route::post('cancel-order', 'cancelOrder')->name('cancelOrder');
     });
 
 
@@ -156,6 +159,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //view
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
+
 
         //create 
         Route::post('store', 'store')->name('store');

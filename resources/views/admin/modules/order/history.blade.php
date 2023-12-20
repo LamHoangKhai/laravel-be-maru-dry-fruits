@@ -2,16 +2,10 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/js/log-import-export/main.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/history-order/main.js') }}" type="module"></script>
 @endpush
-
-
-
 @section('content')
-    <input type="hidden" id="product_id" value="{{ $id }}">
-    <input type="hidden" id="url" data-url="{{ route('admin.product.warehouse.getLog') }}">
-    <input type="hidden" id="url-edit-import" data-url="{{ route('admin.product.warehouse.editImport', 'id') }}">
-
+    <input type="hidden" id="url" data-url="{{ route('admin.order.getHistoryOrder') }}">
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
@@ -22,30 +16,37 @@
 
             <div class="card">
                 <div class="card-header">
-                    <div class="nav-item d-flex justify-content-end w-100 ">
-                        <select id="select" class="form-select w-px-150">
-                            <option value="1" selected>Import</option>
-                            <option value="2">Export</option>
-                        </select>
-                        <input type="text" class="form-control  w-25" style="margin:0 0 0 16px" id="search"
-                            placeholder="Enter shipment" />
+                    <div class="nav-item d-flex justify-content-end w-100 h-px-40">
+                        <div class="input-group w-px-200">
+                            <label class="input-group-text" for="inputGroupSelect01">Status</label>
+                            <select id="select" class="form-select ">
+                                <option value="0" selected>All</option>
+                                <option value="4">Complete</option>
+                                <option value="5">Cancel</option>
+                            </select>
+                        </div>
+
+                        <div class="input-group w-25" style="margin:0 12px ">
+                            <span class="input-group-text" h-px-40>Search</span>
+                            <input type="text" class="form-control" placeholder="Enter order No. , phone , email "
+                                id="search">
+                        </div>
+
+
                     </div>
                 </div>
-
                 <div class="card-body">
                     <div class="table-responsive text-nowrap">
                         <table class="table  table-bordered table-image">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Supplier</th>
-                                    <th>Product</th>
-                                    <th class="max-110" id="quantity"></th>
-                                    <th class="max-110">Current Quantity</th>
-                                    <th>Shipment</th>
-                                    <th>Type</th>
-                                    <th class="max-110">Expiration Date</th>
-                                    <th class="max-110">Transaction Date</th>
+
+                                    <th>Order #</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
@@ -60,15 +61,12 @@
 
                             <tfoot>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Supplier</th>
-                                    <th>Product</th>
-                                    <th>Quantity</th>
-                                    <th class="max-110">Current Quantity</th>
-                                    <th>Shipment</th>
-                                    <th>Type</th>
-                                    <th class="max-110">Expiration Date</th>
-                                    <th class="max-110">Transaction Date</th>
+                                    <th>Order #</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Phone</th>
+                                    <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>

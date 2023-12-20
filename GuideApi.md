@@ -80,6 +80,7 @@ Content type: application/json
         'phone' => $request->phone,
         'transaction' => $request->transaction,
         'subtotal' => $request->subtotal,
+        
     }
     Data cua order_items {
         $product_id = $request->product_id;
