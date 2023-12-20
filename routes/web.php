@@ -80,6 +80,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
+        Route::get('scan-qr', function() {
+            return view('admin.modules.product.scan');
+        });
 
 
 

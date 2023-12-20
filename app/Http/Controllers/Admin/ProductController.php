@@ -67,7 +67,7 @@ class ProductController extends Controller
 
         // save qr code
 
-        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $product->id, 'scan' => $product->id]));
+        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
         $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
         file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
         $product->qrcode = route("qrcode") . "/" . $qrFilename;
