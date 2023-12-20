@@ -4,7 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ExportController;
 use App\Http\Controllers\API\OrderController as APIOrderController;
-use App\Http\Controllers\APi\ProductController;
+use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
 use App\Http\Controllers\API\FeedbackController;
@@ -36,6 +36,7 @@ Route::group([
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::post('edit_profile', [AuthController::class, 'edit_profile'])->name('edit_profile');
     Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 
 });

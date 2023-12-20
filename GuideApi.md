@@ -241,3 +241,20 @@ Feedback {
         }
     }
 
+Edit profile {
+    URL: http://localhost:8000/api/edit_profile/edit_profile
+    Method: POST
+    Content type: application/json
+
+        data {
+            'full_name'
+            'email'
+            'phone'
+            'address'
+            password và password_confirmation nếu user có đổi password
+        }
+        return {
+            'message' => 'Edit successfully'    
+        }
+    }
+

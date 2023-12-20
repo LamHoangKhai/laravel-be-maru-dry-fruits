@@ -65,6 +65,9 @@ const loadProduct = (storage) => {
                         level[0]
                     }</span>
                     </td>
+                    <td>
+                    <img src="${element.qrcode}" alt="Product QR Code">
+                    </td>
                     <td  class="max-110">${create_at}</td>
                     <td  class="max-110">${update_at}</td>
                     

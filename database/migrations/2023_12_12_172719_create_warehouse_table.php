@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->tinyInteger("transaction_type")->comment("1: Export - 2: Import");
             $table->string("note")->nullable();
             $table->string("shipment");
+            $table->integer('import_price')->nullable();
             $table->date("transaction_date");
             $table->date("expiration_date");
             $table->foreign('product_id')->references('id')->on('products');

@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
 use App\Models\Order;
+// use BaconQrCode\Encoder\QrCode;
 use Illuminate\Support\Facades\Route;
+use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,7 +30,7 @@ Route::get('/', function () {
     return redirect()->route("admin.user.index");
 });
 Route::get('uploads/')->name("uploads");
-
+Route::get('qrcode/')->name('qrcode');
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
@@ -77,6 +79,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
+
+        // QR
+        Route::get('details/{id}', 'details')->name('details');
+        Route::get('scan-qr', function() {
+            return view('admin.modules.product.scan');
+        });
 
 
         Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
@@ -186,3 +194,5 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 Route::fallback(function () {
     abort(404);
 });
+
+
