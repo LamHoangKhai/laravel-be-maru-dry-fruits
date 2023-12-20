@@ -28,41 +28,27 @@ class OrderController extends Controller
         $order->created_at = date("Y-m-d h:i:s");
         $order->updated_at = date("Y-m-d h:i:s");
         $order->save();
-        
+
 
         // Save order item
         $orderID = $order->id;
 
-        $product_id = $request->product_id;
-        $price = $request->price;
-        $weight = $request->weight;
-        $quantity = $request->quantity;
-        if (is_array($product_id)) {
-            foreach ($product_id as $product) {
-                $id = $product['id'];
-                $price = $product['price'];
-                $weight = $product['weight'];
-                $quantity = $product['quantity'];
-
-                $orderDetail = [
+        $items = $request->order_items;
+        $orderDetail=[];
+            foreach ($items as $item) {
+                $id = $item['product_id'];
+                $price = $item['price'];
+                $weight = $item['weight'];
+                $quantity = $item['quantity'];
+                $orderDetail[] = [
                     'product_id' => $id,
                     'order_id' => $orderID,
                     'price' => $price,
                     'weight' => $weight,
                     'quantity' => $quantity
                 ];
-                OrderItems::insert($orderDetail);
             }
-        } else {
-            $orderDetail = [
-                'product_id' => $product_id,
-                'order_id' => $orderID,
-                'price' => $price,
-                'weight' => $weight,
-                'quantity' => $quantity
-            ];
-            OrderItems::insert($orderDetail);
-        }
+        OrderItems::insert($orderDetail);
         return response()->json([
             'message' => 'Checkout successfully',
             'order' => $order,
