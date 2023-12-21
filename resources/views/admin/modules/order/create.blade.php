@@ -5,8 +5,33 @@
 @endpush
 
 @push('js')
-    <script src="{{ asset('administrator/js/order/create.js') }}"></script>
+    <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="{{ asset('administrator/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('administrator/js/order/create.js') }}"></script>
+@endpush
+
+@push('handlejs')
+    {{-- <script type="text/javascript">
+        document.getElementById('startScan').addEventListener('click', function() {
+            document.getElementById('preview').style.display = 'block';
+
+            let scanner = new Instascan.Scanner({
+                video: document.getElementById('preview')
+            });
+            scanner.addListener('scan', function(content) {
+                window.location.href = content;
+            });
+            Instascan.Camera.getCameras().then(function(cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error('No cameras found.');
+                }
+            }).catch(function(e) {
+                console.error(e);
+            });
+        });
+    </script> --}}
 @endpush
 
 @section('content')
@@ -19,6 +44,7 @@
                 </h4>
 
             </div>
+
             <div class="card-body">
                 <form method="POST" action="{{ route('admin.order.checking') }}" enctype="multipart/form-data"
                     id="form">
@@ -26,28 +52,32 @@
 
                     <div class="row">
                         <div class="col mb-2">
-                            <button type="button" class="btn btn-sm btn-info" id="add-item"><i
-                                    class="bx bx-plus-circle"></i>&nbsp;
-                                Add item</button>
+                            <select class="form-select js-example-basic-single" id="select" placeho>
+                                <option value="" disabled selected>Please choose item</option>
+                                @foreach ($products as $product)
+                                    <option value="{{ $product->id }}">
+                                        {{ $product->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="col mb-2 d-flex justify-content-end">
+                            <button type="button" id="scan" class="btn btn-secondary" data-toggle="modal"
+                                data-target="#showScan"><i class='bx bx-qr-scan'></i>
+                                QR
+                            </button>
                         </div>
                     </div>
 
-                    {{--                  
-                    <select class="js-example-basic-single" name="state[]">
-                        <option value="AL">Alabama</option>
-
-                        <option value="WY">Wyoming</option>
-                    </select>
-                    <select class="js-example-basic-single" name="state[]">
-                        <option value="AL">Alabama</option>
-
-                        <option value="WY">Wyoming</option>
-                    </select> --}}
 
                     <div class="row">
                         <div class="row">
                             <div class="col mb-2">
                                 <label for="" class="form-label">Product</label>
+                            </div>
+                            <div class="col mb-2">
+                                <label for="" class="form-label">Price</label>
                             </div>
                             <div class="col mb-2">
                                 <label for="" class="form-label">Weight</label>
@@ -96,6 +126,27 @@
             </div>
 
         </div>
+
+
+
+
+        <!-- The Modal -->
+        <div class="modal fade" id="showScan">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <input type="hidden" class="close closeModal" data-dismiss="modal" aria-label="Close">
+
+                    </div>
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <video id="preview" style="width: 100%;height:auto"></video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
 
     </div>
     <!-- /.card -->

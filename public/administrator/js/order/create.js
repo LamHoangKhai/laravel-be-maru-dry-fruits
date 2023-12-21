@@ -1,12 +1,14 @@
 $(document).ready(() => {
-    ajax();
-    //handle click add item
-    $("#add-item").click(() => {
-        ajax();
+    $("#select").change((e) => {
+        let product_id = e.target.value;
+        createItems(product_id);
     });
-    // remove item
     $("#list-item").on("click", ".remove-item", (e) => {
         $(e.target).parent().parent().remove();
+    });
+
+    $(".js-example-basic-single").select2({
+        theme: "bootstrap4",
     });
 
     $("#discount").keyup((e) => {
@@ -17,23 +19,88 @@ $(document).ready(() => {
             e.target.value = 100;
         }
     });
+
+    $("#scan").click(() => {
+        // disable button scan
+        setTimeout(() => {
+            $("#scan").prop("disabled", true);
+        }, 100);
+        // show camera
+        $("#preview").css("display", "block");
+        // if timouet 20s close camera
+        let timerId = setTimeout(() => {
+            $(".closeModal").trigger("click");
+            $("#scan").prop("disabled", false);
+            scanner.stop();
+        }, 20000);
+
+        let scanner = new Instascan.Scanner({
+            video: $("#preview")[0],
+        });
+
+        scanner.addListener("scan", function (qrURl) {
+            // clear all timeout
+
+            clearTimeout(timerId);
+            // check math url
+            if (!checkMathUrl(qrURl)) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error!!!",
+                    html: "<strong>QR not exist</strong>",
+                    timer: 3000,
+                });
+                $(".closeModal").trigger("click");
+                $("#scan").prop("disabled", false);
+                scanner.stop();
+                return;
+            }
+            let url = new URL(qrURl);
+            let product_id = url.search.split("=")[1];
+            // create item
+            createItems(product_id);
+            //close camera
+            $(".closeModal").trigger("click");
+            $("#scan").prop("disabled", false);
+            scanner.stop();
+        });
+        //on camera
+        Instascan.Camera.getCameras()
+            .then(function (cameras) {
+                if (cameras.length > 0) {
+                    scanner.start(cameras[0]);
+                } else {
+                    console.error("No cameras found.");
+                }
+            })
+            .catch(function (e) {
+                console.error(e);
+            });
+        //close camera if click over layer modal
+        $(".modal ").click(() => {
+            // clear all timeout
+            clearTimeout(timerId);
+            $("#scan").prop("disabled", false);
+            scanner.stop();
+        });
+    });
 });
 
-const ajax = () => {
+const checkMathUrl = (url) => {
+    return url.indexOf("/admin/product/detail/") != -1 ? true : false;
+};
+
+const createItems = (product_id) => {
     $.ajax({
         type: "POST",
         url: $("#url").data("url"),
+        data: { id: product_id },
         dataType: "json",
         success: (res) => {
+            console.log("run");
             let data = res?.data || [];
-            let optionItem = "";
             let optionWeights = "";
             let innerHTML = "";
-            let listItem = [];
-            for (const item of data.products) {
-                optionItem += `<option  value="${item.id}">${item.name} </option>`;
-                listItem = [...listItem, item.id];
-            }
             for (const item of data.weights) {
                 optionWeights += `<option value="${item.mass}">${
                     item.mass >= 1000
@@ -46,13 +113,13 @@ const ajax = () => {
                         <div class="row">
                          <i class='bx bx-x remove-item w-px-20'></i>
                          </div>
-                         <div class="col mb-2">
-                            <select class="form-select js-example-basic-single item_id" name="product[]" >
-                            ${optionItem}
-                            <option value="" disabled selected></option>
-                            </select>
+                         <div class="col mb-2 d-flex align-items-center">
+                           <span >${data.product.name} </span>
+                           <input type="hidden" name="products[]" value="${data.product.id}">
                         </div>
-
+                        <div class="col mb-2  d-flex align-items-center">
+                        <span >$${data.product.price}/100gram </span>
+                        </div>
                         <div class="col mb-2">
                             <select name="weight[]" class="form-select">
                                 ${optionWeights}
@@ -66,11 +133,14 @@ const ajax = () => {
             </div>`;
             //append 1 product
             $("#list-item").append(innerHTML);
-            $(".js-example-basic-single").select2({
-                theme: "bootstrap4",
-            });
         },
         error: function (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!!!",
+                html: "<strong>QR not exist</strong>",
+                timer: 3000,
+            });
             console.log(error.message);
         },
     });

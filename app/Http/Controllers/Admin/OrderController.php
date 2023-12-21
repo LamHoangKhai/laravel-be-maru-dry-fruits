@@ -41,15 +41,16 @@ class OrderController extends Controller
      */
     public function create()
     {
-        return view("admin.modules.order.create");
+        $products = Product::get();
+        return view("admin.modules.order.create", ["products" => $products]);
     }
 
     public function checking(Request $request)
     {
         $request->validate([
-            "product" => "required"
+            "products" => "required"
         ]);
-        $productId = $request->product;
+        $productId = $request->products;
         $note = $request->note;
         $weights = $request->weight;
         $quantity = $request->quantity;
@@ -175,9 +176,9 @@ class OrderController extends Controller
     //API get products, weight tags
     public function getProduct(Request $request)
     {
-        $products = Product::get();
+        $product = Product::findOrFail($request->id);
         $weights = WeighTag::orderBy("mass", "ASC")->get();
-        $result = ["products" => $products, "weights" => $weights];
+        $result = ["product" => $product, "weights" => $weights];
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
 
