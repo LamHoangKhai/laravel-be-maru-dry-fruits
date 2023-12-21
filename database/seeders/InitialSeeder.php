@@ -201,14 +201,14 @@ class InitialSeeder extends Seeder
                 $product->price = $products[$k]['price'];
                 $product->status = 1;
                 $product->feature = rand(1, 2);
-                $product->description = $products[$k]["name"];
+                $product->description = $products[$k]["description"];
                 $product->nutrition_detail = $products[$k]["name"];
                 $product->category_id = $products[$k]['category_Id'];
                 $product->created_at = Carbon::now();
                 $product->updated_at = Carbon::now();
                 $product->save();
 
-                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
                 $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
                 file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
                 $product->qrcode = 'http://localhost:8000/qrcode' . "/" . $qrFilename;
