@@ -55,7 +55,7 @@ const loadProduct = (storage) => {
                       element.image
                   }" class="img" alt="Sheep" width="100" height="75" ">
 		             </td>
-                    <td>${element.price}</td>
+                    <td>$${element.price}</td>
                     <td>${element.stock_quantity}kg</td>
                     <td>${element.store_quantity}kg</td>
                     <td>

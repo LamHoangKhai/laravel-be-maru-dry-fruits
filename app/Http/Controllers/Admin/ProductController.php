@@ -66,7 +66,7 @@ class ProductController extends Controller
         
         // save qr code
         $lastestID = Product::latest()->first();
-        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.details', ['id' => $lastestID->id + 1]));
+        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $lastestID->id + 1]));
         $qrFilename = rand(1, 10000) . time() . "." . $lastestID->id + 1 . '.svg';
         file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
         $product->qrcode = route("qrcode") . "/" . $qrFilename;
@@ -172,11 +172,11 @@ class ProductController extends Controller
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
 
-    public function details($id)
+    public function detail($id)
     {
-        $product_details = Product::where('id', $id)->get();
-        return view('admin.modules.product.details', [
-            'product' => $product_details
+        $product_detail = Product::where('id', $id)->get();
+        return view('admin.modules.product.detail', [
+            'product' => $product_detail
         ]);
 
     }
