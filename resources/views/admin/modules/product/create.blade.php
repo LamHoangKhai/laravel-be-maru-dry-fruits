@@ -5,6 +5,7 @@
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
 @endpush
 
+
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
         <div class="card">
