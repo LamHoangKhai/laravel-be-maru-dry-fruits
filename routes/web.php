@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
+use App\Http\Controllers\CrawController;
 use App\Models\Order;
 // use BaconQrCode\Encoder\QrCode;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,7 @@ Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
+Route::get('craw', [CrawController::class, "index"])->name('craw');
 
 
 

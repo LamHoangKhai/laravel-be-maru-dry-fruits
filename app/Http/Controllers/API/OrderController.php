@@ -25,8 +25,8 @@ class OrderController extends Controller
         $order->total = $request->subtotal + 35000;
         $order->status = 1;
         $order->transaction_status = 1;
-        $order->created_at = date("Y-m-d h:i:s");
-        $order->updated_at = date("Y-m-d h:i:s");
+        $order->created_at = Carbon::now();
+        $order->updated_at = Carbon::now();
         $order->save();
 
 
