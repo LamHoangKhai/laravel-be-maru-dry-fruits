@@ -26,7 +26,7 @@ class ProductController extends Controller
     public function product_details(Request $request)
     {
         $product_id = $request->product_id;
-        $product_detail = Product::where('id', $product_id)->get();
+        $product_detail = Product::with('weightTags')->where('id', $product_id)->get();
         return response()->json([
             'product_detail' => $product_detail
         ]);

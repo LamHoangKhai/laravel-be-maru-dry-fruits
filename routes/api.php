@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ExportController;
@@ -62,6 +63,8 @@ Route::group([
 ], function () {
 
     Route::post('order',[OrderController::class, 'order'])->name('order');
+    Route::get('history_order', [OrderController::class, 'history_order'])->name('history_order');
+    Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
 
 });
 

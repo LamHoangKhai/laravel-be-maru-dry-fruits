@@ -141,6 +141,43 @@ Content type: application/json
     }
 }
 
+History Order {
+    URL: http://localhost:8000/api/order/history_order
+    Method: GET
+    Content type: application/json
+    return: {
+        "history_order": [
+            {
+                "order_id": 2,
+                "status": 1,
+                "subtotal": 15000,
+                "created_at": "2023-12-20T03:46:00.000000Z",
+                "quantity": so luong item 
+            },
+        ]
+    }
+}
+
+History order details {
+    URL: http://localhost:8000/api/order/history_order_details
+    Method: POST
+    Content type: application/json
+    data {
+        order_id
+    }
+    return {
+        "history_order_details": [
+        {
+            "name": "Chuối sấy",
+            "price": 500,
+            "weight": 500,
+            "quantity": 12,
+            "total": 30000
+        },
+        ]
+    }
+}
+
 
 Banner_Slide {
 URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
