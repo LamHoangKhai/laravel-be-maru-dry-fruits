@@ -201,7 +201,7 @@ class InitialSeeder extends Seeder
                 $product->price = $products[$k]['price'];
                 $product->status = 1;
                 $product->feature = rand(1, 2);
-                $product->description = $products[$k]["name"];
+                $product->description = $products[$k]["description"];
                 $product->nutrition_detail = $products[$k]["name"];
                 $product->category_id = $products[$k]['category_Id'];
                 $product->created_at = Carbon::now();
