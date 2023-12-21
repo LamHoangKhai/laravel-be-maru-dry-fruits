@@ -80,7 +80,7 @@ Content type: application/json
 <!-- Product { -->
 URL1: http://localhost:8000/api/product/allproduct  theo category
 METHOD: POST
-    Data: 
+    Data gửi xuống: 
         "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
     return: {
         if(category != 0) {
@@ -104,7 +104,7 @@ METHOD: POST
 Search Prouduct
 URL4: http://localhost:8000/api/product/search_product
 METHOD: POST
-    Data gửi xuống: category, nội dung search
+    Data gửi xuống: nội dung search
     return: {
         tất cả các sản phẩm có nội dung search
     }
