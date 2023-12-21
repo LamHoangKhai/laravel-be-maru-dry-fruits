@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
 use App\Http\Controllers\API\ExportController;
@@ -48,10 +49,14 @@ Route::group([
 ], function () {
 
     Route::get('category/{parent_id}', [CategoryController::class, 'category'])->name('category');
-    Route::get('allproduct', [ProductController::class, 'allProduct'])->name('all_product');
-    Route::get('product/{category_id}', [ProductController::class, 'product'])->name('product');
+
+    Route::post('allproduct', [ProductController::class, 'allproduct'])->name('all_product');
+    Route::post('product_details', [ProductController::class, 'product_details'])->name('product_details');
+    Route::post('search_product', [ProductController::class, 'search_product'])->name('search_product');
+
     Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
     Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
+
 });
 
 Route::group([
@@ -61,6 +66,8 @@ Route::group([
 ], function () {
 
     Route::post('order',[OrderController::class, 'order'])->name('order');
+    Route::get('history_order', [OrderController::class, 'history_order'])->name('history_order');
+    Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
 
 });
 
