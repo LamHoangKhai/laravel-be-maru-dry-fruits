@@ -102,7 +102,9 @@ const createItems = (product_id) => {
             let optionWeights = "";
             let innerHTML = "";
             for (const item of data.weights) {
-                optionWeights += `<option value="${item.mass}">${
+                optionWeights += `<option class="text-center" value="${
+                    item.mass
+                }">${
                     item.mass >= 1000
                         ? item.mass / 1000 + "kg"
                         : item.mass + "gram"
@@ -113,21 +115,21 @@ const createItems = (product_id) => {
                         <div class="row">
                          <i class='bx bx-x remove-item w-px-20'></i>
                          </div>
-                         <div class="col mb-2 d-flex align-items-center">
+                         <div class="col mb-2 d-flex align-items-center justify-content-center">
                            <span >${data.product.name} </span>
                            <input type="hidden" name="products[]" value="${data.product.id}">
                         </div>
-                        <div class="col mb-2  d-flex align-items-center">
+                        <div class="col mb-2  d-flex align-items-center justify-content-center">
                         <span >$${data.product.price}/100gram </span>
                         </div>
-                        <div class="col mb-2">
-                            <select name="weight[]" class="form-select">
+                        <div class="col mb-2 text-center">
+                            <select name="weight[]" class="form-select ">
                                 ${optionWeights}
                             </select>
                          </div>
 
-                        <div class="col mb-2">
-                            <input type="number"  class="form-control "
+                        <div class="col mb-2  ">
+                            <input type="number"  class="form-control text-end"
                             placeholder="Enter quantity" name="quantity[]" value="1"   min="1"/>
                         </div>
             </div>`;

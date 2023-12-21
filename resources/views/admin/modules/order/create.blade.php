@@ -73,16 +73,16 @@
 
                     <div class="row">
                         <div class="row">
-                            <div class="col mb-2">
+                            <div class="col mb-2 text-center">
                                 <label for="" class="form-label">Product</label>
                             </div>
-                            <div class="col mb-2">
+                            <div class="col mb-2  text-center">
                                 <label for="" class="form-label">Price</label>
                             </div>
-                            <div class="col mb-2">
+                            <div class="col mb-2  text-center">
                                 <label for="" class="form-label">Weight</label>
                             </div>
-                            <div class="col mb-2">
+                            <div class="col mb-2  text-center">
                                 <label for="" class="form-label">Quantity</label>
                             </div>
                         </div>
