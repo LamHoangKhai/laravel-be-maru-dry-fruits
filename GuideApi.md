@@ -1,4 +1,5 @@
-Login {
+<!-- ///////////////////////////////////// AUTH /////////////////////////////////////////-->
+<!-- Login { -->
 URL: http://localhost:8000/api/auth/login,
 Method: POST
 Content type: application/json
@@ -11,9 +12,9 @@ access_tokens,
 token_type,
 expires_in
 }
-}
 
-Register {
+
+<!-- Register { -->
 URL: http://localhost:8000/api/auth/register,
 Method: POST
 Content type: application/json
@@ -25,9 +26,9 @@ password_confirmation
 return: {
 'message': 'User successfuly registered'
 }
-}
 
-Logout {
+
+<!-- Logout { -->
 URL: http://localhost:8000/api/auth/logout,
 Method: POST
 Content type: application/json
@@ -36,9 +37,8 @@ Content type: application/json
         'message' => 'Successfully logged out'
     }
 
-}
 
-Profile {
+<!-- Profile { -->
 URL: http://localhost:8000/api/auth/profile,
 Method: GET
 Content type: application/json
@@ -46,7 +46,25 @@ Content type: application/json
     Nếu user đã login -> return: Tất cả thông tin của user vừa đăng nhập
     Nếu user đã logout hoặc chưa login -> return:  'message' => 'You need to login to get profile'
 
-}
+
+
+<!-- Edit profile { -->
+    URL: http://localhost:8000/api/edit_profile/edit_profile
+    Method: POST
+    Content type: application/json
+
+        data {
+            'full_name'
+            'email'
+            'phone'
+            'address'
+            password và password_confirmation nếu user có đổi password
+        }
+        return {
+            'message' => 'Edit successfully'    
+        }
+
+<!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
 
 Category {
 URL: http://localhost:8000/api/product/category/{parent_id},
@@ -57,7 +75,9 @@ Content type: application/json
 
 }
 
-Product {
+<!-- ///////////////////////////////////// PRODUCT /////////////////////////////////////////-->
+
+<!-- Product { -->
 URL1: http://localhost:8000/api/product/allproduct  theo category
 METHOD: POST
     Data: 
@@ -72,13 +92,8 @@ METHOD: POST
 
     }
 
-URL2: http//localhost:8000/api/product/product/{category_id}
-Method: GET
-Content type: application/json
-    URL2: Trả về tất cả các product có trong category
 
-
-Product Details
+<!-- Product Details -->
 URL3: http//localhost:8000/api/product/product_details
 METHOD: POST
     Data gửi xuống: product_id
@@ -86,157 +101,16 @@ METHOD: POST
         Tất cả thông tin của sản phẩm
     }
 
-}
-
-Order {
-URL: http://localhost:8000/api/order/order
-Method: POST
-Content type: application/json
-
-    Data cua ORder: {
-        'email' => $request->email,
-        'full_name' => $request->full_name,
-        'address' => $request->address,
-        'phone' => $request->phone,
-        'transaction' => $request->transaction,
-        'subtotal' => $request->subtotal,
-    }
-    Data
-    "order_items": [
-        {
-            $product_id = 1;
-            $price = 123;
-            $weight = 2;
-            $quantity = 3;
-        },
-
-        {
-            $product_id = 1;
-            $price = 123;
-            $weight = 2;
-            $quantity = 3;
-        }
-        ...
-        ]
-
-    return cua order: {
-        'message' : "Checkout successfully",
-        'email'
-        'full_name'
-        'address'
-        'phone'
-        'transaction'
-        'subtotal'
-        'total' => $request->subtotal + 35000,
-        'status' => 1,
-        'transaction_status' => 1,
-        'created_at' => Carbon::now(),
-    }
-    return cua order items: {
-     'product_id' => $product_id,
-        'order_id' => $latestOrder->id,
-        'price' => $price,
-        'weight' => $weight,
-        'quantity' => $quantity
-    }
-}
-
-History Order {
-    URL: http://localhost:8000/api/order/history_order
-    Method: GET
-    Content type: application/json
+Search Prouduct
+URL4: http://localhost:8000/api/product/search_product
+METHOD: POST
+    Data gửi xuống: category, nội dung search
     return: {
-        "history_order": [
-            {
-                "order_id": 2,
-                "status": 1,
-                "subtotal": 15000,
-                "created_at": "2023-12-20T03:46:00.000000Z",
-                "quantity": so luong item 
-            },
-        ]
-    }
-}
-
-History order details {
-    URL: http://localhost:8000/api/order/history_order_details
-    Method: POST
-    Content type: application/json
-    data {
-        order_id
-    }
-    return {
-        "history_order_details": [
-        {
-            "name": "Chuối sấy",
-            "price": 500,
-            "weight": 500,
-            "quantity": 12,
-            "total": 30000
-        },
-        ]
-    }
-}
-
-
-Banner_Slide {
-URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
-Method: GET
-
-    return: {
-        id, title, image, description, position: banner or slide, status: show or hidden
+        tất cả các sản phẩm có nội dung search
     }
 
-}
 
-Get Comments {
-URL: http://localhost:8000/api/review/get_comment
-Method: POST
-Content type: application/json
-
-    Data: {
-        'content' => $request->content,
-        'product_id' => $request->product_id,
-    }
-
-    return {
-        'message': Comment successfully
-    }
-
-}
-
-Get Rating {
-URL: http://localhost:8000/api/review/get_star
-Method: POST
-Content type: application/json
-
-    Data: {
-        'star' => $request->star,
-        'product_id' => $request->product_id,
-    }
-
-    return {
-         'message': Rating successfully
-    }
-
-}
-
-Comment, Rating: Trả lên FE {
-URL: http://localhost:8000/api/review/return_review
-Method: GET
-Content type: application/json
-
-    return {
-         'full_name'
-        'content'
-        'star'
-        'date'
-        'product_id'
-    }
-
-}
-
-Top 5 product co sao cao nhat theo category {
+<!-- Top 5 product co sao cao nhat theo category { -->
 URL: http://localhost:8000/api/product/highest_rating_products/{category_id}
 Method: get
 Content type: application/json
@@ -259,9 +133,9 @@ Content type: application/json
             "updated_at":
     }
 
-}
 
-Top 5 product noi bat theo category {
+
+<!-- Top 5 product noi bat theo category { -->
 URL: http://localhost:8000/api/product/featured_products/{category_id}
 Content type: application/json
 
@@ -282,9 +156,166 @@ Content type: application/json
             "created_at":
             "updated_at":
     }
+
+
+
+
+<!-- ///////////////////////////////////// ORDER /////////////////////////////////////////-->
+
+<!-- Order { -->
+URL: http://localhost:8000/api/order/order
+Method: POST
+Content type: application/json
+
+    Data cua ORder: {
+        'email' => $request->email,
+        'full_name' => $request->full_name,
+        'address' => $request->address,
+        'phone' => $request->phone,
+        'transaction' => $request->transaction,
+        'subtotal' => $request->subtotal,
+    }
+
+    return cua order: {
+        'message' : "Checkout successfully",
+        'email'
+        'full_name'
+        'address'
+        'phone'
+        'transaction'
+        'subtotal'
+        'total' => $request->subtotal + 35000,
+        'status' => 1,
+        'transaction_status' => 1,
+        'created_at' => Carbon::now(),
+    }
+
+
+    Data của order items gửi xuống
+    "order_items": [
+        {
+            $product_id = 1;
+            $price = 123;
+            $weight = 2;
+            $quantity = 3;
+        },
+
+        {
+            $product_id = 1;
+            $price = 123;
+            $weight = 2;
+            $quantity = 3;
+        }
+        ...
+        ]
+
+    return cua order items: {
+     'product_id' => $product_id,
+        'order_id' => $latestOrder->id,
+        'price' => $price,
+        'weight' => $weight,
+        'quantity' => $quantity
+    }
+
+
+<!-- History Order { -->
+    URL: http://localhost:8000/api/order/history_order
+    Method: GET
+    Content type: application/json
+    return: {
+        "history_order": [
+            {
+                "order_id": 2,
+                "status": 1,
+                "subtotal": 15000,
+                "created_at": "2023-12-20T03:46:00.000000Z",
+                "quantity": so luong item 
+            },
+        ]
+    }
+
+
+<!-- History order details { -->
+    URL: http://localhost:8000/api/order/history_order_details
+    Method: POST
+    Content type: application/json
+    data {
+        order_id
+    }
+    return {
+        "history_order_details": [
+        {
+            "name": "Chuối sấy",
+            "price": 500,
+            "weight": 500,
+            "quantity": 12,
+            "total": 30000
+        },
+        ]
+    }
+
+
+<!-- ///////////////////////////////////// Banner_Slide /////////////////////////////////////////-->
+Banner_Slide {
+URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
+Method: GET
+
+    return: {
+        id, title, image, description, position: banner or slide, status: show or hidden
+    }
+
 }
 
-Feedback {
+<!-- ///////////////////////////////////// Review /////////////////////////////////////////-->
+<!-- Get Comments { -->
+URL: http://localhost:8000/api/review/get_comment
+Method: POST
+Content type: application/json
+
+    Data: {
+        'content' => $request->content,
+        'product_id' => $request->product_id,
+    }
+
+    return {
+        'message': Comment successfully
+    }
+
+
+
+<!-- Get Rating { -->
+URL: http://localhost:8000/api/review/get_star
+Method: POST
+Content type: application/json
+
+    Data: {
+        'star' => $request->star,
+        'product_id' => $request->product_id,
+    }
+
+    return {
+         'message': Rating successfully
+    }
+
+
+
+<!-- Comment, Rating: Trả lên FE { -->
+URL: http://localhost:8000/api/review/return_review
+Method: GET
+Content type: application/json
+
+    return {
+         'full_name'
+        'content'
+        'star'
+        'date'
+        'product_id'
+    }
+
+
+
+<!-- ///////////////////////////////////// Feedback /////////////////////////////////////////-->
+<!-- Feedback { -->
     URL: http://localhost:8000/api/feedback/feedback
     Method: POST
     Content type: application/json
@@ -298,22 +329,5 @@ Feedback {
         return {
             'message' => 'Feedback is sent successfully'    
         }
-    }
 
-Edit profile {
-    URL: http://localhost:8000/api/edit_profile/edit_profile
-    Method: POST
-    Content type: application/json
-
-        data {
-            'full_name'
-            'email'
-            'phone'
-            'address'
-            password và password_confirmation nếu user có đổi password
-        }
-        return {
-            'message' => 'Edit successfully'    
-        }
-    }
 

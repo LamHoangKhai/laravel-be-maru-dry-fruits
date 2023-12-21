@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
 {
@@ -16,10 +17,10 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $result = $query->get();
+        $products = $query->get();
 
         return response()->json([
-            'product' => $result
+            'product' => $products
         ], 200);
     }
 
@@ -30,15 +31,6 @@ class ProductController extends Controller
         return response()->json([
             'product_detail' => $product_detail
         ]);
-    }
-
-    public function product($category_id)
-    {
-        $products = Product::where([['category_id', $category_id], ['status', 1]])
-            ->get();
-        return response()->json([
-            'product' => $products
-        ], 200);
     }
 
     public function highest_rating_products()
@@ -57,6 +49,17 @@ class ProductController extends Controller
         $featured_products = Product::where('feature', 1)->limit(5)->get();
         return response()->json([
             'featuredProduct' => $featured_products
+        ]);
+    }
+
+    public function search_product(Request $request) {
+        $category = $request->category;
+        $search = $request->search_product;
+        $product = $category == 0  
+        ? Product::where("name", "like", "%" . $search . "%")->get() 
+        : Product::where([["name", "like", "%" . $search . "%"], ["category_id", 2]])->get();
+        return response()->json([
+            'product' => $product
         ]);
     }
 }
