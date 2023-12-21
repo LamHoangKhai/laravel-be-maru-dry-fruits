@@ -39,12 +39,12 @@ Content type: application/json
 
 
 <!-- Profile { -->
-URL: http://localhost:8000/api/auth/profile,
+<!-- URL: http://localhost:8000/api/auth/profile,
 Method: GET
 Content type: application/json
 
     Nếu user đã login -> return: Tất cả thông tin của user vừa đăng nhập
-    Nếu user đã logout hoặc chưa login -> return:  'message' => 'You need to login to get profile'
+    Nếu user đã logout hoặc chưa login -> return:  'message' => 'You need to login to get profile' -->
 
 
 
