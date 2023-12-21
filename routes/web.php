@@ -36,7 +36,7 @@ Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
-Route::get('craw', [CrawController::class, "index"])->name('craw');
+// Route::get('craw', [CrawController::class, "index"])->name('craw');
 
 
 
