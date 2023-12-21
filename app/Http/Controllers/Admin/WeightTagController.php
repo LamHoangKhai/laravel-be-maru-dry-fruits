@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\WeighTag;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class WeightTagController extends Controller
 {
@@ -13,7 +14,7 @@ class WeightTagController extends Controller
      */
     public function index()
     {
-        $weights = WeighTag::orderBy("mass","ASC")->get();
+        $weights = WeighTag::orderBy("mass", "ASC")->get();
         return view("admin.modules.weight-tag.index", ["weights" => $weights]);
     }
 

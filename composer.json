@@ -38,6 +38,7 @@
             "Tests\\": "tests/"
         },
         "files": [
+            "app/Craw/simple_html_dom.php",
             "app/Libs/function.php"
         ]
     },

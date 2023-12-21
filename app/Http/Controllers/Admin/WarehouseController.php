@@ -8,6 +8,7 @@ use App\Models\Supplier;
 use App\Models\Warehouse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class WarehouseController extends Controller
 {
@@ -51,9 +52,9 @@ class WarehouseController extends Controller
         $import->input_price = $request->input_price;
         $import->shipment = time();
         $import->transaction_type = 1;
-        $import->transaction_date = date("Y-m-d H:i:s");
-        $import->created_at = date("Y-m-d H:i:s");
-        $import->updated_at = date("Y-m-d H:i:s");
+        $import->transaction_date = Carbon::now();
+        $import->created_at = Carbon::now();
+        $import->updated_at = Carbon::now();
         $import->save();
 
         return redirect()->route('admin.product.index')->with("success", "Create import success!");
@@ -91,7 +92,7 @@ class WarehouseController extends Controller
         $import->supplier_id = $request->supplier_id;
         $import->quantity = $request->quantity;
         $import->expiration_date = $request->expiration_date;
-        $import->updated_at = date("Y-m-d H:i:s");
+        $import->updated_at = Carbon::now();
         $import->save();
 
         return redirect()->route('admin.product.index')->with("success", "Update success!");
@@ -130,7 +131,7 @@ class WarehouseController extends Controller
         $export->shipment = $request->shipment;
         $export->transaction_type = 2;
         $export->transaction_date = date("Y-m-d");
-        $export->created_at = date("Y-m-d H:i:s");
+        $export->created_at = Carbon::now();
         $export->save();
 
         // update current quantity import

@@ -9,6 +9,8 @@ use App\Models\OrderItems;
 use App\Models\Product;
 use App\Models\WeighTag;
 use Exception;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,8 +96,8 @@ class OrderController extends Controller
         $order->transaction_status = 1;
         $order->note = $request->note;
         $order->status = 4;
-        $order->created_at = date("Y-m-d H:i:s");
-        $order->updated_at = date("Y-m-d H:i:s");
+        $order->created_at = Carbon::now();
+        $order->updated_at = Carbon::now();
         $order->save();
 
         // insert order item
@@ -120,7 +122,7 @@ class OrderController extends Controller
         $take = (int) $request->take;
         $select = $request->select;
 
-        $query = Order::with(["product", "user"]);
+        $query = Order::with("user");
 
         // if select  0 get  all status order else  status order  = select
         $query = $select > 0
@@ -146,7 +148,7 @@ class OrderController extends Controller
         $take = (int) $request->take;
         $select = $request->select;
 
-        $query = Order::with(["product", "user"]);
+        $query = Order::with("user");
 
         // if select  0 get  all status order else  status order  = select
         $query = $select > 0
@@ -190,7 +192,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($request->id);
         $order->status = 5;
-        $order->updated_at = date("Y-m-d H:i:s");
+        $order->updated_at = Carbon::now();
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
@@ -200,7 +202,7 @@ class OrderController extends Controller
         $order = Order::findOrFail($request->id);
         $currentStatus = $order->status;
         $order->status = $currentStatus + 1;
-        $order->updated_at = date("Y-m-d H:i:s");
+        $order->updated_at = Carbon::now();
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }

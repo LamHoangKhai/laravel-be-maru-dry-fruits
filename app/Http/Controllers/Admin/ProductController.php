@@ -8,9 +8,9 @@ use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Product_Weight;
-use App\Models\Supplier;
 use App\Models\Warehouse;
 use App\Models\WeighTag;
+use Carbon\Carbon;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -55,8 +55,8 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->category_id = $request->category_id;
         $product->feature = $request->feature;
-        $product->created_at = date("Y-m-d H:i:s");
-        $product->updated_at = date("Y-m-d H:i:s");
+        $product->created_at = Carbon::now();
+        $product->updated_at = Carbon::now();
 
         //save  image
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
@@ -101,7 +101,7 @@ class ProductController extends Controller
         $product->status = $request->status;
         $product->feature = $request->feature;
         $product->category_id = $request->category_id;
-        $product->updated_at = date("Y-m-d H:i:s");
+        $product->updated_at = Carbon::now();
 
         // save image
         if (isset($request->image)) {
