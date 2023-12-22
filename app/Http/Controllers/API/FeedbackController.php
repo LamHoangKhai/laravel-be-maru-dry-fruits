@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserFeedback;
+use App\Events\UserOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
 use Carbon\Carbon;
@@ -17,8 +19,10 @@ class FeedbackController extends Controller
             'content' => $request->content,
             'timestamps' => now()
         ];
+        
+        $new_feedback = Feedback::create($feedback);
+        event(new UserFeedback($new_feedback));
 
-        Feedback::create($feedback);
         return response()->json([
             'message' => 'Feedback is sent successfully.'
         ],200);
