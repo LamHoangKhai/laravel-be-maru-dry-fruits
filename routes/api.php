@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ReviewController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -95,5 +96,11 @@ Route::group([
     Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
 });
 
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'vnpay'
+], function () {
+    Route::post('vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+});
 
 
