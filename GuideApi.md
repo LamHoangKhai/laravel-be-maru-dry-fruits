@@ -259,7 +259,7 @@ Content type: application/json
 Banner_Slide {
 URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
 Method: GET
-
+    Data gửi xuống: position = $request->position: 1 hoặc 2
     return: {
         id, title, image, description, position: banner or slide, status: show or hidden
     }
