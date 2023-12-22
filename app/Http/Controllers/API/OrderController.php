@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\UserOrder;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItems;
@@ -29,6 +30,7 @@ class OrderController extends Controller
         $order->created_at = Carbon::now();
         $order->updated_at = Carbon::now();
         $order->save();
+        event(new UserOrder($order));
 
 
         // Save order item
