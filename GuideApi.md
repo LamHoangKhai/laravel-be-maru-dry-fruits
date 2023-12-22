@@ -81,8 +81,8 @@ Content type: application/json
 URL1: http://localhost:8000/api/product/allproduct  
 METHOD: POST
     Data gửi xuống: 
-        "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
-    return: {
+        "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3,
+     return: {
         if(category == 0) {
             Tat ca san pham 
         }
