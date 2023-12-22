@@ -25,7 +25,9 @@ class WarehouseSeeder extends Seeder
                 'current_quantity' => 200,
                 'expiration_date' => '2023-12-31',
                 'transaction_date' => now(),
-                'shipment' => rand(1000,99999) . Carbon::now()->timestamp
+                'shipment' => rand(1000,99999) . Carbon::now()->timestamp,
+                'created_at' => now(),
+                'updated_at' => now()
             ];
             Warehouse::insert($import);
 
@@ -38,7 +40,9 @@ class WarehouseSeeder extends Seeder
                 'current_quantity' => $import['quantity'] - 20,
                 'expiration_date' => $import['expiration_date'],
                 'transaction_date' => $import['transaction_date'],
-                'shipment' => $import['shipment']
+                'shipment' => $import['shipment'],
+                'created_at' => now(),
+                'updated_at' => now()
             ];
             Warehouse::insert($export);
         }
