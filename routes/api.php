@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\UserOrder;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\CategoryController;
@@ -9,7 +10,9 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ReviewController;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -28,12 +31,13 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'auth'
 
 ], function () {
-
     Route::post('login', [AuthController::class, 'login'])->name('login');
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('register', [AuthController::class, 'register'])->name('register');
@@ -56,7 +60,6 @@ Route::group([
 
     Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
     Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
-
 });
 
 Route::group([
@@ -65,10 +68,9 @@ Route::group([
 
 ], function () {
 
-    Route::post('order',[OrderController::class, 'order'])->name('order');
+    Route::post('order', [OrderController::class, 'order'])->name('order');
     Route::get('history_order', [OrderController::class, 'history_order'])->name('history_order');
     Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
-
 });
 
 Route::group([
@@ -95,5 +97,9 @@ Route::group([
     Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
 });
 
-
-
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'vnpay'
+], function () {
+    Route::post('vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+});

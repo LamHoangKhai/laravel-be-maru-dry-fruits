@@ -67,7 +67,7 @@ Content type: application/json
 <!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
 
 Category {
-URL: http://localhost:8000/api/product/category,
+URL: http://localhost:8000/api/product/category/,
 Method: GET
 Content type: application/json
 
@@ -84,10 +84,10 @@ METHOD: POST
         "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
     return: {
         if(category == 0) {
-            Tat ca san pham
+            Tat ca san pham 
         }
         else {
-            Tat ca san pham  co trong category do
+            Tat ca san pham co trong category do
         }
 
     }
