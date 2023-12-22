@@ -67,27 +67,27 @@ Content type: application/json
 <!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
 
 Category {
-URL: http://localhost:8000/api/product/category/{parent_id},
+URL: http://localhost:8000/api/product/category,
 Method: GET
 Content type: application/json
 
-    return: Tất cả thằng con của parent đó
+    return: Tất cả category
 
 }
 
 <!-- ///////////////////////////////////// PRODUCT /////////////////////////////////////////-->
 
 <!-- Product { -->
-URL1: http://localhost:8000/api/product/allproduct  theo category
+URL1: http://localhost:8000/api/product/allproduct  
 METHOD: POST
     Data gửi xuống: 
         "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
     return: {
-        if(category != 0) {
-            Tat ca san pham co trong category do
+        if(category == 0) {
+            Tat ca san pham
         }
         else {
-            Tat ca san pham
+            Tat ca san pham  co trong category do
         }
 
     }

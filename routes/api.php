@@ -48,7 +48,7 @@ Route::group([
 
 ], function () {
 
-    Route::get('category/{parent_id}', [CategoryController::class, 'category'])->name('category');
+    Route::get('category', [CategoryController::class, 'category'])->name('category');
 
     Route::post('allproduct', [ProductController::class, 'allproduct'])->name('all_product');
     Route::post('product_details', [ProductController::class, 'product_details'])->name('product_details');
