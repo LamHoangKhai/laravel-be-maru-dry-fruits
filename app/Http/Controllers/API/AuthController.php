@@ -74,16 +74,16 @@ class AuthController extends Controller
         
     }
 
-    // public function profile() {
-    //         return response()->json([
-    //             'email' => auth('api')->user()->email,
-    //             'full_name' => auth('api')->user()->full_name,
-    //             'phone' => auth('api')->user()->phone,
-    //             'address' => auth('api')->user()->address,
-    //             'level' => auth('api')->user()->level,
-    //             'status' => auth('api')->user()->status,
-    //         ],200);
-    // }
+    public function profile() {
+            return response()->json([
+                'email' => auth('api')->user()->email,
+                'full_name' => auth('api')->user()->full_name,
+                'phone' => auth('api')->user()->phone,
+                'address' => auth('api')->user()->address,
+                'level' => auth('api')->user()->level,
+                'status' => auth('api')->user()->status,
+            ],200);
+    }
 
     public function logout()
     {
@@ -96,14 +96,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'email' => auth('api')->user()->email,
-            'full_name' => auth('api')->user()->full_name,
-            'phone' => auth('api')->user()->phone,
-            'address' => auth('api')->user()->address,
-            'level' => auth('api')->user()->level,
-            'status' => auth('api')->user()->status,
-
+            'expires_in' => auth('api')->factory()->getTTL() * 60
         ]);
     }
 
