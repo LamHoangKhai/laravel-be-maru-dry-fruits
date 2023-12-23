@@ -9,13 +9,12 @@ const Mydebounce = (callback, timeout = 500) => {
 };
 
 function formatDate(date) {
-    var year = date.getFullYear();
-    var month = String(date.getMonth() + 1).padStart(2, "0");
-    var day = String(date.getDate()).padStart(2, "0");
-    var hours = String(date.getHours()).padStart(2, "0");
-    var minutes = String(date.getMinutes()).padStart(2, "0");
-    var seconds = String(date.getSeconds()).padStart(2, "0");
-
+    let year = date.getFullYear();
+    let month = String(date.getMonth() + 1).padStart(2, "0");
+    let day = String(date.getDate()).padStart(2, "0");
+    let hours = String(date.getHours()).padStart(2, "0");
+    let minutes = String(date.getMinutes()).padStart(2, "0");
+    let seconds = String(date.getSeconds()).padStart(2, "0");
     return (
         year +
         "/" +
@@ -36,12 +35,6 @@ const setTotalPages = (storage) => {
         ? Math.ceil(storage.totalData / storage.take)
         : 1;
     $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
-
-    $(".totalData").text(
-        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
-            storage.totalData
-        } entries`
-    );
 };
 
 const loading = (colspan) => {
@@ -69,6 +62,5 @@ const statusText = (text) => {
             return ["Cancel", "danger"];
     }
 };
-
 
 export { Mydebounce, formatDate, setTotalPages, loading, statusText };

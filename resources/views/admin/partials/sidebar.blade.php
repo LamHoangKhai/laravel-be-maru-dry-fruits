@@ -5,7 +5,6 @@
         </a>
     </div>
 
-    <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
         <li class="menu-header small text-uppercase">
@@ -49,9 +48,14 @@
                 <div data-i18n="Account Settings">Order</div>
             </a>
             <ul class="menu-sub">
+                <li class="menu-item {{ request()->is('admin/order/create') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.create') }}" class="menu-link">
+                        <div data-i18n="Connections">Create In-Store Sales Order</div>
+                    </a>
+                </li>
                 <li class="menu-item {{ request()->is('admin/order/index') ? 'active' : '' }}">
                     <a href="{{ route('admin.order.index') }}" class="menu-link">
-                        <div data-i18n="Connections">List</div>
+                        <div data-i18n="Connections">Online Orders</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->is('admin/order/history') ? 'active' : '' }}">
@@ -73,11 +77,12 @@
                 <div data-i18n="Connections"><i class='bx  tf-icons bx-detail'></i> Supplier</div>
             </a>
         </li>
-        {{-- <li class="menu-item ">
-            <a href="{{ route('admin.banner-silder') }}" class="menu-link">
-                <div data-i18n="Account">Banner & Silder</div>
+        <li class="menu-item {{ request()->is('admin/slider-banner/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.slider-banner.index') }}" class="menu-link">
+
+                <div data-i18n="Account"><i class='bx bxs-slideshow'></i> Banner & Silder</div>
             </a>
-        </li> --}}
+        </li>
         <li class="menu-item {{ request()->is('admin/weight-tag/index') ? 'active' : '' }}">
             <a href="{{ route('admin.weight-tag.index') }}" class="menu-link">
                 <div data-i18n="Notifications"><i class='bx  tf-icons bx-tag'></i> Weigh Tag</div>

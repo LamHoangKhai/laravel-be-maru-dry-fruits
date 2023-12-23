@@ -1,5 +1,7 @@
-import { Mydebounce, loading, formatDate, statusText } from "../function.js";
+import { Mydebounce, loading } from "../function.js";
 import { loadProduct } from "./load-data.js";
+import { modalHtml } from "./modal-order-detail.js";
+import { printInvoice } from "./print-invoice.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -69,6 +71,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
+            loading(storage.tableCols);
             loadProduct(storage);
         },
     });
@@ -119,15 +122,46 @@ $(document).ready(() => {
     $("#modalOrderDetail").on("click", "#cancel", (e) => {
         const urlCancel = $("#url-cancel").data("url");
         let orderId = e.target.value;
+        Swal.fire({
+            title: "<strong>Warning!!!</strong>",
+            html: `<strong>Are you sure cancel this order ?</strong>`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, cancel it!",
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: urlCancel,
+                    data: { id: orderId },
+                    dataType: "json",
+                    success: (res) => {
+                        $("#modalOrderDetail").modal("toggle");
+                        loading(storage.tableCols);
+                        $("#pagination").simplePaginator("changePage", 1);
+                    },
+                    error: function (error) {
+                        console.log(error.message);
+                    },
+                });
+            }
+        });
+    });
+
+    $("#modalOrderDetail").on("click", "#btnPrintInvoice", (e) => {
+        let urlDetail = $("#url-detail").data("url");
+        let orderId = e.target.value;
         $.ajax({
             type: "POST",
-            url: urlCancel,
+            url: urlDetail,
             data: { id: orderId },
             dataType: "json",
             success: (res) => {
-                $("#modalOrderDetail").modal("toggle");
-                loading(storage.tableCols);
-                $("#pagination").simplePaginator("changePage", 1);
+                let data = res.data || [];
+                printInvoice(data);
             },
             error: function (error) {
                 console.log(error.message);
@@ -135,83 +169,3 @@ $(document).ready(() => {
         });
     });
 });
-
-const modalHtml = (data) => {
-    $(".numberOrder").text("Order #" + data.id);
-    $(".orderDate").text(formatDate(new Date(data.created_at)));
-    // append item oder
-    $("#items").html("");
-    $("#items").append(
-        `<div class="col mb-4">
-             <h6 class="mb-0">Product</h6>
-         </div>
-        <div class="col text-end">
-             <h6 class="mb-0">Price</h6>
-        </div>
-        <div class="col text-end">
-            <h6 class="mb-0">Quantity</h6>
-        </div>
-        <div class="col text-end">
-            <h6 class="mb-0">Subtotal</h6>
-        </div>
-`
-    );
-    let xhmtlItem = ``;
-    data.order_items.forEach((element) => {
-        let formatText =
-            element.weight > 1000
-                ? element.weight / 1000 + "kg"
-                : element.weight + "gram";
-
-        xhmtlItem += ` <div class="row g-3 mt-0 mb-4">
-        <div class="col mt-0">
-            <span>${element.product.name} (${formatText}) </span>
-        </div>
-        
-        <div class="col text-end mt-0">
-            <span>$${element.product.price}/100gr </span>
-        </div>
-        <div class="col text-end mt-0">
-            <span>${element.quantity} </span>
-        </div>
-        <div class="col text-end mt-0">
-            <span>$${element.price}</span>
-        </div>
-    </div>`;
-    });
-
-    $("#items").append(xhmtlItem);
-
-    //append order details
-    $("#orderDetail").html("");
-    let text = statusText(data.status);
-    let xhmtDetails = ` 
-    <div class="col mb-2">
-        <ul type="none">
-            <li class="left">Status Order:</li>
-            <li class="left">Subtotal:</li>
-            <li class="left">Discount:</li>
-            <li class="left">Total Price:</li>
-        </ul>
-    </div>
-    <div class="col mb-2 ">
-        <ul class="right" type="none">
-            <li class="right"><strong>${text[0]}</strong></li>
-            <li class="right"><strong>$${data.subtotal}</strong></li>
-            <li class="right"><strong>${data.discount}%</strong></li>
-            <li class="right"><strong>$${data.total}</strong></li>
-        </ul>
-    </div>`;
-    $("#orderDetail").append(xhmtDetails);
-
-    $(".modal-footer").html("");
-    let xhtmlButton = `
-        <button class="btn btn-primary " style="margin-right: 4px"
-            id="confirm" value=${data.id}>Confirm</button>
-        <button class="btn btn-danger " style="margin-right: 4px"
-            id="cancel" value=${data.id}>Cancel</button>
-        <button type="button" class="btn btn-secondary" id="closeModal">Close</button>
-    `;
-
-    $(".modal-footer").append(xhtmlButton);
-};

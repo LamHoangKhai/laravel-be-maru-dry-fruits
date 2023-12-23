@@ -58,6 +58,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
+            loading(storage.tableCols);
             loadProduct(storage);
         },
     });
