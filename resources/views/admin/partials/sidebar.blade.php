@@ -77,11 +77,12 @@
                 <div data-i18n="Connections"><i class='bx  tf-icons bx-detail'></i> Supplier</div>
             </a>
         </li>
-        {{-- <li class="menu-item ">
-            <a href="{{ route('admin.banner-silder') }}" class="menu-link">
-                <div data-i18n="Account">Banner & Silder</div>
+        <li class="menu-item {{ request()->is('admin/slider-banner/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.slider-banner.index') }}" class="menu-link">
+
+                <div data-i18n="Account"><i class='bx bxs-slideshow'></i> Banner & Silder</div>
             </a>
-        </li> --}}
+        </li>
         <li class="menu-item {{ request()->is('admin/weight-tag/index') ? 'active' : '' }}">
             <a href="{{ route('admin.weight-tag.index') }}" class="menu-link">
                 <div data-i18n="Notifications"><i class='bx  tf-icons bx-tag'></i> Weigh Tag</div>

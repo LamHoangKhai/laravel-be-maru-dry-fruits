@@ -35,12 +35,6 @@ const setTotalPages = (storage) => {
         ? Math.ceil(storage.totalData / storage.take)
         : 1;
     $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
-
-    $(".totalData").text(
-        `Show ${
-            storage.page == 1 ? storage.take : storage.take * storage.page
-        } to  ${storage.totalData} entries`
-    );
 };
 
 const loading = (colspan) => {

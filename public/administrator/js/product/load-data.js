@@ -53,7 +53,7 @@ const loadProduct = (storage) => {
                     <td >
 			      <img src="${
                       element.image
-                  }" class="img" alt="Sheep" width="100" height="75" ">
+                  }" class="img" alt="Sheep" width="100" height="75" >
 		             </td>
                     <td>$${element.price}/100gram</td>
                     <td>${element.stock_quantity}kg</td>

@@ -47,6 +47,7 @@ class ProductController extends Controller
     //create product
     public function store(StoreRequest $request)
     {
+
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -181,10 +182,5 @@ class ProductController extends Controller
         ]);
 
     }
-
-
-
-
-
 
 }
