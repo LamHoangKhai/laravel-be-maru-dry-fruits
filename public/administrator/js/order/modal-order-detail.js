@@ -30,7 +30,7 @@ const modalHtml = (data) => {
             element.weight > 1000
                 ? element.weight / 1000 + "kg"
                 : element.weight + "gram";
-
+        console.log(data);
         xhmtlItem += ` <div class="row g-3 mt-0 mb-4">
         <div class="col mt-0">
             <span>${element.product.name} (${formatText}) </span>
