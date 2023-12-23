@@ -49,9 +49,14 @@
                 <div data-i18n="Account Settings">Order</div>
             </a>
             <ul class="menu-sub">
+                <li class="menu-item {{ request()->is('admin/order/create') ? 'active' : '' }}">
+                    <a href="{{ route('admin.order.create') }}" class="menu-link">
+                        <div data-i18n="Connections">Create In-Store Sales Order</div>
+                    </a>
+                </li>
                 <li class="menu-item {{ request()->is('admin/order/index') ? 'active' : '' }}">
                     <a href="{{ route('admin.order.index') }}" class="menu-link">
-                        <div data-i18n="Connections">List</div>
+                        <div data-i18n="Connections">Online Orders</div>
                     </a>
                 </li>
                 <li class="menu-item {{ request()->is('admin/order/history') ? 'active' : '' }}">

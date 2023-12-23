@@ -4,13 +4,7 @@
     </script>
     <script src="{{ asset('administrator/js/order/main.js') }}" type="module"></script>
 @endpush
-@push('css')
-    <style>
-        .detail:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
-@endpush
+
 
 
 @section('content')
@@ -47,9 +41,7 @@
                                 id="search">
                         </div>
 
-                        <a type="button" class="btn btn-primary" href="{{ route('admin.order.create') }}">
-                            <i class='bx bx-plus-circle'></i>&nbsp; Create Order
-                        </a>
+
 
                     </div>
                 </div>
@@ -72,7 +64,7 @@
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/other/main.js -->
+                                    <!-- render form administrator/js/order/main.js -->
                                 </tr>
                             </tbody>
 
@@ -98,7 +90,6 @@
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
             </div>
-
             @include('admin.modules.order.modal-order-details')
 
         </div>

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,50 +22,56 @@ class UserSeeder extends Seeder
     public function run(Faker $faker): void
     {
         $data = [];
-        for ($i = 2; $i <= 12; $i++) {
-            $data = [
-                'id' => $i,
-                'full_name' => $faker->name,
-                'email' => $faker->email,
-                'password' => Hash::make('12345678'),
-                'phone' => '12345667',
-                'address' => $faker->address,
-                'level' => 2,
-                'status' => 1
-            ];
-            DB::table('users')->insert($data);
+        for ($i = 1; $i <= 4; $i++) {
+            $user = new User();
+            $user->full_name = $faker->name;
+            $user->email = $faker->email;
+            $user->password = Hash::make('12345678');
+            $user->phone = '12345667';
+            $user->address = $faker->address;
+            $user->level = 2;
+            $user->status = 1;
+            $user->save();
 
-            $user = User::where('id', $i)->get();
-            $order = [];
-            for ($j = 1; $j <= 2; $j++) {
-                $order_id = Order::all();
-                $order = [
-                    'id'  => count($order_id) + 1,
-                    'user_id' => $i,
-                    'status' => 1,
-                    'subtotal' => rand(1, 150),
-                    'discount' => 0,
-                    'total' => rand(150, 200),
-                    'transaction' => rand(1, 2),
-                    'transaction_status' => rand(1, 2),
-                    'email' => $user[0]->email,
-                    'full_name' => $user[0]->full_name,
-                    'address' => $user[0]->address,
-                    'phone' => $faker->phoneNumber
-                ];
-                Order::insert($order);
-                for ($k = 1; $k <= 3; $k++) {
-                    $order_id = Order::all();
-                    $order_items = [
-                        'product_id' => rand(1, 20),
-                        'order_id' => count($order_id),
-                        'price' => 100,
-                        'weight' => 250,
-                        'quantity' => rand(1, 10),
-                    ];
-                    OrderItems::insert($order_items);
-                }
+
+            $order_id = Order::count() + 1;
+            $order = new Order();
+
+            $order->id = $order_id;
+            $order->user_id = $user->id;
+            $order->status = 1;
+            $order->discount = 0;
+            $order->transaction = 1;
+            $order->transaction_status = 2;
+            $order->email = $user->email;
+            $order->full_name = $user->full_name;
+            $order->address = $user->address;
+            $order->phone = $faker->phoneNumber;
+            $order->subtotal = 0;
+            $order->total = 0;
+            $order->save();
+
+            $order_items = [];
+            for ($k = 1; $k <= 3; $k++) {
+
+                $order_items[$k]['product_id'] = rand(1, 20);
+                $order_items[$k]['order_id'] = $order->id;
+                $order_items[$k]['quantity'] = rand(1, 4);
+                $order_items[$k]['weight'] = 250;
+                $product = Product::findOrFail($order_items[$k]['product_id']);
+                $order_items[$k]['price'] = $product->price * ($order_items[$k]['weight'] / 100 * $order_items[$k]['quantity']);
             }
+            OrderItems::insert($order_items);
+
+
+            $orderItems = OrderItems::where("order_id", $order->id)->get();
+
+            foreach ($orderItems as $item) {
+                $order->subtotal += $item->price;
+            }
+            $order->total = $order->subtotal + ($order->subtotal * $order->discount / 100);
+            $order->save();
+
         }
     }
 }
