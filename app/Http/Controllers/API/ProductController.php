@@ -17,8 +17,8 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $products = $query->get();
-
+        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(9);
+        
         return response()->json([
             'product' => $products
         ], 200);

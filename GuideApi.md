@@ -1,6 +1,5 @@
 <!-- ///////////////////////////////////// AUTH /////////////////////////////////////////-->
 <!-- Login { -->
-
 URL: http://localhost:8000/api/auth/login,
 Method: POST
 Content type: application/json
@@ -14,8 +13,8 @@ token_type,
 expires_in
 }
 
-<!-- Register { -->
 
+<!-- Register { -->
 URL: http://localhost:8000/api/auth/register,
 Method: POST
 Content type: application/json
@@ -28,8 +27,8 @@ return: {
 'message': 'User successfuly registered'
 }
 
-<!-- Logout { -->
 
+<!-- Logout { -->
 URL: http://localhost:8000/api/auth/logout,
 Method: POST
 Content type: application/json
@@ -37,6 +36,7 @@ Content type: application/json
     return: {
         'message' => 'Successfully logged out'
     }
+
 
 <!-- Profile { -->
 <!-- URL: http://localhost:8000/api/auth/profile,
@@ -46,8 +46,9 @@ Content type: application/json
     Nếu user đã login -> return: Tất cả thông tin của user vừa đăng nhập
     Nếu user đã logout hoặc chưa login -> return:  'message' => 'You need to login to get profile' -->
 
-<!-- Edit profile { -->
 
+
+<!-- Edit profile { -->
     URL: http://localhost:8000/api/edit_profile/edit_profile
     Method: POST
     Content type: application/json
@@ -60,7 +61,7 @@ Content type: application/json
             password và password_confirmation nếu user có đổi password
         }
         return {
-            'message' => 'Edit successfully'
+            'message' => 'Edit successfully'    
         }
 
 <!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
@@ -77,40 +78,39 @@ Content type: application/json
 <!-- ///////////////////////////////////// PRODUCT /////////////////////////////////////////-->
 
 <!-- Product { -->
-
 URL1: http://localhost:8000/api/product/allproduct  
 METHOD: POST
-Data gửi xuống:
-"category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3
-return: {
-if(category == 0) {
-Tat ca san pham
-}
-else {
-Tat ca san pham co trong category do
-}
+    Data gửi xuống: 
+        "category" => $request->category vd san pham = 0, hat = 1, trai cay kho = 3,
+     return: {
+        if(category == 0) {
+            Tat ca san pham 
+        }
+        else {
+            Tat ca san pham co trong category do
+        }
 
     }
 
-<!-- Product Details -->
 
+<!-- Product Details -->
 URL3: http//localhost:8000/api/product/product_details
 METHOD: POST
-Data gửi xuống: product_id
-return: {
-Tất cả thông tin của sản phẩm
-}
+    Data gửi xuống: product_id
+    return: {
+        Tất cả thông tin của sản phẩm
+    }
 
 Search Prouduct
 URL4: http://localhost:8000/api/product/search_product
 METHOD: POST
-Data gửi xuống: nội dung search
-return: {
-tất cả các sản phẩm có nội dung search
-}
+    Data gửi xuống: nội dung search
+    return: {
+        tất cả các sản phẩm có nội dung search
+    }
+
 
 <!-- Top 5 product co sao cao nhat theo category { -->
-
 URL: http://localhost:8000/api/product/highest_rating_products/{category_id}
 Method: get
 Content type: application/json
@@ -133,8 +133,9 @@ Content type: application/json
             "updated_at":
     }
 
-<!-- Top 5 product noi bat theo category { -->
 
+
+<!-- Top 5 product noi bat theo category { -->
 URL: http://localhost:8000/api/product/featured_products/{category_id}
 Content type: application/json
 
@@ -156,10 +157,12 @@ Content type: application/json
             "updated_at":
     }
 
+
+
+
 <!-- ///////////////////////////////////// ORDER /////////////////////////////////////////-->
 
 <!-- Order { -->
-
 URL: http://localhost:8000/api/order/order
 Method: POST
 Content type: application/json
@@ -214,8 +217,8 @@ Content type: application/json
         'quantity' => $quantity
     }
 
-<!-- History Order { -->
 
+<!-- History Order { -->
     URL: http://localhost:8000/api/order/history_order
     Method: GET
     Content type: application/json
@@ -226,13 +229,13 @@ Content type: application/json
                 "status": 1,
                 "subtotal": 15000,
                 "created_at": "2023-12-20T03:46:00.000000Z",
-                "quantity": so luong item
+                "quantity": so luong item 
             },
         ]
     }
 
-<!-- History order details { -->
 
+<!-- History order details { -->
     URL: http://localhost:8000/api/order/history_order_details
     Method: POST
     Content type: application/json
@@ -251,12 +254,12 @@ Content type: application/json
         ]
     }
 
-<!-- ///////////////////////////////////// Banner_Slide /////////////////////////////////////////-->
 
+<!-- ///////////////////////////////////// Banner_Slide /////////////////////////////////////////-->
 Banner_Slide {
 URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
 Method: GET
-
+    Data gửi xuống: position = $request->position: 1 hoặc 2
     return: {
         id, title, image, description, position: banner or slide, status: show or hidden
     }
@@ -265,7 +268,6 @@ Method: GET
 
 <!-- ///////////////////////////////////// Review /////////////////////////////////////////-->
 <!-- Get Comments { -->
-
 URL: http://localhost:8000/api/review/get_comment
 Method: POST
 Content type: application/json
@@ -279,8 +281,9 @@ Content type: application/json
         'message': Comment successfully
     }
 
-<!-- Get Rating { -->
 
+
+<!-- Get Rating { -->
 URL: http://localhost:8000/api/review/get_star
 Method: POST
 Content type: application/json
@@ -294,8 +297,9 @@ Content type: application/json
          'message': Rating successfully
     }
 
-<!-- Comment, Rating: Trả lên FE { -->
 
+
+<!-- Comment, Rating: Trả lên FE { -->
 URL: http://localhost:8000/api/review/return_review
 Method: GET
 Content type: application/json
@@ -308,9 +312,10 @@ Content type: application/json
         'product_id'
     }
 
+
+
 <!-- ///////////////////////////////////// Feedback /////////////////////////////////////////-->
 <!-- Feedback { -->
-
     URL: http://localhost:8000/api/feedback/feedback
     Method: POST
     Content type: application/json
@@ -322,5 +327,7 @@ Content type: application/json
             'content'
         }
         return {
-            'message' => 'Feedback is sent successfully'
+            'message' => 'Feedback is sent successfully'    
         }
+
+
