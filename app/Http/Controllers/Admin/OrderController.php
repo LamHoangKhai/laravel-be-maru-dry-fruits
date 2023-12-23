@@ -111,7 +111,7 @@ class OrderController extends Controller
             $orderItems[$k]["quantity"] = $quantity[$k];
         }
         OrderItems::insert($orderItems);
-        return redirect()->route("admin.order.index")->with("success", "Create order success!");
+        return redirect()->route("admin.order.history")->with("success", "Create order success!");
     }
 
 

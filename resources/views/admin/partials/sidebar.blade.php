@@ -5,7 +5,6 @@
         </a>
     </div>
 
-    <div class="menu-inner-shadow"></div>
 
     <ul class="menu-inner py-1">
         <li class="menu-header small text-uppercase">

@@ -7,8 +7,24 @@
     $total = $subtotal - $subtotal * ($discount / 100);
 @endphp
 
-@push('js')
-    <script src="{{ asset('administrator/js/print-invoice.js') }}"></script>
+@push('handle')
+    <script>
+        
+        $("#btn").click(function() {
+            let divToPrint = $("#DivIdToPrint").html();
+            let newWin = window.open("", "Print-Window");
+            newWin.document.open();
+            newWin.document.write(
+                '<html><body onload="window.print()">' +
+                divToPrint +
+                "</body></html>"
+            );
+            newWin.document.close();
+            setTimeout(function() {
+                newWin.close();
+            }, 10);
+        });
+    </script>
 @endpush
 
 @section('content')
@@ -50,6 +66,11 @@
                         <table cellpadding="0" cellspacing="0">
                             <table style="border:0;width:100%;">
                                 <tr>
+                                    <td colspan="4" align="center">
+                                        <h3>Dummy Invoice</h3>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan="4" align="center"><b>Maru Dry Fruits</b></td>
                                 </tr>
                                 <tr>
@@ -66,9 +87,7 @@
                                 <tr class="padding">
                                     <td><b>Note:</b> {{ $note }} </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="4" align="center"><b>Dummy Invoice</b></td>
-                                </tr>
+
                                 <tr class="heading" style="background:#eee;border-bottom:1px solid #ddd;font-weight:bold;">
                                     <td>
                                         Item

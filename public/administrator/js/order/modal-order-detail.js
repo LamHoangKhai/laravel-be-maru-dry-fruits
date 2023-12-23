@@ -60,10 +60,14 @@ const modalHtml = (data) => {
             <li class="left">Total Price: <strong>$${data.total}</strong></li>
         </ul>
     </div>`;
-    
+
     $("#orderDetail").html(xhmtDetails);
 
-    let xhtmlButton = ``;
+    let xhtmlButton = `
+    <button type='button' id='btnPrintInvoice' value=${data.id} class="bnt" style="margin-right:auto">
+     <i class='bx bx-printer '></i>&nbsp;
+    Print</button>`;
+
     if (data.status <= 3) {
         xhtmlButton += `
         <button class="btn btn-primary " style="margin-right: 4px"
@@ -72,6 +76,7 @@ const modalHtml = (data) => {
             id="cancel" value=${data.id}>Cancel</button>
     `;
     }
+
     xhtmlButton += `
         <button type="button" class="btn btn-secondary" id="closeModal">
              Close

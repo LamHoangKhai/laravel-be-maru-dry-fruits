@@ -31,7 +31,7 @@
             </div>
 
             <!-- Modal footer -->
-            <div class="modal-footer">
+            <div class="modal-footer d-flex">
 
             </div>
 

@@ -1,6 +1,7 @@
 import { Mydebounce, loading } from "../function.js";
 import { loadProduct } from "./load-data.js";
 import { modalHtml } from "./modal-order-detail.js";
+import { printInvoice } from "./print-invoice.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -121,15 +122,46 @@ $(document).ready(() => {
     $("#modalOrderDetail").on("click", "#cancel", (e) => {
         const urlCancel = $("#url-cancel").data("url");
         let orderId = e.target.value;
+        Swal.fire({
+            title: "<strong>Warning!!!</strong>",
+            html: `<strong>Are you sure cancel this order ?</strong>`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, cancel it!",
+            
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: urlCancel,
+                    data: { id: orderId },
+                    dataType: "json",
+                    success: (res) => {
+                        $("#modalOrderDetail").modal("toggle");
+                        loading(storage.tableCols);
+                        $("#pagination").simplePaginator("changePage", 1);
+                    },
+                    error: function (error) {
+                        console.log(error.message);
+                    },
+                });
+            }
+        });
+    });
+
+    $("#modalOrderDetail").on("click", "#btnPrintInvoice", (e) => {
+        let urlDetail = $("#url-detail").data("url");
+        let orderId = e.target.value;
         $.ajax({
             type: "POST",
-            url: urlCancel,
+            url: urlDetail,
             data: { id: orderId },
             dataType: "json",
             success: (res) => {
-                $("#modalOrderDetail").modal("toggle");
-                loading(storage.tableCols);
-                $("#pagination").simplePaginator("changePage", 1);
+                let data = res.data || [];
+                printInvoice(data);
             },
             error: function (error) {
                 console.log(error.message);
