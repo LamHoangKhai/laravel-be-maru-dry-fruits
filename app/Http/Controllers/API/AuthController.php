@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'profile']]);
     }
 
     public function register(RegisterRequest $request) {
@@ -75,6 +75,7 @@ class AuthController extends Controller
     }
 
     public function profile() {
+        if(auth('api')->user()) {
             return response()->json([
                 'email' => auth('api')->user()->email,
                 'full_name' => auth('api')->user()->full_name,
@@ -83,6 +84,12 @@ class AuthController extends Controller
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
             ],200);
+        }
+        else {
+            return response()->json([
+                'message' => 'You need to login to get profile'
+            ]);
+        }
     }
 
     public function logout()
