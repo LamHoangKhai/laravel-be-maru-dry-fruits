@@ -15,9 +15,9 @@ return new class extends Migration {
             $table->uuid('user_id');
             $table->foreign('user_id')->references('id')->on('users');
             $table->tinyInteger('status')->default(1)->comment('1: Pending - 2: Prepare - 3: Delivery - 4: Finish - 5: Cancel');
-            $table->unsignedFloat("subtotal", 8, 2);
+            $table->unsignedFloat("subtotal", 8, 2)->default(0);
             $table->tinyInteger("discount")->default(0);
-            $table->unsignedFloat("total", 8, 2);
+            $table->unsignedFloat("total", 8, 2)->default(0);
             $table->tinyInteger('transaction')->comment('1: Cash/ShipCOD - 2: VNPAY');
             $table->tinyInteger('transaction_status')->comment('1: Completed - 2: Pending payment');
             $table->string('email');

@@ -29,13 +29,7 @@ class OrderController extends Controller
         return view("admin.modules.order.history");
     }
 
-    public function invoice(string $id)
-    {
-        $order = Order::with(["order_items", "user"])->findOrFail($id);
-        dd($order);
-        return view("admin.modules.order.invoice", ['order' => $order]);
-    }
-
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -67,7 +61,6 @@ class OrderController extends Controller
             $orderItems[$i]["weight"] = $weights[$i];
             $orderItems[$i]["quantity"] = $quantity[$i];
         }
-
         return view("admin.modules.order.checking", ['orderItems' => $orderItems, "discount" => $discount, "note" => $note]);
 
     }
@@ -82,7 +75,6 @@ class OrderController extends Controller
         $weight = $request->weight;
         $quantity = $request->quantity;
         $subtotal = $request->subtotal;
-
         // insert order 
         $order = new Order();
         $order->user_id = Auth::guard("web")->user()->id;
@@ -90,7 +82,7 @@ class OrderController extends Controller
         $order->email = "empty";
         $order->phone = "empty";
         $order->address = "empty";
-        $order->subtotal = $request->subtotal;
+        $order->subtotal = $request->subtotalOrder;
         $order->discount = $request->discount;
         $order->total = $request->total;
         $order->transaction = 1;
@@ -110,8 +102,10 @@ class OrderController extends Controller
             $orderItems[$k]["weight"] = $weight[$k];
             $orderItems[$k]["quantity"] = $quantity[$k];
         }
+
         OrderItems::insert($orderItems);
-        return redirect()->route("admin.order.index")->with("success", "Create order success!");
+
+        return redirect()->route("admin.order.history")->with("success", "Create order success!");
     }
 
 

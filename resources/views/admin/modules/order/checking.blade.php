@@ -1,14 +1,29 @@
 @extends('admin.master')
 @php
-    $subtotal = 0;
+    $orderSubtotal= 0;
     foreach ($orderItems as $item) {
-        $subtotal += $item['subtotal'];
+        $orderSubtotal+= $item['subtotal'];
     }
-    $total = $subtotal - $subtotal * ($discount / 100);
+    $total = $orderSubtotal- $orderSubtotal* ($discount / 100);
 @endphp
 
-@push('js')
-    <script src="{{ asset('administrator/js/print-invoice.js') }}"></script>
+@push('handle')
+    <script>
+        $("#btn").click(function() {
+            let divToPrint = $("#DivIdToPrint").html();
+            let newWin = window.open("", "Print-Window");
+            newWin.document.open();
+            newWin.document.write(
+                '<html><body onload="window.print()">' +
+                divToPrint +
+                "</body></html>"
+            );
+            newWin.document.close();
+            setTimeout(function() {
+                newWin.close();
+            }, 10);
+        });
+    </script>
 @endpush
 
 @section('content')
@@ -50,6 +65,11 @@
                         <table cellpadding="0" cellspacing="0">
                             <table style="border:0;width:100%;">
                                 <tr>
+                                    <td colspan="4" align="center">
+                                        <h3>Dummy Invoice</h3>
+                                    </td>
+                                </tr>
+                                <tr>
                                     <td colspan="4" align="center"><b>Maru Dry Fruits</b></td>
                                 </tr>
                                 <tr>
@@ -66,9 +86,7 @@
                                 <tr class="padding">
                                     <td><b>Note:</b> {{ $note }} </td>
                                 </tr>
-                                <tr>
-                                    <td colspan="4" align="center"><b>Dummy Invoice</b></td>
-                                </tr>
+
                                 <tr class="heading" style="background:#eee;border-bottom:1px solid #ddd;font-weight:bold;">
                                     <td>
                                         Item
@@ -96,13 +114,13 @@
 
                                 <tr class="total" stlye="margin-top:12px">
                                     <td align="right" colspan="3">
-                                        <b>Subtotal&nbsp;:&nbsp;${{ $subtotal }}</b>
+                                        <b>Subtotal&nbsp;:&nbsp;${{ $orderSubtotal}}</b>
 
                                     </td>
                                 </tr>
                                 <tr class="total" stlye="margin-top:12px">
                                     <td align="right" colspan="3">
-                                        <b>Subtotal&nbsp;:&nbsp;{{ $discount }}%</b>
+                                        <b>Discount&nbsp;:&nbsp;{{ $discount }}%</b>
                                     </td>
                                 </tr>
                                 <tr class="total" stlye="margin-top:12px">
@@ -128,7 +146,7 @@
                             <input type="hidden" name="quantity[]" value="{{ $item['quantity'] }}">
                         @endforeach
 
-                        <input type="hidden" name="subtotal" value="{{ $subtotal }}">
+                        <input type="hidden" name="subtotalOrder" value="{{ $orderSubtotal}}">
                         <input type="hidden" name="discount" value="{{ $discount }}">
                         <input type="hidden" name="total" value="{{ $total }}">
                     </div>

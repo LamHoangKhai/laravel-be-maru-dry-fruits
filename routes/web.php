@@ -4,6 +4,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BannerSliderController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -134,7 +135,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('index', 'index')->name('index');
         Route::get('history', 'history')->name('history');
         Route::get('create', 'create')->name('create');
-        Route::get('invoice/{id}', 'invoice')->name('invoice');
         Route::post('checking', 'checking')->name('checking');
 
         //create
@@ -195,6 +195,24 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
     Route::fallback(function () {
         abort(404);
     });
+
+    Route::prefix('slider-banner')->name('slider-banner.')->controller(BannerSliderController::class)->group(function () {
+        //view
+        Route::get('index', 'index')->name('index');
+        Route::get('create', 'create')->name('create');
+        //create
+        Route::post('store', 'store')->name('store');
+
+        //edit and update
+        Route::get('edit/{id}', 'edit')->name('edit');
+        Route::post('update/{id}', 'update')->name('update');
+
+        //destroy
+        Route::get('destroy/{id}', 'destroy')->name('destroy');
+
+
+    });
+
 });
 
 Route::fallback(function () {

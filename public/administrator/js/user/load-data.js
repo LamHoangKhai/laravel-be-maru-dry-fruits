@@ -1,3 +1,5 @@
+import { setTotalPages } from "../function.js";
+
 const loadUser = (storage) => {
     $.ajax({
         type: "POST",
@@ -34,7 +36,13 @@ const loadUser = (storage) => {
 
                     xhtml += `
                     <tr>
-                        <td>${index + 1}</td>
+                        <td>${
+                            storage.page === 1
+                                ? index + 1
+                                : storage.take * storage.page -
+                                  storage.take +
+                                  index
+                        }</td>
                         <td>${element.full_name}</td>
                         <td>${element.email}</td>
                         <td>
@@ -78,19 +86,6 @@ const loadUser = (storage) => {
             console.log(error.message);
         },
     });
-};
-
-const setTotalPages = (storage) => {
-    storage.totalPage = storage.totalData
-        ? Math.ceil(storage.totalData / storage.take)
-        : 1;
-    $("#pagination").simplePaginator("setTotalPages", storage.totalPage);
-
-    $(".totalData").text(
-        `Show ${storage.page == 1 ? 1 : storage.take * storage.page} to  ${
-            storage.totalData
-        } entries`
-    );
 };
 
 export { loadUser };

@@ -221,7 +221,7 @@
 .swal2-container {
     display: grid;
     position: fixed;
-    z-index: 1060;
+    z-index: 1200;
     top: 0;
     right: 0;
     bottom: 0;
