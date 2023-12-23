@@ -135,7 +135,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('index', 'index')->name('index');
         Route::get('history', 'history')->name('history');
         Route::get('create', 'create')->name('create');
-        Route::get('invoice/{id}', 'invoice')->name('invoice');
         Route::post('checking', 'checking')->name('checking');
 
         //create

@@ -29,13 +29,7 @@ class OrderController extends Controller
         return view("admin.modules.order.history");
     }
 
-    public function invoice(string $id)
-    {
-        $order = Order::with(["order_items", "user"])->findOrFail($id);
-        dd($order);
-        return view("admin.modules.order.invoice", ['order' => $order]);
-    }
-
+    
     /**
      * Show the form for creating a new resource.
      */
