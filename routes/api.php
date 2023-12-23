@@ -42,7 +42,7 @@ Route::group([
     Route::post('logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('register', [AuthController::class, 'register'])->name('register');
     Route::post('edit_profile', [AuthController::class, 'edit_profile'])->name('edit_profile');
-    Route::post('profile', [AuthController::class, 'profile'])->name('profile');
+    Route::get('profile', [AuthController::class, 'profile'])->name('profile');
 
 });
 
