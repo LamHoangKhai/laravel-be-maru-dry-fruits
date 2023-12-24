@@ -176,7 +176,8 @@ Content type: application/json
         'subtotal' => $request->subtotal,
     }
 
-    return cua order: {
+    return cua order:
+    data_order: {
         'message' : "Checkout successfully",
         'email'
         'full_name'
@@ -209,7 +210,8 @@ Content type: application/json
         ...
         ]
 
-    return cua order items: {
+    return cua order items:
+    data_orderDetail {
      'product_id' => $product_id,
         'order_id' => $latestOrder->id,
         'price' => $price,
