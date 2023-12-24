@@ -10,6 +10,7 @@ use App\Http\Controllers\API\ProductController;
 use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\BannerAndSlideController;
 use App\Http\Controllers\API\FeedbackController;
+use App\Http\Controllers\API\MailController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ReviewController;
 use App\Models\Order;
@@ -30,7 +31,6 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
 
 
 Route::group([
@@ -54,7 +54,7 @@ Route::group([
 
     Route::get('category', [CategoryController::class, 'category'])->name('category');
 
-    Route::post('allproduct', [ProductController::class, 'allproduct'])->name('all_product');
+    Route::post('allproduct', [ProductController::class, 'allproduct'])->name('allproduct');
     Route::post('product_details', [ProductController::class, 'product_details'])->name('product_details');
     Route::post('search_product', [ProductController::class, 'search_product'])->name('search_product');
 

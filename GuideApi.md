@@ -39,7 +39,7 @@ Content type: application/json
 
 
 <!-- Profile { -->
-<!-- URL: http://localhost:8000/api/auth/profile,
+URL: http://localhost:8000/api/auth/profile,
 Method: GET
 Content type: application/json
 
@@ -49,13 +49,12 @@ Content type: application/json
 
 
 <!-- Edit profile { -->
-    URL: http://localhost:8000/api/edit_profile/edit_profile
+    URL: http://localhost:8000/api/auth/edit_profile
     Method: POST
     Content type: application/json
 
         data {
             'full_name'
-            'email'
             'phone'
             'address'
             password và password_confirmation nếu user có đổi password
@@ -67,7 +66,7 @@ Content type: application/json
 <!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
 
 Category {
-URL: http://localhost:8000/api/product/category/,
+URL: http://localhost:8000/api/product/category,
 Method: GET
 Content type: application/json
 
@@ -110,8 +109,8 @@ METHOD: POST
     }
 
 
-<!-- Top 5 product co sao cao nhat theo category { -->
-URL: http://localhost:8000/api/product/highest_rating_products/{category_id}
+<!-- Top 5 product co sao cao nhat { -->
+URL: http://localhost:8000/api/product/highest_rating_products
 Method: get
 Content type: application/json
 
@@ -135,8 +134,9 @@ Content type: application/json
 
 
 
-<!-- Top 5 product noi bat theo category { -->
-URL: http://localhost:8000/api/product/featured_products/{category_id}
+<!-- Top 5 product noi bat  { -->
+URL: http://localhost:8000/api/product/featured_products
+METHOD: GET
 Content type: application/json
 
     return {
@@ -223,7 +223,7 @@ Content type: application/json
     Method: GET
     Content type: application/json
     return: {
-        "history_order": [
+        "data": [
             {
                 "order_id": 2,
                 "status": 1,
@@ -243,7 +243,7 @@ Content type: application/json
         order_id
     }
     return {
-        "history_order_details": [
+        "data": [
         {
             "name": "Chuối sấy",
             "price": 500,
@@ -258,7 +258,7 @@ Content type: application/json
 <!-- ///////////////////////////////////// Banner_Slide /////////////////////////////////////////-->
 Banner_Slide {
 URL: http://localhost:8000/api/banner_and_slide/banner_and_slide,
-Method: GET
+Method: POST
     Data gửi xuống: position = $request->position: 1 hoặc 2
     return: {
         id, title, image, description, position: banner or slide, status: show or hidden
@@ -305,7 +305,7 @@ Method: GET
 Content type: application/json
 
     return {
-         'full_name'
+        'full_name'
         'content'
         'star'
         'date'

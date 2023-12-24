@@ -12,7 +12,7 @@ class BannerAndSlideController extends Controller
         $position = $request->position;
         $banner_and_slide = BannerAndSlide::where('position', $position)->get();
         return response()->json([
-            'banner_and_slide' => $banner_and_slide
+            'data' => $banner_and_slide
         ],200);
     }
 }

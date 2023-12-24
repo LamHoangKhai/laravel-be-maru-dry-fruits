@@ -17,7 +17,7 @@ return new class extends Migration {
             $table->unsignedBigInteger("supplier_id");
             $table->mediumInteger("quantity");
             $table->mediumInteger("current_quantity")->default(0);
-            $table->tinyInteger("transaction_type")->comment("1: Export - 2: Import");
+            $table->tinyInteger("transaction_type")->comment("1: Import - 2: Export");
             $table->unsignedFloat("input_price", 8, 2);
             $table->string("shipment");
             $table->integer('import_price')->nullable();

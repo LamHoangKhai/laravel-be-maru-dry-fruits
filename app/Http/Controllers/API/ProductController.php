@@ -17,10 +17,10 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(9);
+        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(12);
         
         return response()->json([
-            'product' => $products
+            'data' => $products
         ], 200);
     }
 
@@ -29,7 +29,7 @@ class ProductController extends Controller
         $product_id = $request->product_id;
         $product_detail = Product::with('weightTags')->where('id', $product_id)->get();
         return response()->json([
-            'product_detail' => $product_detail
+            'data' => $product_detail
         ]);
     }
 
@@ -40,7 +40,7 @@ class ProductController extends Controller
             ->limit(10)
             ->get();
         return response()->json([
-            'top10Product' => $highestRatingProducts
+            'data' => $highestRatingProducts
         ]);
     }
 
@@ -48,7 +48,7 @@ class ProductController extends Controller
     {
         $featured_products = Product::where('feature', 1)->limit(5)->get();
         return response()->json([
-            'featuredProduct' => $featured_products
+            'data' => $featured_products
         ]);
     }
 
@@ -56,7 +56,7 @@ class ProductController extends Controller
         $search = $request->search_product;
         $product = Product::where("name", "like", "%" . $search . "%")->get();
         return response()->json([
-            'product' => $product
+            'data' => $product
         ]);
     }
 }
