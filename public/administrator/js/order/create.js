@@ -7,6 +7,16 @@ $(document).ready(() => {
         $(e.target).parent().parent().remove();
     });
 
+    $("#list-item").on("change", ".quantity", (e) => {
+        console.log("run");
+        if (!e.target.value || e.target.value < 1) {
+            e.target.value = 1;
+        }
+        if (e.target.value > 100) {
+            e.target.value = 100;
+        }
+    });
+
     $(".js-example-basic-single").select2({
         theme: "bootstrap4",
     });
@@ -129,8 +139,8 @@ const createItems = (product_id) => {
                          </div>
 
                         <div class="col mb-2  ">
-                            <input type="number"  class="form-control text-end"
-                            placeholder="Enter quantity" name="quantity[]" value="1"   min="1"/>
+                            <input type="number"  class="form-control text-end quantity"
+                            placeholder="Enter quantity" name="quantity[]" value="1"   min="1" max="100"/>
                         </div>
             </div>`;
             //append 1 product
