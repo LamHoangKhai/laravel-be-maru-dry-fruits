@@ -13,7 +13,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register', 'profile']]);
     }
 
     public function register(RegisterRequest $request) {
@@ -70,20 +70,27 @@ class AuthController extends Controller
             auth('api')->logout();
             return response()->json(['error' => 'Not found'], 403);
         }
-        return $this->respondWithTokenAndProfile($token);
+        return $this->respondWithToken($token);
         
     }
 
-    // public function profile() {
-    //         return response()->json([
-    //             'email' => auth('api')->user()->email,
-    //             'full_name' => auth('api')->user()->full_name,
-    //             'phone' => auth('api')->user()->phone,
-    //             'address' => auth('api')->user()->address,
-    //             'level' => auth('api')->user()->level,
-    //             'status' => auth('api')->user()->status,
-    //         ],200);
-    // }
+    public function profile() {
+        if(auth('api')->user()) {
+            return response()->json([
+                'email' => auth('api')->user()->email,
+                'full_name' => auth('api')->user()->full_name,
+                'phone' => auth('api')->user()->phone,
+                'address' => auth('api')->user()->address,
+                'level' => auth('api')->user()->level,
+                'status' => auth('api')->user()->status,
+            ],200);
+        }
+        else {
+            return response()->json([
+                'message' => 'You need to login to get profile'
+            ]);
+        }
+    }
 
     public function logout()
     {
@@ -91,18 +98,12 @@ class AuthController extends Controller
         return response()->json(['message' => 'Successfully logged out']);
     }
 
-    protected function respondWithTokenAndProfile($token)
+    protected function respondWithToken($token)
     {
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
-            'email' => auth('api')->user()->email,
-            'full_name' => auth('api')->user()->full_name,
-            'phone' => auth('api')->user()->phone,
-            'address' => auth('api')->user()->address,
-            'level' => auth('api')->user()->level,
-            'status' => auth('api')->user()->status,
 
         ]);
     }
