@@ -17,9 +17,10 @@ class CheckLogin
     public function handle(Request $request, Closure $next): Response
     {
         // handle authentication
-        if (Auth::check() && Auth::user()->level == 1) {
+        if (Auth::guard("web")->check() && Auth::guard("web")->user()->level == 1 && Auth::guard("web")->user()->status == 1) {
             return $next($request);
         }
+        dd("run");
         return redirect()->route("login");
     }
 }

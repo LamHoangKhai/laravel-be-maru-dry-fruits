@@ -1,6 +1,5 @@
-import Mydebounce from "../debouce.js";
-import { loadData, setTotalPages } from "./function.js";
-
+import { Mydebounce, loading } from "../function.js";
+import { loadUser } from "./load-data.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -11,6 +10,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         url: $("#url").data("url"),
+        tableCols: 7,
     };
     //handle search
     $("#search").keypress(
@@ -20,55 +20,30 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
+            loading(storage.tableCols);
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
+
+    $("#search").bind("paste", (e) => {
+        // access the clipboard using the api
+        storage.search = e.originalEvent.clipboardData.getData("text");
+        storage.page = 1;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
 
     $("#search").keyup(
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
+                loading(storage.tableCols);
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
         }, 500)
     );
     // end handle search
-
-    // handle filter
-    $(".filter").change((e) => {
-        const selecter = e.target;
-        const isChecked = selecter.checked;
-        const name = selecter.name;
-        const value = selecter.value;
-        storage.page = 1;
-        if (name === "status") {
-            storage.status = isChecked
-                ? [...storage.status, value]
-                : [...storage.status.filter((e) => e !== value)];
-        }
-
-        if (name === "featured") {
-            storage.featured = isChecked
-                ? [...storage.featured, value]
-                : [...storage.featured.filter((e) => e !== value)];
-        }
-
-        $(selecter).attr("disabled", true);
-        setTimeout(() => {
-            $(selecter).removeAttr("disabled");
-        }, 500);
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    // end handle filter
-
-    //handle filter category
-    $("#category").change((e) => {
-        storage.category_id = e.target.value;
-        storage.page = 1;
-        $("#pagination").simplePaginator("changePage", 1);
-    });
-    //end handle filter category
 
     //choose show entries
     $("#showEntries").change((e) => {
@@ -91,23 +66,32 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loadData(storage);
+            loading(storage.tableCols);
+            loadUser(storage);
         },
     });
     // end pagination
 
-    // move fast page
-    $("#movePage").keypress(
-        Mydebounce((e) => {
-            let page = parseInt(e.target.value);
-            // if user input value > total page
-            if (page > storage.totalPage) {
-                storage.page = storage.totalPage;
-            } else {
-                storage.page = page;
+    $("#renderData").on("click", ".delete", async (e) => {
+        e.preventDefault();
+        const url = e.target.href;
+        const name = e.target.getAttribute("value");
+        // show modal
+        await Swal.fire({
+            title: "<strong>Please read the warning carefully!!!</strong>",
+            html: `
+            Do you want to delete user <strong>${name}, If you delete this user, things related to reviews and orders cannot be found?</strong>`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    return (window.location.href = url);
+                }
             }
-            $("#pagination").simplePaginator("changePage", storage.page);
-        }, 500)
-    );
-    // end fast page
+        });
+    });
 });

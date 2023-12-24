@@ -27,6 +27,13 @@
 
                 <!-- Content wrapper -->
                 <div class="content-wrapper">
+                    <!-- loading -->
+                    <div id="loading" class="page-loader flex-column">
+                        <div>
+                            <span class="spinner-border text-primary" role="status"></span>
+                            <span class="text-muted fs-6 fw-semibold ">Loading...</span>
+                        </div>
+                    </div>
                     <!-- Content -->
 
                     @if (Session::has('success'))
@@ -64,7 +71,7 @@
                                         popup: 'colored-toast',
                                     },
                                     showConfirmButton: false,
-                                    timer: 1500,
+                                    timer: 3000,
                                     timerProgressBar: true,
                                 })
                                 Toast.fire({

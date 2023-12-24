@@ -14,10 +14,36 @@
 <!-- Vendors JS -->
 <script src="{{ asset('administrator/assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 
+{{-- Notification new order --}}
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script src="{{ asset('administrator/js/notification.js') }}"></script>
 
 <!-- Main JS -->
 <script src="{{ asset('administrator/assets/js/main.js') }}"></script>
 
+<script>
+    const loading = () => {
+        const loadingEl = $("#loading");
+
+        // Show page loading
+
+        // Hide after 3 seconds
+        setTimeout(function() {
+            loadingEl.remove();
+        }, 1000);
+    };
+    loading();
+
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+</script>
 
 
 
