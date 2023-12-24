@@ -8,18 +8,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function category($parent_id = 0) {
-        $categories = $this->getCategories($parent_id);
+    public function category() {
+        $categories = Category::all();
         return response()->json([
             'categories' => $categories
         ],200);
     }
 
-    public function getCategories($parent_id = 0) {
-        $categories = Category::where('parent_id', $parent_id)->get();
-        foreach($categories as $category) {
-            $category->children = $this->getCategories($category->id);
-        }
-        return $categories;
-    }
 }
