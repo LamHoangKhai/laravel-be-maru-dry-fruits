@@ -56,9 +56,9 @@
                                     <th>#</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
-                                    <th>Level</th>
                                     <th>Phone</th>
                                     <th>Address</th>
+                                    <th>Level</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -77,9 +77,9 @@
                                     <th>#</th>
                                     <th>Full Name</th>
                                     <th>Email</th>
-                                    <th>Level</th>
                                     <th>Phone</th>
                                     <th>Address</th>
+                                    <th>Level</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

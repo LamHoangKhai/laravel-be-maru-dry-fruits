@@ -42,6 +42,11 @@ const loadProduct = (storage) => {
             setTotalPages(storage);
         },
         error: function (error) {
+            Swal.fire({
+                title: "Errors system!!",
+                text: "The system needs maintenance.",
+                icon: "warning",
+            });
             console.log(error.message);
         },
     });

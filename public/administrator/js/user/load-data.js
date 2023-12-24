@@ -45,13 +45,13 @@ const loadUser = (storage) => {
                         }</td>
                         <td>${element.full_name}</td>
                         <td>${element.email}</td>
-                        <td>
-                            <span class="badge rounded-pill 
-                            bg-${level[1]}">${level[0]}</span>
-                        </td>
                         <td>${element.phone}</td>
                         <td  class="text-wrap" style="min-width:180px">
                             ${element.address}
+                        </td>
+                        <td>
+                            <span class="badge rounded-pill 
+                            bg-${level[1]}">${level[0]}</span>
                         </td>
                         <td class="g-2" >
                         <div class="dropdown">
@@ -83,6 +83,11 @@ const loadUser = (storage) => {
             setTotalPages(storage);
         },
         error: function (error) {
+            Swal.fire({
+                title: "Errors system!!",
+                text: "The system needs maintenance.",
+                icon: "warning",
+            });
             console.log(error.message);
         },
     });
