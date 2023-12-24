@@ -39,7 +39,7 @@ class OrderController extends Controller
 
             // send mail
 
-            $subject = 'Maru Dry Fruits confirms order';
+            $subject = '[MARU DRY FRUITS CONFIRMS ORDER]';
             $body = [
                 'dear' => 'Dear' . ' ' . $order->full_name,
                 'greeting' => "We extend our sincere gratitude to you for choosing Maru Dry Fruits as your shopping partner. We have received your order and are pleased to inform you that your order has been successfully confirmed.",
