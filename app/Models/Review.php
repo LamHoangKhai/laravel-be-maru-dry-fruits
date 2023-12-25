@@ -12,4 +12,9 @@ class Review extends Model
     use SoftDeletes;
     public $table = 'reviews';
     public $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

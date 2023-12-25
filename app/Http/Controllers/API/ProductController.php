@@ -29,7 +29,7 @@ class ProductController extends Controller
     public function product_details(Request $request)
     {
         $product_id = $request->product_id;
-        $product_detail = Product::with('weightTags')
+        $product_detail = Product::with('weightTags', 'reviews')
         ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature')
         ->where('id', $product_id)->get();
         return response()->json([
