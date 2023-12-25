@@ -305,7 +305,7 @@ Content type: application/json
 URL: http://localhost:8000/api/review/return_review
 Method: post
 Content type: application/json
-
+    data gui xuong: $request->product_id
     return {
         'full_name'
         'content'
