@@ -83,7 +83,8 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ],200); }
+            ],200); 
+        }
         else {
             return response()->json([
                 'message' => 'You need to login to get profile'
