@@ -87,8 +87,9 @@ class ReviewController extends Controller
         ]);
     }
 
-    public function return_review() {
-        $comments = Review::select('user_id', 'content', 'star', 'date', 'product_id')->get();
+    public function return_review(Request $request) {
+        
+        $comments = Review::select('user_id', 'content', 'star', 'date', 'product_id')->where('product_id', $request->product_id)->get();
         $dataComment = [];
         foreach($comments as $comment) {
             $full_name = User::select('full_name')->where('id', $comment->user_id)->get();

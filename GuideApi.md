@@ -303,7 +303,7 @@ Content type: application/json
 
 <!-- Comment, Rating: Trả lên FE { -->
 URL: http://localhost:8000/api/review/return_review
-Method: GET
+Method: post
 Content type: application/json
 
     return {
