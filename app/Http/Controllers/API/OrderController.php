@@ -17,7 +17,7 @@ class OrderController extends Controller
     {
         // Save order
         $order = new Order();
-        $order->email =  $request->email;
+        $order->email =  auth('api')->user()->email;
         $order->full_name = $request->full_name;
         $order->address = $request->address;
         $order->phone = $request->phone;
