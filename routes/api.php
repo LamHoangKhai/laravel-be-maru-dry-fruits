@@ -43,21 +43,14 @@ Route::middleware(['api'])->group(function () {
         Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'product'
-
-], function () {
-
-    Route::get('category/{parent_id}', [CategoryController::class, 'category'])->name('category');
-
-    Route::post('allproduct', [ProductController::class, 'allproduct'])->name('all_product');
-    Route::post('product_details', [ProductController::class, 'product_details'])->name('product_details');
-    Route::post('search_product', [ProductController::class, 'search_product'])->name('search_product');
-
-    Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
-    Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
-});
+    Route::prefix('product')->group(function () {
+        Route::get('category', [CategoryController::class, 'category'])->name('category');
+        Route::post('allproduct', [ProductController::class, 'allproduct'])->name('allproduct');
+        Route::post('product_details', [ProductController::class, 'product_details'])->name('product_details');
+        Route::post('search_product', [ProductController::class, 'search_product'])->name('search_product');
+        Route::get('highest_rating_products', [ProductController::class, 'highest_rating_products'])->name('highest_rating_products');
+        Route::get('featured_products', [ProductController::class, 'featured_products'])->name('featured_products');
+    });
 
     Route::prefix('order')->group(function () {
         Route::post('order', [OrderController::class, 'order'])->name('order');
@@ -65,22 +58,15 @@ Route::group([
         Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
     });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'banner_and_slide'
-], function () {
-    Route::get('banner_and_slide', [BannerAndSlideController::class, 'banner_and_slide'])->name('banner_and_slide');
-});
+    Route::prefix('banner_and_slide')->group(function () {
+        Route::post('banner_and_slide', [BannerAndSlideController::class, 'banner_and_slide'])->name('banner_and_slide');
+    });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'review'
-], function () {
-    Route::post('get_comment', [ReviewController::class, 'get_comment'])->name('get_comment');
-    Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
-
-    Route::get('return_review', [ReviewController::class, 'return_review'])->name('return_review');
-});
+    Route::prefix('review')->group(function () {
+        Route::post('get_comment', [ReviewController::class, 'get_comment'])->name('get_comment');
+        Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
+        Route::post('return_review', [ReviewController::class, 'return_review'])->name('return_review');
+    });
 
     Route::prefix('feedback')->group(function () {
         Route::post('feedback', [FeedbackController::class, 'feedback'])->name('feedback');
