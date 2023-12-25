@@ -81,6 +81,16 @@
 
                     <div class="row">
                         <div class="col mb-2">
+                            <label for="sumary" class="form-label">Sumary</label>
+                            <input class="form-control" id="sumary" name="sumary" value='{{ old('sumary', $data->sumary) }}' />
+                            @if ($errors->has('sumary'))
+                                <span class="text-danger">* {{ $errors->get('sumary')[0] }}</span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col mb-2">
                             <label for="description" class="form-label">Description</label>
                             <textarea class="form-control" id="description" rows="3" name="description">{{ old('description', $data->description) }}</textarea>
                             @if ($errors->has('description'))

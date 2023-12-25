@@ -15,11 +15,12 @@ return new class extends Migration {
             $table->unsignedBigInteger('category_id');
             $table->string("name");
             $table->string("image");
+            $table->string("sumary");
             $table->text("description");
             $table->text("nutrition_detail");
             $table->mediumInteger("stock_quantity")->default(0);
             $table->float("store_quantity", 8, 2)->default(0);
-            $table->unsignedFloat("price", 8, 2);
+            $table->unsignedFloat("price", 8, 2)->default(0);
             $table->tinyInteger("star")->default(5);
             $table->tinyInteger("status")->default(1)->comment("1:Show - 2:Hidden");
             $table->tinyInteger("feature")->default(2)->comment('1: Featured - 2: Unfeatured');

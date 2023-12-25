@@ -129,12 +129,12 @@ const htmlString = (data) => {
 </tr>
 <tr class="total" stlye="margin-top:12px">
 <td align="right" colspan="3">
-    <b>Subtotal&nbsp;:&nbsp;%${data.discount}</b>
+    <b>Subtotal&nbsp;:&nbsp;${data.discount}%</b>
 </td>
 </tr>
 <tr class="total" stlye="margin-top:12px">
 <td align="right" colspan="3">
-    <b>Total&nbsp;:&nbsp;$${data.total}</b>
+    <b>Total&nbsp;:&nbsp;$${toFix(data.total)}</b>
 </td>
 </tr>
 <tr>

@@ -121,8 +121,8 @@ class InitialSeeder extends Seeder
                 $productDetails = file_get_html($linkDetails, false, $context);
                 $products[$count]['name'] = $name;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 1;
                 $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
@@ -152,6 +152,7 @@ class InitialSeeder extends Seeder
                 $productDetails = file_get_html($linkDetails, false, $context);
                 $products[$count]['name'] = $name;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 2;
@@ -177,6 +178,7 @@ class InitialSeeder extends Seeder
                 $productDetails = file_get_html($linkDetails, false, $context);
                 $products[$count]['name'] = $name;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 3;
@@ -201,8 +203,9 @@ class InitialSeeder extends Seeder
                 $product->price = $products[$k]['price'];
                 $product->status = 1;
                 $product->feature = rand(1, 2);
+                $product->sumary = 'If you need to buy wholesale, Please call office at 1800 1779 or email us at marudryfruits@gmail.com  to enquire ';
                 $product->description = $products[$k]["description"];
-                $product->nutrition_detail = $products[$k]["name"];
+                $product->nutrition_detail = $products[$k]["nutrition_detail"];
                 $product->category_id = $products[$k]['category_Id'];
                 $product->created_at = Carbon::now();
                 $product->updated_at = Carbon::now();
@@ -255,6 +258,9 @@ class InitialSeeder extends Seeder
         $str = preg_replace('/[^a-z0-9-\s]/', '', $str);
         $str = preg_replace('/([\s]+)/', '-', $str);
         $str = preg_replace('/-+/', '-', $str);
+
+        $str = str_replace('***10kg wholesale bag available. Kindly call office at 66594859 or email us at enquiries@gardenpicks.com.sg to enquire', 'If you need to buy wholesale, Please call office at 1800 1779 or email us at marudryfruits@gmail.com  to enquire ', $str);
+
 
         return $str;
     }

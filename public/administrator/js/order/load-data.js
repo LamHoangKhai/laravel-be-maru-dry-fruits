@@ -23,11 +23,13 @@ const loadProduct = (storage) => {
                     let type = statusText(element.status);
                     xhtml += `
                         <tr class="detail" data-id="${element.id}">
-                            <td>${element.id}</td>
-                            <td >${element.user.full_name}</td>
-                            <td>${element.user.email}</td>
-                            <td>${element.user.address}</td>
+                            <td >${element.id}</td>
+                            <td class="max-110">${element.user.full_name}</td>
+                            <td class="max-110">${element.user.email}</td>
+                            <td class="max-250">${element.user.address}</td>
                             <td>${element.user.phone}</td>
+                            <td class="text-center">${element.discount}%</td>
+                            <td>$${element.total}</td>
                             <td><span class="badge rounded-pill bg-${type[1]}">${type[0]}</span> </td>
                             <td  class="max-110">${created_at}</td>
                             <td  class="max-110">${updated_at}</td>

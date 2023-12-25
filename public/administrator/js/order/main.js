@@ -130,7 +130,6 @@ $(document).ready(() => {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, cancel it!",
-            
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
@@ -168,4 +167,26 @@ $(document).ready(() => {
             },
         });
     });
+
+    $("#modalOrderDetail").on(
+        "keypress",
+        "#discount",
+        Mydebounce((e) => {
+            let urlAddDiscount = $("#url-add-discount").data("url");
+            let orderId = $("#discount").data("id");
+            let discount = e.target.value;
+            $.ajax({
+                type: "POST",
+                url: urlAddDiscount,
+                data: { id: orderId, discount },
+                dataType: "json",
+                success: (res) => {
+                    $("#total").text("$" + res.total);
+                },
+                error: function (error) {
+                    console.log(error.message);
+                },
+            });
+        })
+    );
 });

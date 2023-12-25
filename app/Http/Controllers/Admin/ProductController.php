@@ -51,6 +51,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
+        $product->sumary = $request->sumary;
         $product->description = $request->description;
         $product->nutrition_detail = $request->nutrition_detail;
         $product->status = $request->status;
@@ -97,6 +98,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $product->name = $request->name;
         $product->price = $request->price;
+        $product->sumary = $request->sumary;
         $product->description = $request->description;
         $product->nutrition_detail = $request->nutrition_detail;
         $product->status = $request->status;

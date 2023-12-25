@@ -53,6 +53,8 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Phone</th>
+                                    <th>Discount</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
@@ -72,6 +74,8 @@
                                     <th>Email</th>
                                     <th>Address</th>
                                     <th>Phone</th>
+                                    <th>Discount</th>
+                                    <th>Total</th>
                                     <th>Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>

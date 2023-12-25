@@ -17,10 +17,10 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(9);
-        
+        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(12);
+
         return response()->json([
-            'product' => $products
+            'data' => $products
         ], 200);
     }
 
@@ -29,7 +29,7 @@ class ProductController extends Controller
         $product_id = $request->product_id;
         $product_detail = Product::with('weightTags')->where('id', $product_id)->get();
         return response()->json([
-            'product_detail' => $product_detail
+            'data' => $product_detail
         ]);
     }
 
@@ -52,7 +52,8 @@ class ProductController extends Controller
         ]);
     }
 
-    public function search_product(Request $request) {
+    public function search_product(Request $request)
+    {
         $search = $request->search_product;
         $product = Product::where("name", "like", "%" . $search . "%")->get();
         return response()->json([

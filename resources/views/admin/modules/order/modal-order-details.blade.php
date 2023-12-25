@@ -1,7 +1,7 @@
 <!-- The Modal -->
-<div class="modal fade" id="modalOrderDetail">
+<div class="modal fade " id="modalOrderDetail">
 
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
         <div class="modal-content">
 
             <!-- Modal Header -->

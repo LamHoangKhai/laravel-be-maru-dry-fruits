@@ -29,7 +29,7 @@ class OrderController extends Controller
         return view("admin.modules.order.history");
     }
 
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -200,5 +200,18 @@ class OrderController extends Controller
         $order->updated_at = Carbon::now();
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+    }
+
+    public function addDiscount(Request $request)
+    {
+        $request->validate([
+            "discount" => "numeric"
+        ]);
+        $order = Order::findOrFail($request->id);
+        $order->discount = $request->discount;
+        $order->total = $order->subtotal - ($order->subtotal * $request->discount / 100);
+        $order->update();
+
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "total" => $order->total]);
     }
 }
