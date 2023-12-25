@@ -78,8 +78,6 @@ class OrderController extends Controller
             OrderItems::insert($orderDetail);
             return response()->json([
                 'message' => 'Checkout successfully',
-                'data_order' => $order,
-                'data_orderDetail' => $orderDetail
             ], 200);
         }
         else {
@@ -106,7 +104,7 @@ class OrderController extends Controller
         }
         return response()->json([
             'data' => $history_order
-        ]);
+        ],200);
     }
     public function history_order_details(Request $request)
     {
@@ -125,6 +123,6 @@ class OrderController extends Controller
         }
         return response()->json([
             'data' => $history_order_details
-        ]);
+        ],200);
     }
 }
