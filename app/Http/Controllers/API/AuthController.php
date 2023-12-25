@@ -83,8 +83,7 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ],200);
-        }
+            ],200); }
         else {
             return response()->json([
                 'message' => 'You need to login to get profile'
@@ -104,6 +103,12 @@ class AuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'email' => auth('api')->user()->email,
+            'full_name' => auth('api')->user()->full_name,
+            'phone' => auth('api')->user()->phone,
+            'address' => auth('api')->user()->address,
+            'level' => auth('api')->user()->level,
+            'status' => auth('api')->user()->status,
 
         ]);
     }

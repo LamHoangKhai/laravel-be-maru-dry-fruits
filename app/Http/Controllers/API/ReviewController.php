@@ -88,6 +88,7 @@ class ReviewController extends Controller
     }
 
     public function return_review(Request $request) {
+        
         $comments = Review::select('user_id', 'content', 'star', 'date', 'product_id')->where('product_id', $request->product_id)->get();
         $dataComment = [];
         foreach($comments as $comment) {
@@ -101,7 +102,7 @@ class ReviewController extends Controller
             ];
         }
         return response()->json([
-            'comment' => $dataComment
+            'data' => $dataComment
         ],200);
     }
 }

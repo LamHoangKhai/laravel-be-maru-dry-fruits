@@ -13,9 +13,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
 use App\Http\Controllers\CrawController;
 use App\Models\Order;
-// use BaconQrCode\Encoder\QrCode;
 use Illuminate\Support\Facades\Route;
-use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +30,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode as FacadesQrCode;
 Route::get('/', function () {
     return redirect()->route("admin.user.index");
 });
+
 Route::get('uploads/')->name("uploads");
 Route::get('qrcode/')->name('qrcode');
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
