@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->string('image');
             $table->text('description');
-            $table->tinyInteger('position')->comment('1: Slide - 2: Banner');
+            $table->tinyInteger('position')->comment('1: Slide - 2: Parallax Banner - 3: Normal Banner');
             $table->tinyInteger('status')->default(2)->comment('1: Show - 2: Hidden');
             $table->timestamps();
         });
