@@ -87,7 +87,7 @@ Route::group([
     Route::post('get_comment', [ReviewController::class, 'get_comment'])->name('get_comment');
     Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
 
-    Route::get('return_review', [ReviewController::class, 'return_review'])->name('return_review');
+    Route::post('return_review', [ReviewController::class, 'return_review'])->name('return_review');
 });
 
 Route::group([
