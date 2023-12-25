@@ -168,12 +168,14 @@ Method: POST
 Content type: application/json
 
     Data cua ORder: {
+    data_order: {
         'email' => $request->email,
         'full_name' => $request->full_name,
         'address' => $request->address,
         'phone' => $request->phone,
         'transaction' => $request->transaction,
         'subtotal' => $request->subtotal,
+    }
     }
 
     return cua order:
@@ -193,7 +195,7 @@ Content type: application/json
 
 
     Data của order items gửi xuống
-    "order_items": [
+    "data_orderDetail": [
         {
             $product_id = 1;
             $price = 123;
