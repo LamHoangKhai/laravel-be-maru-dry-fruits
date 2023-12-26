@@ -62,7 +62,7 @@ const modalHtml = (data) => {
             <li class="left mb-2 ">Status Order: <strong>${text[0]}</strong></li>
             <li class="left mb-2">Subtotal: <strong>$${data.subtotal}</strong></li>
             <li class="left mb-2">Discount:  ${discount}</li>
-            <li class="left mb-2">Total Price: <strong id="total">$${toFix(data.total)}</strong></li>
+            <li class="left mb-2">Total Price: <strong id="total">$${data.total.toFixed(2)}</strong></li>
         </ul>
     </div>`;
 
