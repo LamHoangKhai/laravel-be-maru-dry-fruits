@@ -134,7 +134,7 @@ const htmlString = (data) => {
 </tr>
 <tr class="total" stlye="margin-top:12px">
 <td align="right" colspan="3">
-    <b>Total&nbsp;:&nbsp;$${toFix(data.total)}</b>
+    <b>Total&nbsp;:&nbsp;$${data.total.toFixed(2)}</b>
 </td>
 </tr>
 <tr>
