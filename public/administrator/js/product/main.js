@@ -1,4 +1,4 @@
-import { Mydebounce, loading } from "../function.js";
+import { Mydebounce, checkMathUrl, loading } from "../function.js";
 import { loadProduct, detailProduct } from "./load-data.js";
 //  call api Search
 
@@ -7,17 +7,25 @@ $(document).ready(() => {
     let barcode = "";
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
+
         if (code == 13) {
-            detailProduct(barcode);
+            console.log(barcode);
+            if (checkMathUrl(barcode)) {
+                detailProduct(barcode);
+            }
             barcode = "";
         } else if (code == 9) {
-            detailProduct(barcode);
+            if (checkMathUrl(barcode)) {
+                detailProduct(barcode);
+            }
             barcode = "";
         } else {
             barcode = barcode + String.fromCharCode(code);
         }
     });
+
     // end handle scan
+
     let storage = {
         search: "",
         page: 1,

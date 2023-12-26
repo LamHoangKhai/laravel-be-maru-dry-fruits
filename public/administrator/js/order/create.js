@@ -33,19 +33,20 @@ $(document).ready(() => {
     });
 
     //handle scan
-    let barcode = "";
-    $(document).keypress(function (e) {
-        var code = e.keyCode ? e.keyCode : e.which;
-        if (code == 13) {
-            createItems(barcode);
-            barcode = "";
-        } else if (code == 9) {
-            createItems(barcode);
-            barcode = "";
-        } else {
-            barcode = barcode + String.fromCharCode(code);
+    if (code == 13) {
+        console.log(barcode);
+        if (checkMathUrl(barcode)) {
+            detailProduct(barcode);
         }
-    });
+        barcode = "";
+    } else if (code == 9) {
+        if (checkMathUrl(barcode)) {
+            detailProduct(barcode);
+        }
+        barcode = "";
+    } else {
+        barcode = barcode + String.fromCharCode(code);
+    }
     //end handle scan
 });
 

@@ -17,7 +17,7 @@ channel.bind('user-order', function (data) {
       popup: "colored-toast",
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: true,
   });
   Toast.fire({
@@ -37,7 +37,7 @@ channel.bind('feedback', function (data) {
       popup: "colored-toast",
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: true,
   });
   Toast.fire({
