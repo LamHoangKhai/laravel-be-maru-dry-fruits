@@ -70,6 +70,12 @@ class AuthController extends Controller
             auth('api')->logout();
             return response()->json(['error' => 'Not found'], 403);
         }
+        if($user->status == 2) {
+            auth('api')->logout();
+            return response()->json([
+                'message' => 'Your account is locked'
+            ]);
+        }
         return $this->respondWithToken($token);
         
     }

@@ -19,6 +19,11 @@ class OrderController extends Controller
     {
         // Save order
         if (auth('api')->user()) {
+            if(auth('api')->user()->status == 2) {
+                return response()->json([
+                    'message' => 'Your account is locked'
+                ]);
+            }
             $order = new Order();
             $order->email = auth('api')->user()->email;
             $order->full_name = $request->full_name;
@@ -88,23 +93,30 @@ class OrderController extends Controller
     }
     public function history_order()
     {
-        $user = auth('api')->user()->id;
-        $order = Order::where('user_id', $user)->get();
-        $history_order = [];
-        foreach ($order as $order) {
-            $quantity = OrderItems::where('order_id', $order->id)->get();
+        if(auth('api')->user()) {
+            $user = auth('api')->user()->id;
+            $order = Order::where('user_id', $user)->get();
+            $history_order = [];
+            foreach ($order as $order) {
+                $quantity = OrderItems::where('order_id', $order->id)->get();
 
-            $history_order[] = [
-                'order_id' => $order->id,
-                'status' => $order->status,
-                'subtotal' => $order->subtotal,
-                'created_at' => $order->created_at,
-                'quantity' => count($quantity)
-            ];
+                $history_order[] = [
+                    'order_id' => $order->id,
+                    'status' => $order->status,
+                    'subtotal' => $order->subtotal,
+                    'created_at' => $order->created_at,
+                    'quantity' => count($quantity)
+                ];
+            }
+            return response()->json([
+                'data' => $history_order
+            ],200);
         }
-        return response()->json([
-            'data' => $history_order
-        ],200);
+        else {
+            return response()->json([
+                'message' => 'Ypu are not logged in'
+            ]);
+        }
     }
     public function history_order_details(Request $request)
     {
@@ -125,4 +137,5 @@ class OrderController extends Controller
             'data' => $history_order_details
         ],200);
     }
+
 }
