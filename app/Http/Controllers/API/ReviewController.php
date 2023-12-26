@@ -17,6 +17,11 @@ class ReviewController extends Controller
     public function get_comment(Request $request)
     {
         if(auth('api')->user()) {
+            if(auth('api')->user()->status == 2) {
+                return response()->json([
+                    'message' => 'Your account is locked' 
+                ]);
+            }
             $review = [
                 'content' => $request->content,
                 'product_id' => $request->product_id,
@@ -56,6 +61,11 @@ class ReviewController extends Controller
     public function get_star(Request $request)
     {
         if(auth('api')->user()) {
+            if(auth('api')->user()->status == 2) {
+                return response()->json([
+                    'message' => 'Your account is locked' 
+                ]);
+            }
             $rating = [
                 'product_id' => $request->product_id,
                 'user_id' => auth('api')->user()->id,

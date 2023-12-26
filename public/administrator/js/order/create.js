@@ -37,7 +37,7 @@ $(document).ready(() => {
         }, 100);
         // show camera
         $("#preview").css("display", "block");
-        // if timouet 20s close camera
+        // if timeout 20s close camera
         let timerId = setTimeout(() => {
             $(".closeModal").trigger("click");
             $("#scan").prop("disabled", false);

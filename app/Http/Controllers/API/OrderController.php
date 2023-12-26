@@ -19,6 +19,11 @@ class OrderController extends Controller
     {
         // Save order
         if (auth('api')->user()) {
+            if(auth('api')->user()->status == 2) {
+                return response()->json([
+                    'message' => 'Your account is locked'
+                ]);
+            }
             $order = new Order();
             $order->email = auth('api')->user()->email;
             $order->full_name = $request->full_name;

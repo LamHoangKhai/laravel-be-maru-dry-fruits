@@ -25,7 +25,7 @@ return new class extends Migration {
               END IF;
             ELSEIF (NEW.transaction_type != OLD.transaction_type) THEN
                 if(NEW.transaction_type = 1) THEN
-                    IF (SELECT COUNT(*) FROM warehouse WHERE shipment = NEW.shipment > 1) THEN
+                    IF ((SELECT COUNT(*) FROM warehouse WHERE shipment = NEW.shipment GROUP BY shipment) > 1) THEN
                        SIGNAL SQLSTATE "45000"
                        SET MESSAGE_TEXT = "Error: Shipment was exist.";
                     END IF;
