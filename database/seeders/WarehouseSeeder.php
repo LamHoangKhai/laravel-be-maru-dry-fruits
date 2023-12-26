@@ -45,6 +45,9 @@ class WarehouseSeeder extends Seeder
                 'updated_at' => now()
             ];
             Warehouse::insert($export);
+            $importStore = Warehouse::where([['product_id', $import['product_id']], ['transaction_type', 1]])->first();
+            $importStore->current_quantity = $export['current_quantity'];
+            $importStore->update();
         }
     }
 }

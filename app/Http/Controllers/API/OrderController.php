@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Events\UserOrder;
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redis;
 
 class OrderController extends Controller
@@ -16,47 +18,73 @@ class OrderController extends Controller
     public function order(Request $request)
     {
         // Save order
-        $order = new Order();
-        $order->email = auth('api')->user()->email;
-        $order->full_name = $request->full_name;
-        $order->address = $request->address;
-        $order->phone = $request->phone;
-        $order->transaction = $request->transaction;
-        $order->subtotal = $request->subtotal;
-        $order->user_id = auth('api')->user()->id;
-        $order->status = 1;
-        $order->total = $request->subtotal + 35000;
-        $order->transaction_status = 1;
-        $order->created_at = Carbon::now();
-        $order->updated_at = Carbon::now();
-        $order->save();
-        event(new UserOrder($order));
+        if (auth('api')->user()) {
+            $order = new Order();
+            $order->email = auth('api')->user()->email;
+            $order->full_name = $request->full_name;
+            $order->address = $request->address;
+            $order->phone = $request->phone;
+            $order->transaction = $request->transaction;
+            $order->subtotal = $request->subtotal;
+            $order->user_id = auth('api')->user()->id;
+            $order->status = 1;
+            $order->total = $request->subtotal + 35000;
+            $order->transaction_status = 1;
+            $order->created_at = Carbon::now();
+            $order->updated_at = Carbon::now();
+            $order->save();
 
+            // Realtime notification
+            event(new UserOrder($order));
 
-        // Save order item
-        $orderID = $order->id;
+            // send mail
 
-        $items = $request->order_items;
-        $orderDetail = [];
-        foreach ($items as $item) {
-            $id = $item['product_id'];
-            $price = $item['price'];
-            $weight = $item['weight'];
-            $quantity = $item['quantity'];
-            $orderDetail[] = [
-                'product_id' => $id,
-                'order_id' => $orderID,
-                'price' => $price,
-                'weight' => $weight,
-                'quantity' => $quantity
+            $subject = '[MARU DRY FRUITS CONFIRMS ORDER]';
+            $body = [
+                'dear' => 'Dear' . ' ' . $order->full_name,
+                'greeting' => "We extend our sincere gratitude to you for choosing Maru Dry Fruits as your shopping partner. We have received your order and are pleased to inform you that your order has been successfully confirmed.",
+
+                'order_id' => $order->id,
+                'date' => $order->created_at,
+                'total' => $order->total,
+                'transaction' => $order->transaction,
+                'full_name' => $order->full_name,
+                'address' => $order->address,
+                'phone' => $order->phone,
+
+                'end' => "If you have any questions or concerns, please contact us via email at huanbeu555@gmail.com or by phone at 0929090614.
+
+            We sincerely look forward to serving you again and hope that you will be satisfied with our products and services."
             ];
+            Mail::to($order->email)->send(new SendMail($subject, $body));
+            // Save order item
+            $orderID = $order->id;
+
+            $items = $request->order_items;
+            $orderDetail = [];
+            foreach ($items as $item) {
+                $id = $item['product_id'];
+                $price = $item['price'];
+                $weight = $item['weight'];
+                $quantity = $item['quantity'];
+                $orderDetail[] = [
+                    'product_id' => $id,
+                    'order_id' => $orderID,
+                    'price' => $price,
+                    'weight' => $weight,
+                    'quantity' => $quantity
+                ];
+            }
+            OrderItems::insert($orderDetail);
+            return response()->json([
+                'message' => 'Checkout successfully',
+            ], 200);
         }
-        OrderItems::insert($orderDetail);
-        return response()->json([
-            'message' => 'Checkout successfully',
-            'order' => $order,
-            'orderDetail' => $orderDetail
-        ], 200);
+        else {
+            return response()->json([
+                'message' => "You are not logged in"
+            ]);
+        }
     }
     public function history_order()
     {
@@ -75,8 +103,8 @@ class OrderController extends Controller
             ];
         }
         return response()->json([
-            'history_order' => $history_order
-        ]);
+            'data' => $history_order
+        ],200);
     }
     public function history_order_details(Request $request)
     {
@@ -94,7 +122,7 @@ class OrderController extends Controller
             ];
         }
         return response()->json([
-            'history_order_details' => $history_order_details
-        ]);
+            'data' => $history_order_details
+        ],200);
     }
 }

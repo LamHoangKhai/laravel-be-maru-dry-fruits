@@ -83,7 +83,7 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ],200);
+            ],200); 
         }
         else {
             return response()->json([
@@ -103,7 +103,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'expires_in' => auth('api')->factory()->getTTL() * 60
 
         ]);
     }
