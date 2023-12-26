@@ -17,7 +17,7 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $products = $query->with("category")
+        $products = $query->with("category", "weightTags")
         ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature')
         ->orderBy("created_at", "desc")->paginate(12);
         
@@ -39,7 +39,7 @@ class ProductController extends Controller
 
     public function highest_rating_products()
     {
-        $highestRatingProducts = Product::orderBy('star', 'desc')
+        $highestRatingProducts = Product::with('weightTags')->orderBy('star', 'desc')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature')
             ->whereIn('star', [4, 5])
             ->limit(10)
@@ -51,8 +51,8 @@ class ProductController extends Controller
 
     public function featured_products()
     {
-        $featured_products = Product::
-        select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature')
+        $featured_products = Product::with('weightTags')
+        ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature')
         ->where('feature', 1)->limit(5)->get();
         return response()->json([
             'data' => $featured_products
