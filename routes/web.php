@@ -65,10 +65,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //view 
         Route::get('index', 'index')->name('index');
         Route::get('create', 'create')->name('create');
-        Route::get('detail/{id}', 'detail')->name('detail');
 
-        //api
-        Route::post('get-products', 'getProducts')->name('getProducts');
+
 
         //create
         Route::post('store', 'store')->name('store');
@@ -81,6 +79,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
+        //api
+        Route::post('detail', 'detail')->name('detail');
+        Route::post('get-products', 'getProducts')->name('getProducts');
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
 
@@ -150,7 +151,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //api
         Route::post('get-list-order', 'getListOrder')->name('getListOrder');
         Route::post('get-history-order', 'getHistoryOrder')->name('getHistoryOrder');
-        Route::post('get-product', 'getProduct')->name('getProduct');
         Route::post('get-order-detail', 'getOrderDetail')->name('getOrderDetail');
         Route::post('update-status', 'updateStatus')->name('updateStatus');
         Route::post('cancel-order', 'cancelOrder')->name('cancelOrder');
@@ -219,5 +219,3 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 Route::fallback(function () {
     abort(404);
 });
-
-

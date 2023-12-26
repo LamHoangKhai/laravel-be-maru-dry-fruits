@@ -1,3 +1,5 @@
+import { checkMathUrl } from "../function.js";
+
 $(document).ready(() => {
     $("#select").change((e) => {
         let product_id = e.target.value;
@@ -30,84 +32,43 @@ $(document).ready(() => {
         }
     });
 
-    $("#scan").click(() => {
-        // disable button scan
-        setTimeout(() => {
-            $("#scan").prop("disabled", true);
-        }, 100);
-        // show camera
-        $("#preview").css("display", "block");
-        // if timouet 20s close camera
-        let timerId = setTimeout(() => {
-            $(".closeModal").trigger("click");
-            $("#scan").prop("disabled", false);
-            scanner.stop();
-        }, 20000);
-
-        let scanner = new Instascan.Scanner({
-            video: $("#preview")[0],
-        });
-
-        scanner.addListener("scan", function (qrURl) {
-            // clear all timeout
-
-            clearTimeout(timerId);
-            // check math url
-            if (!checkMathUrl(qrURl)) {
-                Swal.fire({
-                    icon: "error",
-                    title: "Error!!!",
-                    html: "<strong>QR not exist</strong>",
-                    timer: 3000,
-                });
-                $(".closeModal").trigger("click");
-                $("#scan").prop("disabled", false);
-                scanner.stop();
-                return;
-            }
-            let url = new URL(qrURl);
-            let product_id = url.search.split("=")[1];
-            // create item
-            createItems(product_id);
-            //close camera
-            $(".closeModal").trigger("click");
-            $("#scan").prop("disabled", false);
-            scanner.stop();
-        });
-        //on camera
-        Instascan.Camera.getCameras()
-            .then(function (cameras) {
-                if (cameras.length > 0) {
-                    scanner.start(cameras[0]);
-                } else {
-                    console.error("No cameras found.");
-                }
-            })
-            .catch(function (e) {
-                console.error(e);
-            });
-        //close camera if click over layer modal
-        $(".modal ").click(() => {
-            // clear all timeout
-            clearTimeout(timerId);
-            $("#scan").prop("disabled", false);
-            scanner.stop();
-        });
+    //handle scan
+    let barcode = "";
+    $(document).keypress(function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code == 13) {
+            createItems(barcode);
+            barcode = "";
+        } else if (code == 9) {
+            createItems(barcode);
+            barcode = "";
+        } else {
+            barcode = barcode + String.fromCharCode(code);
+        }
     });
+    //end handle scan
 });
 
-const checkMathUrl = (url) => {
-    return url.indexOf("/admin/product/detail/") != -1 ? true : false;
-};
+const createItems = (barcode) => {
+    if (!checkMathUrl(barcode)) {
+        Swal.fire({
+            icon: "error",
+            title: "Error!!!",
+            html: "<strong>QR not exist</strong>",
+            timer: 3000,
+        });
+        return;
+    }
 
-const createItems = (product_id) => {
+    let url = new URL(barcode);
+    let product_id = url.search.split("=")[1];
+
     $.ajax({
         type: "POST",
-        url: $("#url").data("url"),
+        url: $("#url-detail").data("url"),
         data: { id: product_id },
         dataType: "json",
         success: (res) => {
-            console.log("run");
             let data = res?.data || [];
             let optionWeights = "";
             let innerHTML = "";

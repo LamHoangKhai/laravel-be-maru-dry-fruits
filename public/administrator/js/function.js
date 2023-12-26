@@ -7,6 +7,9 @@ const Mydebounce = (callback, timeout = 500) => {
         }, timeout);
     };
 };
+const checkMathUrl = (url) => {
+    return url.indexOf("/admin/product/detail/") != -1 ? true : false;
+};
 
 function formatDate(date) {
     let year = date.getFullYear();
@@ -63,4 +66,11 @@ const statusText = (text) => {
     }
 };
 
-export { Mydebounce, formatDate, setTotalPages, loading, statusText };
+export {
+    Mydebounce,
+    formatDate,
+    setTotalPages,
+    loading,
+    statusText,
+    checkMathUrl,
+};

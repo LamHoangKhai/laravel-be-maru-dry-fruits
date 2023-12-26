@@ -1,4 +1,4 @@
-import { formatDate, setTotalPages } from "../function.js";
+import { formatDate, setTotalPages, checkMathUrl } from "../function.js";
 
 const loadProduct = (storage) => {
     $.ajax({
@@ -108,4 +108,54 @@ const loadProduct = (storage) => {
     });
 };
 
-export { loadProduct };
+const detailProduct = (barcode) => {
+    if (!checkMathUrl(barcode)) {
+        Swal.fire({
+            icon: "error",
+            title: "Error!!!",
+            html: "<strong>QR not exist</strong>",
+            timer: 3000,
+        });
+        return;
+    }
+
+    let url = new URL(barcode);
+    let product_id = url.search.split("=")[1];
+    $(".card-img").attr("src", "");
+    $(".name").html("");
+    $(".category").html("");
+    $(".price").html("");
+    $(".input_price").html("");
+    $(".exp_date").html("");
+    $(".description").html("");
+    $("#exLargeModal").modal("toggle");
+    $.ajax({
+        type: "POST",
+        url: $("#url-detail").data("url"),
+        data: { id: product_id },
+        dataType: "json",
+        success: (res) => {
+            console.log(res);
+            let data = res.data.product;
+            let exparationDate = res.data.exparationDate;
+            $(".card-img").attr("src", data.image);
+            $(".name").html(data.name);
+            $(".category").html("Category: " + data.category.name);
+            $(".price").html("Price: " + data.price);
+            $(".input_price").html("Input Price: " + data.input_price);
+            $(".exp_date").html("Exp Date: " + exparationDate);
+            $(".description").html(data.description);
+            $("#exLargeModal").modal("show");
+        },
+        error: function (error) {
+            Swal.fire({
+                icon: "error",
+                title: "Error!!!",
+                html: "<strong>QR not exist</strong>",
+                timer: 3000,
+            });
+            console.log(error.message);
+        },
+    });
+};
+export { loadProduct, detailProduct };

@@ -167,14 +167,6 @@ class OrderController extends Controller
 
 
 
-    //API get products, weight tags
-    public function getProduct(Request $request)
-    {
-        $product = Product::findOrFail($request->id);
-        $weights = WeighTag::orderBy("mass", "ASC")->get();
-        $result = ["product" => $product, "weights" => $weights];
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-    }
 
     //API get order details
     public function getOrderDetail(Request $request)

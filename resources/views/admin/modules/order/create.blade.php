@@ -7,13 +7,13 @@
 @push('js')
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="{{ asset('administrator/plugins/select2/js/select2.min.js') }}"></script>
-    <script src="{{ asset('administrator/js/order/create.js') }}"></script>
+    <script src="{{ asset('administrator/js/order/create.js') }}" type="module"></script>
 @endpush
 
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <input type="hidden" id="url" data-url="{{ route('admin.order.getProduct') }}">
+        <input type="hidden" id="url-detail" data-url="{{ route('admin.product.detail') }}">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
@@ -39,12 +39,6 @@
                             </select>
                         </div>
 
-                        <div class="col mb-2 d-flex justify-content-end">
-                            <button type="button" id="scan" class="btn btn-secondary" data-toggle="modal"
-                                data-target="#showScan"><i class='bx bx-qr-scan'></i>
-                                QR
-                            </button>
-                        </div>
                     </div>
 
 

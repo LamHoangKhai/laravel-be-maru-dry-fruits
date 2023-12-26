@@ -1,8 +1,23 @@
 import { Mydebounce, loading } from "../function.js";
-import { loadProduct } from "./load-data.js";
+import { loadProduct, detailProduct } from "./load-data.js";
 //  call api Search
 
 $(document).ready(() => {
+    //handle scan
+    let barcode = "";
+    $(document).keypress(function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+        if (code == 13) {
+            detailProduct(barcode);
+            barcode = "";
+        } else if (code == 9) {
+            detailProduct(barcode);
+            barcode = "";
+        } else {
+            barcode = barcode + String.fromCharCode(code);
+        }
+    });
+    // end handle scan
     let storage = {
         search: "",
         page: 1,

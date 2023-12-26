@@ -15,7 +15,7 @@
     <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
     <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkQuantity') }}">
-
+    <input type="hidden" id="url-detail" data-url="{{ route('admin.product.detail') }}">
     <input type="hidden" id="url-import" data-url="{{ route('admin.product.warehouse.createImport', 'id') }}">
     <input type="hidden" id="url-export" data-url="{{ route('admin.product.warehouse.createExport', 'id') }}">
     <input type="hidden" id="url-log" data-url="{{ route('admin.product.warehouse.log', 'id') }}">
@@ -95,8 +95,44 @@
 
                     <div id="pagination" class="text-center card-header"></div>
                 </div>
+
+            </div>
+            {{-- modal --}}
+            <div class="modal fade" id="exLargeModal" tabindex="-1" style="display: none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel4">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img class="card-img card-img-left" src="" alt="Card image">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h3 class="card-title name"></h3>
+                                        <h5 class="card-text category"></h5>
+                                        <h5 class="card-text price"></h5>
+                                        <h5 class="card-text input_price"> </h5>
+                                        <h5 class="card-text total_quantity"></h5>
+                                        <h5 class="card-text exp_date"> </h5>
+                                        <h5 class="card-text">Description : <span class="description"></span></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            {{-- end modal --}}
         </div>
     </div>
 

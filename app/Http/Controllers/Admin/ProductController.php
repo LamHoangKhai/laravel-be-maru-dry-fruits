@@ -26,15 +26,16 @@ class ProductController extends Controller
         ]);
     }
 
-    public function detail(string $id)
+    public function detail(Request $request)
     {
-        $product = Product::with("category")->findOrFail($id);
+        $product = Product::with("category")->findOrFail($request->id);
         $exparationDate = Warehouse::select("expiration_date")->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
             ->first();
+        $weights = WeighTag::orderBy("mass", "ASC")->get();
+        $result = ["product" => $product, "weights" => $weights, "exparationDate" => $exparationDate];
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
 
-        return view('admin.modules.product.detail', [
-            'product' => $product, 'exparationDate' => $exparationDate
-        ]);
+
     }
     //view create product
     public function create()
@@ -176,13 +177,6 @@ class ProductController extends Controller
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
 
-    public function details($id)
-    {
-        $product_details = Product::where('id', $id)->get();
-        return view('admin.modules.product.details', [
-            'product' => $product_details
-        ]);
 
-    }
 
 }
