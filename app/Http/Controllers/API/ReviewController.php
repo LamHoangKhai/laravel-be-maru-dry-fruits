@@ -16,47 +16,72 @@ class ReviewController extends Controller
 {
     public function get_comment(Request $request)
     {
-        $review = [
-            'content' => $request->content,
-            'product_id' => $request->product_id,
-            'user_id' => auth('api')->user()->id,
-            'date' => Carbon::now()
-        ];
-        $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->get()->first();
-        if (empty($check->content)) {
-            if (empty($check->star)) {
-                Review::create($review);
-                return response()->json([
-                    'message' => 'Comment successfully'
-                ]);
-            } else {
-                Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])
-                    ->update([
-                        'content' => $request->content,
-                        'date' => Carbon::now()
+        if(auth('api')->user()) {
+            $review = [
+                'content' => $request->content,
+                'product_id' => $request->product_id,
+                'user_id' => auth('api')->user()->id,
+                'date' => Carbon::now()
+            ];
+            $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->get()->first();
+            if (empty($check->content)) {
+                if (empty($check->star)) {
+                    Review::create($review);
+                    return response()->json([
+                        'message' => 'Comment successfully'
                     ]);
+                } else {
+                    Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])
+                        ->update([
+                            'content' => $request->content,
+                            'date' => Carbon::now()
+                        ]);
+                    return response()->json([
+                        'message' => 'Comment successfully'
+                    ]);
+                }
+            } else {
                 return response()->json([
-                    'message' => 'Comment successfully'
+                    'message' => 'You have already commented'
                 ]);
             }
-        } else {
+        }
+        else {
             return response()->json([
-                'message' => 'You have already commented'
+                'message' => 'You are not logged in'
             ]);
         }
     }
 
     public function get_star(Request $request)
     {
-        $rating = [
-            'product_id' => $request->product_id,
-            'user_id' => auth('api')->user()->id,
-            'date' => Carbon::now(),
-            'star' => $request->star
-        ];
-        $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->first();
-        if (empty($check->star) && empty($check->content)) {
-            Review::insert($rating);
+        if(auth('api')->user()) {
+            $rating = [
+                'product_id' => $request->product_id,
+                'user_id' => auth('api')->user()->id,
+                'date' => Carbon::now(),
+                'star' => $request->star
+            ];
+            $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->first();
+            if (empty($check->star) && empty($check->content)) {
+                Review::insert($rating);
+
+                $totalStar = Review::where('product_id', $request->product_id)->sum('star');
+                $countRating = Review::where([['product_id', $request->product_id], ['star', '>', 0]])->count();
+                $averageStar = round($totalStar / $countRating, 1);
+                Product::where('id', $request->product_id)->update([
+                    'star' => $averageStar
+                ]);
+
+                return response()->json([
+                    'message' => 'Rating succesfully'
+                ]);
+            }
+            Review::select('id')->where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])
+                ->update([
+                    'star' => $request->star,
+                    'date' => Carbon::now()
+                ]);
 
             $totalStar = Review::where('product_id', $request->product_id)->sum('star');
             $countRating = Review::where([['product_id', $request->product_id], ['star', '>', 0]])->count();
@@ -66,25 +91,14 @@ class ReviewController extends Controller
             ]);
 
             return response()->json([
-                'message' => 'Rating succesfully'
+                'message' => 'Rating successfully'
             ]);
         }
-        Review::select('id')->where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])
-            ->update([
-                'star' => $request->star,
-                'date' => Carbon::now()
+        else {
+            return response()->json([
+                'message' => 'You are not logged in'
             ]);
-
-        $totalStar = Review::where('product_id', $request->product_id)->sum('star');
-        $countRating = Review::where([['product_id', $request->product_id], ['star', '>', 0]])->count();
-        $averageStar = round($totalStar / $countRating, 1);
-        Product::where('id', $request->product_id)->update([
-            'star' => $averageStar
-        ]);
-
-        return response()->json([
-            'message' => 'Rating successfully'
-        ]);
+        }
     }
 
     // public function return_review(Request $request) {
