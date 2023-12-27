@@ -8,7 +8,10 @@ const Mydebounce = (callback, timeout = 500) => {
     };
 };
 const checkMathUrl = (url) => {
-    return url.indexOf("/admin/product/detail/") != -1 ? true : false;
+    return url.indexOf("/admin/product/detail/") != -1 ||
+        url.indexOf("http://localhost:8000") != -1
+        ? true
+        : false;
 };
 
 function formatDate(date) {
