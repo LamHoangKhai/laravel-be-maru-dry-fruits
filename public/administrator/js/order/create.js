@@ -32,19 +32,25 @@ $(document).ready(() => {
     });
 
     //handle scan
-    if (code == 13) {
-        if (checkMathUrl(barcode)) {
-            detailProduct(barcode);
+    let barcode = "";
+    $(document).keypress(function (e) {
+        var code = e.keyCode ? e.keyCode : e.which;
+
+        if (code == 13) {
+            console.log(barcode);
+            if (checkMathUrl(barcode)) {
+                createItems(barcode);
+            }
+            barcode = "";
+        } else if (code == 9) {
+            if (checkMathUrl(barcode)) {
+                createItems(barcode);
+            }
+            barcode = "";
+        } else {
+            barcode = barcode + String.fromCharCode(code);
         }
-        barcode = "";
-    } else if (code == 9) {
-        if (checkMathUrl(barcode)) {
-            detailProduct(barcode);
-        }
-        barcode = "";
-    } else {
-        barcode = barcode + String.fromCharCode(code);
-    }
+    });
     //end handle scan
 });
 

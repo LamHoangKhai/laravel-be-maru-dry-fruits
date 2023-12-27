@@ -143,7 +143,7 @@ const detailProduct = (barcode) => {
             $(".name").html(data.name);
             $(".category").html("Category: " + data.category.name);
             $(".price").html("Price: " + data.price);
-            $(".input_price").html("Input Price: " + warehouse.input_price);
+            $(".input_price").html("Input Price: $" + warehouse.input_price);
             $(".exp_date").html("Exp Date: " + warehouse.expiration_date);
             $(".description").html(data.description);
             $("#exLargeModal").modal("show");

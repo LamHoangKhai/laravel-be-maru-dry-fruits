@@ -59,10 +59,16 @@ const modalHtml = (data) => {
     let xhmtDetails = ` 
     <div class="col mb-2">
         <ul type="none">
-            <li class="left mb-2 ">Status Order: <strong>${text[0]}</strong></li>
-            <li class="left mb-2">Subtotal: <strong>$${data.subtotal}</strong></li>
+            <li class="left mb-2 ">Status Order: <strong>${
+                text[0]
+            }</strong></li>
+            <li class="left mb-2">Subtotal: <strong>$${
+                data.subtotal
+            }</strong></li>
             <li class="left mb-2">Discount:  ${discount}</li>
-            <li class="left mb-2">Total Price: <strong id="total">$${data.total.toFixed(2)}</strong></li>
+            <li class="left mb-2">Total Price: <strong id="total">$${data.total.toFixed(
+                2
+            )}</strong></li>
         </ul>
     </div>`;
 
@@ -76,9 +82,9 @@ const modalHtml = (data) => {
     if (data.status <= 3) {
         xhtmlButton += `
         <button class="btn btn-primary " style="margin-right: 4px"
-            id="confirm" value=${data.id}>Confirm</button>
+            id="confirm" value=${data.id}>Confirm Order</button>
         <button class="btn btn-danger " style="margin-right: 4px"
-            id="cancel" value=${data.id}>Cancel</button>
+            id="cancel" value=${data.id}>Cancel Order</button>
     `;
     }
 
