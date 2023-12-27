@@ -108,6 +108,7 @@ const loadProduct = (storage) => {
     });
 };
 
+//load detail product
 const detailProduct = (barcode) => {
     if (!checkMathUrl(barcode)) {
         Swal.fire({
@@ -137,13 +138,13 @@ const detailProduct = (barcode) => {
         success: (res) => {
             console.log(res);
             let data = res.data.product;
-            let exparationDate = res.data.exparationDate;
+            let warehouse = res.data.warehouse;
             $(".card-img").attr("src", data.image);
             $(".name").html(data.name);
             $(".category").html("Category: " + data.category.name);
             $(".price").html("Price: " + data.price);
-            $(".input_price").html("Input Price: " + data.input_price);
-            $(".exp_date").html("Exp Date: " + exparationDate);
+            $(".input_price").html("Input Price: " + warehouse.input_price);
+            $(".exp_date").html("Exp Date: " + warehouse.expiration_date);
             $(".description").html(data.description);
             $("#exLargeModal").modal("show");
         },

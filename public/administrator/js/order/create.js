@@ -10,7 +10,6 @@ $(document).ready(() => {
     });
 
     $("#list-item").on("change", ".quantity", (e) => {
-        console.log("run");
         if (!e.target.value || e.target.value < 1) {
             e.target.value = 1;
         }
@@ -34,7 +33,6 @@ $(document).ready(() => {
 
     //handle scan
     if (code == 13) {
-        console.log(barcode);
         if (checkMathUrl(barcode)) {
             detailProduct(barcode);
         }
