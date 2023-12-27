@@ -53,7 +53,7 @@ class ProductController extends Controller
     {
         $featured_products = Product::with('weightTags')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
-            ->where('feature', "star", "sumary", 1)->limit(5)->get();
+            ->where('feature', 1)->limit(5)->get();
         return response()->json([
             'data' => $featured_products
         ]);
