@@ -29,10 +29,11 @@ class ProductController extends Controller
     public function detail(Request $request)
     {
         $product = Product::with("category")->findOrFail($request->id);
-        $exparationDate = Warehouse::select("expiration_date")->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
-            ->first();
+        $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
+            ->first()->toArray();
+
         $weights = WeighTag::orderBy("mass", "ASC")->get();
-        $result = ["product" => $product, "weights" => $weights, "exparationDate" => $exparationDate];
+        $result = ["product" => $product, "weights" => $weights, "warehouse" => $warehouse];
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
 
 
