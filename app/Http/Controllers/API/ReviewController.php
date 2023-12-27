@@ -19,8 +19,9 @@ class ReviewController extends Controller
         if(auth('api')->user()) {
             if(auth('api')->user()->status == 2) {
                 return response()->json([
-                    'message' => 'Your account is locked' 
-                ]);
+                    'message' => 'Your account is locked' ,
+                    'status_code' => '901'
+                ], 400);
             }
             $review = [
                 'content' => $request->content,
@@ -43,18 +44,20 @@ class ReviewController extends Controller
                         ]);
                     return response()->json([
                         'message' => 'Comment successfully'
-                    ]);
+                    ], 400);
                 }
             } else {
                 return response()->json([
-                    'message' => 'You have already commented'
+                    'message' => 'You have already commented',
+                    'status_code' => '902'
                 ]);
             }
         }
         else {
             return response()->json([
-                'message' => 'You are not logged in'
-            ]);
+                'message' => 'You are not logged in',
+                'status_code' => '903'
+            ], 401);
         }
     }
 
@@ -63,7 +66,8 @@ class ReviewController extends Controller
         if(auth('api')->user()) {
             if(auth('api')->user()->status == 2) {
                 return response()->json([
-                    'message' => 'Your account is locked' 
+                    'message' => 'Your account is locked' ,
+                    'status_code' => '901'
                 ]);
             }
             $rating = [
@@ -106,7 +110,8 @@ class ReviewController extends Controller
         }
         else {
             return response()->json([
-                'message' => 'You are not logged in'
+                'message' => 'You are not logged in',
+                'status_code' => '903'
             ]);
         }
     }

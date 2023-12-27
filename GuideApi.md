@@ -283,7 +283,13 @@ Content type: application/json
 
     return {
         'message': Comment successfully
+        'status_code: 
+        
     }
+    Status_code:
+        903: Cần phải đăng nhập
+        902: Đã comment rồi
+        901: Account bị khóa rồi 
 
 
 

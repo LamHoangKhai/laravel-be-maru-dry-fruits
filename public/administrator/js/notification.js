@@ -5,9 +5,11 @@ Pusher.logToConsole = true;
 var pusher = new Pusher('d66d111ae83fbb80e079', {
   cluster: 'ap1'
 });
-
+var x = new Audio('/sound/ding-idea-40142.mp3');
+x.autoplay = true;
 var channel = pusher.subscribe('popup-channel');
-channel.bind('user-order', function (data) {
+channel.bind('user-order', function () {
+  x.play();
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
@@ -27,7 +29,8 @@ channel.bind('user-order', function (data) {
 });
 
 
-channel.bind('feedback', function (data) {
+channel.bind('feedback', function() {
+  x.play();
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
@@ -45,5 +48,4 @@ channel.bind('feedback', function (data) {
     title: "You have a feedback",
   });
 });
-
 
