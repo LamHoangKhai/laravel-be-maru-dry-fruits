@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
@@ -32,8 +33,12 @@ class ProductController extends Controller
         $product_detail = Product::with('weightTags', 'reviews')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->where('id', $product_id)->get();
+        foreach($product_detail[0]['reviews'] as $cut_user_id) {
+            unset($cut_user_id['user_id']);
+            unset($cut_user_id['user']['id']);
+        }
         return response()->json([
-            'data' => $product_detail
+            'data' =>  $product_detail
         ]);
     }
 
@@ -62,8 +67,7 @@ class ProductController extends Controller
     public function search_product(Request $request)
     {
         $search = $request->search_product;
-        $product = Product::
-            select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+        $product = Product::select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->where("name", "like", "%" . $search . "%")->get();
         return response()->json([
             'data' => $product
