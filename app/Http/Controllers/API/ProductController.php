@@ -18,7 +18,7 @@ class ProductController extends Controller
             $query = $query->where("category_id", $category);
         }
         $products = $query->with("category", "weightTags")
-            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star")
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->orderBy("created_at", "desc")->paginate(12);
 
         return response()->json([
@@ -30,7 +30,7 @@ class ProductController extends Controller
     {
         $product_id = $request->product_id;
         $product_detail = Product::with('weightTags', 'reviews')
-            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star")
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->where('id', $product_id)->get();
         return response()->json([
             'data' => $product_detail
@@ -40,7 +40,7 @@ class ProductController extends Controller
     public function highest_rating_products()
     {
         $highestRatingProducts = Product::with('weightTags')->orderBy('star', 'desc')
-            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star")
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->whereIn('star', [4, 5])
             ->limit(10)
             ->get();
@@ -52,8 +52,8 @@ class ProductController extends Controller
     public function featured_products()
     {
         $featured_products = Product::with('weightTags')
-            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star")
-            ->where('feature', "star", 1)->limit(5)->get();
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('feature', "star", "sumary", 1)->limit(5)->get();
         return response()->json([
             'data' => $featured_products
         ]);
@@ -63,7 +63,7 @@ class ProductController extends Controller
     {
         $search = $request->search_product;
         $product = Product::
-            select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star")
+            select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->where("name", "like", "%" . $search . "%")->get();
         return response()->json([
             'data' => $product
