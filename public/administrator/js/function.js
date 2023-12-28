@@ -7,12 +7,11 @@ const Mydebounce = (callback, timeout = 500) => {
         }, timeout);
     };
 };
-const checkMathUrl = (url) => {
-    return url.indexOf("/admin/product/detail/") != -1 ||
-        url.indexOf("http://localhost:8000") != -1
-        ? true
-        : false;
-};
+function isURL(str) {
+    var urlPattern =
+        /^(https?|ftp):\/\/(www\.)?(([\w-]+\.)*[\w-]+|localhost)(:\d+)?(\/[\w-./?%&=]*)?$/;
+    return urlPattern.test(str);
+}
 
 function formatDate(date) {
     let year = date.getFullYear();
@@ -69,11 +68,4 @@ const statusText = (text) => {
     }
 };
 
-export {
-    Mydebounce,
-    formatDate,
-    setTotalPages,
-    loading,
-    statusText,
-    checkMathUrl,
-};
+export { Mydebounce, formatDate, setTotalPages, loading, statusText, isURL };

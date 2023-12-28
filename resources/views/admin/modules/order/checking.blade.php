@@ -1,10 +1,10 @@
 @extends('admin.master')
 @php
-    $orderSubtotal= 0;
+    $orderSubtotal = 0;
     foreach ($orderItems as $item) {
-        $orderSubtotal+= $item['subtotal'];
+        $orderSubtotal += $item['subtotal'];
     }
-    $total = $orderSubtotal- $orderSubtotal* ($discount / 100);
+    $total = $orderSubtotal - $orderSubtotal * ($discount / 100);
 @endphp
 
 @push('handle')
@@ -114,7 +114,7 @@
 
                                 <tr class="total" stlye="margin-top:12px">
                                     <td align="right" colspan="3">
-                                        <b>Subtotal&nbsp;:&nbsp;${{ $orderSubtotal}}</b>
+                                        <b>Subtotal&nbsp;:&nbsp;${{ $orderSubtotal }}</b>
 
                                     </td>
                                 </tr>
@@ -146,7 +146,7 @@
                             <input type="hidden" name="quantity[]" value="{{ $item['quantity'] }}">
                         @endforeach
 
-                        <input type="hidden" name="subtotalOrder" value="{{ $orderSubtotal}}">
+                        <input type="hidden" name="subtotalOrder" value="{{ $orderSubtotal }}">
                         <input type="hidden" name="discount" value="{{ $discount }}">
                         <input type="hidden" name="total" value="{{ $total }}">
                     </div>

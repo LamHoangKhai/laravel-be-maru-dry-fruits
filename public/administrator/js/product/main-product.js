@@ -1,5 +1,5 @@
-import { Mydebounce, checkMathUrl, loading } from "../function.js";
-import { loadProduct, detailProduct } from "./load-data.js";
+import { Mydebounce, isURL, loading } from "../function.js";
+import { loadProduct, detailProduct } from "./load-data-table.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -7,16 +7,11 @@ $(document).ready(() => {
     let barcode = "";
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
-
-        if (code == 13) {
-            console.log(barcode);
-            if (checkMathUrl(barcode)) {
-                detailProduct(barcode);
-            }
-            barcode = "";
-        } else if (code == 9) {
-            if (checkMathUrl(barcode)) {
-                detailProduct(barcode);
+        if (code == 13 || code == 9) {
+            if (isURL(barcode)) {
+                let url = new URL(barcode);
+                let product_id = url.search.split("=")[1];
+                detailProduct(product_id);
             }
             barcode = "";
         } else {

@@ -1,5 +1,5 @@
 import { Mydebounce, loading } from "../function.js";
-import { loadProduct } from "./load-data.js";
+import { loadProduct } from "./load-data-table.js";
 import { modalHtml } from "./modal-order-detail.js";
 import { printInvoice } from "./print-invoice.js";
 //  call api Search

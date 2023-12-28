@@ -7,7 +7,7 @@
 @push('js')
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
     <script src="{{ asset('administrator/plugins/select2/js/select2.min.js') }}"></script>
-    <script src="{{ asset('administrator/js/order/create.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/order/create-order.js') }}" type="module"></script>
 @endpush
 
 

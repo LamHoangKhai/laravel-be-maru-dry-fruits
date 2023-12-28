@@ -30,8 +30,7 @@ class ProductController extends Controller
     {
         $product = Product::with("category")->findOrFail($request->id);
         $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
-            ->first()->toArray();
-
+            ->first();
         $weights = WeighTag::orderBy("mass", "ASC")->get();
         $result = ["product" => $product, "weights" => $weights, "warehouse" => $warehouse];
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);

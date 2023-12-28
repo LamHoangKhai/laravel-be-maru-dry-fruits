@@ -2,7 +2,7 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/js/log-import-export/main.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/log-import-export/main-log.js') }}" type="module"></script>
 @endpush
 
 
@@ -62,7 +62,7 @@
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/log-import-export/main.js -->
+                                    <!-- render form administrator/js/log-import-export/main-log.js -->
                                 </tr>
                             </tbody>
 
