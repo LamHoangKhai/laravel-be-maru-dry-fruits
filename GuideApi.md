@@ -309,7 +309,7 @@ Content type: application/json
 
 <!-- ///////////////////////////////////// Feedback /////////////////////////////////////////-->
 <!-- Feedback { -->
-    URL: http://localhost:8000/api/feedback/feedback
+ URL: http://localhost:8000/api/feedback/feedback
     Method: POST
     Content type: application/json
 
@@ -322,5 +322,20 @@ Content type: application/json
         return {
             'message' => 'Feedback is sent successfully'    
         }
+<!-- Payment -->
+URL: http://localhost:8000/api/vnpay/vnpay_payment
+METHOD: POST
+Data gửi xuống: {
+    $request->subtotal
+    $request->bank_code -> Ngân hàng gì: Vietcombank, NCB, TPBank (Phải đúng code)
 
+    return: {
+        {
+        "code": "00",
+        "message": "success",
+        "url": "" -> Đường dẫn tới cổng thanh toán
+        }
+    }
+    Khi thanh toán thành công sẽ trả 1 về trang bên client
+}
 

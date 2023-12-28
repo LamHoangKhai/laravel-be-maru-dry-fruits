@@ -31,7 +31,7 @@ class PaymentController extends Controller
         $returnData = [
             'code' => '00',
             'message' => 'success',
-            'data' => $vnp_Url
+            'url' => $vnp_Url
         ];
 
         return response()->json($returnData);
