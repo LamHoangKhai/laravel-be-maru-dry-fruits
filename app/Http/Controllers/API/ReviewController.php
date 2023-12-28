@@ -47,7 +47,7 @@ class ReviewController extends Controller
 
     public function check(Request $request)
     {
-        if (auth('api')->user()) {
+        if (auth('api')->user()->id) {
             if (auth('api')->user()->status == 2) {
                 return response()->json([
                     'message' => 'Your account is locked',
@@ -56,7 +56,7 @@ class ReviewController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'Please login',
+                'message' => 'You are not logged in',
                 'status_code' => '903'
             ]);
         }
@@ -73,7 +73,7 @@ class ReviewController extends Controller
         }
         if (!$is_exist_order_items) {
             return response()->json([
-                'message' => 'Please buy this product to review',
+                'message' => 'You must buy this product to review',
                 'status_code' => '904'
             ]);
         }
