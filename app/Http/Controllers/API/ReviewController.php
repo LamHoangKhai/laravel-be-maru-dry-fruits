@@ -56,7 +56,7 @@ class ReviewController extends Controller
             }
         } else {
             return response()->json([
-                'message' => 'You are not logged in',
+                'message' => 'Please login',
                 'status_code' => '903'
             ]);
         }
@@ -73,7 +73,7 @@ class ReviewController extends Controller
         }
         if (!$is_exist_order_items) {
             return response()->json([
-                'message' => 'You must buy this product to review',
+                'message' => 'Please buy this product to review',
                 'status_code' => '904'
             ]);
         }
