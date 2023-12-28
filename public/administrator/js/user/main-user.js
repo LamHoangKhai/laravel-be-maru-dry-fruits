@@ -1,5 +1,5 @@
 import { Mydebounce, loading } from "../function.js";
-import { loadUser } from "./load-data.js";
+import { loadUser } from "./load-data-table.js";
 //  call api Search
 
 $(document).ready(() => {

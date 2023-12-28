@@ -78,10 +78,10 @@ class OrderController extends Controller
         // insert order 
         $order = new Order();
         $order->user_id = Auth::guard("web")->user()->id;
-        $order->full_name = "sold offline";
-        $order->email = "empty";
-        $order->phone = "empty";
-        $order->address = "empty";
+        $order->full_name = "";
+        $order->email = "";
+        $order->phone = "";
+        $order->address = "";
         $order->subtotal = $request->subtotalOrder;
         $order->discount = $request->discount;
         $order->total = $request->total;

@@ -60,29 +60,35 @@ const htmlString = (data) => {
         </tr>`;
 
     //infomation user
-    let userInformation = `
+    let userInformation = ` 
     <tr class="padding">
-        <td><b>Username:</b> ${data.user.full_name}</td>
-    </tr>
-    <tr class="padding">
-        <td><b>Phone:</b> ${data.user.phone}</td>
-    </tr>
-    <tr class="padding">
-        <td><b>Email:</b> ${data.user.email}</td>
-    </tr>
-    <tr class="padding">
-        <td><b>Address:</b> ${data.user.address}</td>
-    </tr>
-    <tr class="padding">
-        <td><b>Date:</b> ${formatDate(new Date(data.created_at))}</td>
-    </tr>
-    <tr class="padding">
-        <td><b>Note:</b> ${data.note ? data.note : ""}</td>
+        <td>Sold Offline</td>
+    </tr>`;
+    if (data.full_name || data.phone || data.email || data.address) {
+        userInformation = `
+        <tr class="padding">
+            <td><b>Username:</b> ${data.full_name}</td>
+        </tr>
+        <tr class="padding">
+            <td><b>Phone:</b> ${data.phone}</td>
+        </tr>
+        <tr class="padding">
+            <td><b>Email:</b> ${data.email}</td>
+        </tr>
+        <tr class="padding">
+            <td><b>Address:</b> ${data.address}</td>
+        </tr>
+       `;
+    }
+    userInformation += ` <tr class="padding">
+    <td><b>Date:</b> ${formatDate(new Date(data.created_at))}</td>
+</tr>
+<tr class="padding">
+    <td><b>Note:</b> ${data.note ? data.note : ""}</td>
 </tr>`;
 
     //list items
     let listItems = `
-
 <tr class="heading" style="background:#eee;border-bottom:1px solid #ddd;font-weight:bold;">
 <td>
     Item

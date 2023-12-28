@@ -1,4 +1,4 @@
-import { formatDate, setTotalPages, checkMathUrl } from "../function.js";
+import { formatDate, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
     $.ajax({
@@ -109,19 +109,7 @@ const loadProduct = (storage) => {
 };
 
 //load detail product
-const detailProduct = (barcode) => {
-    if (!checkMathUrl(barcode)) {
-        Swal.fire({
-            icon: "error",
-            title: "Error!!!",
-            html: "<strong>QR not exist</strong>",
-            timer: 3000,
-        });
-        return;
-    }
-
-    let url = new URL(barcode);
-    let product_id = url.search.split("=")[1];
+const detailProduct = (product_id) => {
     $(".card-img").attr("src", "");
     $(".name").html("");
     $(".category").html("");
@@ -129,23 +117,42 @@ const detailProduct = (barcode) => {
     $(".input_price").html("");
     $(".exp_date").html("");
     $(".description").html("");
-    $("#exLargeModal").modal("toggle");
+    $("#exLargeModal").modal("hide");
+
     $.ajax({
         type: "POST",
         url: $("#url-detail").data("url"),
         data: { id: product_id },
         dataType: "json",
         success: (res) => {
-            console.log(res);
-            let data = res.data.product;
+            let product = res.data.product;
             let warehouse = res.data.warehouse;
-            $(".card-img").attr("src", data.image);
-            $(".name").html(data.name);
-            $(".category").html("Category: " + data.category.name);
-            $(".price").html("Price: " + data.price);
-            $(".input_price").html("Input Price: $" + warehouse.input_price);
-            $(".exp_date").html("Exp Date: " + warehouse.expiration_date);
-            $(".description").html(data.description);
+            $(".card-img").attr("src", product.image);
+            $(".name").html(product.name);
+            $(".category").html("Category: " + product.category.name);
+            $(".price").html("Price: " + product.price);
+            $(".input_price").html(
+                "Input Price: $" +
+                    (warehouse && warehouse.input_price
+                        ? warehouse.input_price
+                        : 0)
+            );
+            $(".exp_date").html(
+                "Exp Date: " +
+                    (warehouse && warehouse.expiration_date
+                        ? warehouse.expiration_date
+                        : "")
+            );
+            $(".stock_quantity").html(
+                "Stock Quantity: " + product.stock_quantity
+            );
+            $(".store_quantity").html(
+                "Store Quantity: " + product.store_quantity
+            );
+            $(".total_quantity").html(
+                "Total Quantity: " +
+                    (product.stock_quantity + product.store_quantity)
+            );
             $("#exLargeModal").modal("show");
         },
         error: function (error) {

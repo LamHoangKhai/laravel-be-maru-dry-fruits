@@ -1,4 +1,4 @@
-import { checkMathUrl } from "../function.js";
+import { isURL } from "../function.js";
 
 $(document).ready(() => {
     $("#select").change((e) => {
@@ -35,16 +35,11 @@ $(document).ready(() => {
     let barcode = "";
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
-
-        if (code == 13) {
-            console.log(barcode);
-            if (checkMathUrl(barcode)) {
-                createItems(barcode);
-            }
-            barcode = "";
-        } else if (code == 9) {
-            if (checkMathUrl(barcode)) {
-                createItems(barcode);
+        if (code == 13 || code == 9) {
+            if (isURL(barcode)) {
+                let url = new URL(barcode);
+                let product_id = url.search.split("=")[1];
+                createItems(product_id);
             }
             barcode = "";
         } else {
@@ -54,20 +49,7 @@ $(document).ready(() => {
     //end handle scan
 });
 
-const createItems = (barcode) => {
-    if (!checkMathUrl(barcode)) {
-        Swal.fire({
-            icon: "error",
-            title: "Error!!!",
-            html: "<strong>QR not exist</strong>",
-            timer: 3000,
-        });
-        return;
-    }
-
-    let url = new URL(barcode);
-    let product_id = url.search.split("=")[1];
-
+const createItems = (product_id) => {
     $.ajax({
         type: "POST",
         url: $("#url-detail").data("url"),

@@ -2,7 +2,7 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/js/product/main.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/product/main-product.js') }}" type="module"></script>
 @endpush
 
 @push('handlejs')
@@ -67,7 +67,7 @@
 
                             <tbody class="table-border-bottom-0" id="renderData">
                                 <tr>
-                                    <!-- render form administrator/js/prodcut/main.js -->
+                                    <!-- render form administrator/js/prodcut/main-product.js -->
                                 </tr>
                             </tbody>
 
@@ -116,9 +116,11 @@
                                         <h5 class="card-text category"></h5>
                                         <h5 class="card-text price"></h5>
                                         <h5 class="card-text input_price"> </h5>
-                                        <h5 class="card-text total_quantity"></h5>
                                         <h5 class="card-text exp_date"> </h5>
-                                        <h5 class="card-text">Description : <span class="description"></span></h5>
+                                        <h5 class="card-text stock_quantity"></h5>
+                                        <h5 class="card-text store_quantity"></h5>
+                                        <h5 class="card-text total_quantity"></h5>
+
                                     </div>
                                 </div>
                             </div>

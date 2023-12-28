@@ -1,5 +1,5 @@
-import { Mydebounce, loading, formatDate, statusText } from "../function.js";
-import { loadProduct } from "./load-data.js";
+import { Mydebounce, loading } from "../function.js";
+import { loadProduct } from "./load-data-table.js";
 //  call api Search
 
 $(document).ready(() => {
@@ -9,9 +9,10 @@ $(document).ready(() => {
         take: 25,
         totalData: 0,
         totalPage: 1,
-        select: 0,
+        select: 1,
         url: $("#url").data("url"),
-        tableCols: 9,
+        product_id: $("#product_id").val(),
+        tableCols: 12,
     };
     //handle search
     $("#search").keypress(
