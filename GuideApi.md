@@ -272,40 +272,26 @@ Method: POST
 
 <!-- ///////////////////////////////////// Review /////////////////////////////////////////-->
 <!-- Get Comments { -->
-URL: http://localhost:8000/api/review/get_comment
+URL: http://localhost:8000/api/review/review
 Method: POST
 Content type: application/json
 
     Data: {
         'content' => $request->content,
         'product_id' => $request->product_id,
+        'star' => $request->star
     }
 
     return {
-        'message': Comment successfully
+        'message': Review successfully
         'status_code: 
         
     }
     Status_code:
+        904: User chua mua hang
         903: Cần phải đăng nhập
         902: Đã comment rồi
         901: Account bị khóa rồi 
-
-
-
-<!-- Get Rating { -->
-URL: http://localhost:8000/api/review/get_star
-Method: POST
-Content type: application/json
-
-    Data: {
-        'star' => $request->star,
-        'product_id' => $request->product_id,
-    }
-
-    return {
-         'message': Rating successfully
-    }
 
 <!-- ///////////////////////////////////// Feedback /////////////////////////////////////////-->
 <!-- Feedback { -->

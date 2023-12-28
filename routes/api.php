@@ -63,9 +63,8 @@ Route::middleware(['api'])->group(function () {
     });
 
     Route::prefix('review')->group(function () {
-        Route::post('get_comment', [ReviewController::class, 'get_comment'])->name('get_comment');
-        Route::post('get_star', [ReviewController::class, 'get_star'])->name('get_star');
-        Route::post('return_review', [ReviewController::class, 'return_review'])->name('return_review');
+        Route::post('review', [ReviewController::class, 'review'])->name('review');
+        Route::post('check', [ReviewController::class, 'check'])->name('check');
     });
 
     Route::prefix('feedback')->group(function () {
