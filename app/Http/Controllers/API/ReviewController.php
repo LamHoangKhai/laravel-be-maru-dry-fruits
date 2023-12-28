@@ -37,11 +37,6 @@ class ReviewController extends Controller
             return response()->json([
                 'message' => 'Review successfully'
             ]);
-        } else {
-            return response()->json([
-                'message' => 'You have already reviewed',
-                'status_code' => '902'
-            ]);
         }
     }
 
@@ -58,6 +53,13 @@ class ReviewController extends Controller
             return response()->json([
                 'message' => 'Please login',
                 'status_code' => '903'
+            ]);
+        }
+        $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->get()->first();
+        if(!empty($check->content) || !empty($check->star)) {
+            return response()->json([
+                'message' => 'You have already reviewed',
+                'status_code' => '902'
             ]);
         }
         $ordered = Order::with('order_items')->where('user_id', auth('api')->user()->id)->get();
