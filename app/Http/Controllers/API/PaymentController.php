@@ -3,20 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PaymentController extends Controller
 {
     public function vnpay_payment(Request $request)
 {
     try {
-        $order = $request->order_id;
+        $order = Order::latest()->select('id')->where('user_id', auth('api')->user()->id)->first();
         $subtotal = $request->subtotal;
         $bank_code = $request->bank_code;
         $vnp_TmnCode = "VNA6LDMI"; // Mã website tại VNPAY
         $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Chuỗi bí mật
 
-        $vnp_TxnRef = $order;
+        $vnp_TxnRef = $order->id;
         $vnp_OrderInfo = "Pay bills";
         $vnp_OrderType = "Hello Wolrd Dry Fruits";
         $vnp_Amount = $subtotal * 100;
@@ -52,7 +54,7 @@ private function generateVnpayUrl($vnp_TmnCode, $vnp_Amount, $vnp_TxnRef, $vnp_O
         "vnp_Locale" => $vnp_Locale,
         "vnp_OrderInfo" => $vnp_OrderInfo,
         "vnp_OrderType" => $vnp_OrderType,
-        "vnp_ReturnUrl" => '1 duong dan co name = redirect', // Giả sử bạn có một tuyến đường có tên là 'vnpay_return' cho URL trả về
+        "vnp_ReturnUrl" => route('check_payment'), // Giả sử bạn có một tuyến đường có tên là 'vnpay_return' cho URL trả về
         "vnp_TxnRef" => $vnp_TxnRef
     ];
 
@@ -72,4 +74,23 @@ private function generateVnpayUrl($vnp_TmnCode, $vnp_Amount, $vnp_TxnRef, $vnp_O
     return $vnp_Url;
 }
 
+public function check_payment(Request $request)
+{
+    $vnpResponseData = $request->all();
+
+    // Kiểm tra trạng thái thanh toán từ dữ liệu
+    $paymentStatus = $vnpResponseData['vnp_ResponseCode'];
+
+    // Lấy order ID từ dữ liệu callback
+    $order_id = $vnpResponseData['vnp_TxnRef'];
+
+    if ($paymentStatus == '00') {
+        $order = Order::find($order_id);
+        $order->transaction_status = 2;
+        $order->save();
+
+    }
+    // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
+    return redirect()->away('https://www.google.com/');
+}
 }

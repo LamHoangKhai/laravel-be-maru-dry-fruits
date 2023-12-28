@@ -5,10 +5,12 @@ Pusher.logToConsole = true;
 var pusher = new Pusher('d66d111ae83fbb80e079', {
   cluster: 'ap1'
 });
-var x = new Audio('/sound/ding-idea-40142.mp3');
-x.autoplay = true;
+
 var channel = pusher.subscribe('popup-channel');
+var x = new Audio('/sound/ding-idea-40142.mp3');
+
 channel.bind('user-order', function () {
+  x.autoplay = true;
   x.play();
   const Toast = Swal.mixin({
     toast: true,
@@ -30,7 +32,7 @@ channel.bind('user-order', function () {
 
 
 channel.bind('feedback', function() {
-  x.play();
+
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
