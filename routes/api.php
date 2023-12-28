@@ -74,5 +74,6 @@ Route::middleware(['api'])->group(function () {
 
     Route::prefix('vnpay')->group(function () {
         Route::post('vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay_payment');
+        Route::get('check_payment', [PaymentController::class, 'check_payment'])->name('check_payment');
     });
 });
