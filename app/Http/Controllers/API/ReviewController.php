@@ -42,7 +42,7 @@ class ReviewController extends Controller
 
     public function check(Request $request)
     {
-        if (auth('api')->user()->id) {
+        if (auth('api')->user()) {
             if (auth('api')->user()->status == 2) {
                 return response()->json([
                     'message' => 'Your account is locked',
