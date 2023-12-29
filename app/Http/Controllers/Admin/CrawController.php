@@ -83,7 +83,7 @@ class CrawController extends Controller
                 'updated_at' => Carbon::now(),]
         ]);
 
-        // $this->craw();
+        $this->craw();
 
     }
 
