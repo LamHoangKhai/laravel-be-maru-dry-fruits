@@ -29,7 +29,7 @@
 
                     <div class="row">
                         <div class="col mb-2">
-                            <select class="form-select js-example-basic-single" id="select" placeho>
+                            <select class="form-select js-example-basic-single" id="select" >
                                 <option value="" disabled selected>Please choose item</option>
                                 @foreach ($products as $product)
                                     <option value="{{ $product->id }}">
