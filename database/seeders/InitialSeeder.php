@@ -39,54 +39,54 @@ class InitialSeeder extends Seeder
 
 
 
-        Category::insert([[
-            'name' => "Nuts",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'name' => "Dried Fruits",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'name' => "Mixes",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]]);
+        // Category::insert([[
+        //     'name' => "Nuts",
+        //     'status' => '1',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ], [
+        //     'name' => "Dried Fruits",
+        //     'status' => '1',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ], [
+        //     'name' => "Mixes",
+        //     'status' => '1',
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ]]);
 
-        WeighTag::insert([[
-            'mass' => 250,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 500,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 1000,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 2000,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]]);
-        Supplier::insert([
-            ['name' => "JSON Dry Tree Supply Company",
-                'email' => "jsondrytree" . '@gmail.com',
-                'address' => '35/6 Đường D5, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh 72308',
-                'phone' => '1800 1779',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),],
-            ['name' => " Factory Supplying Aptech Dried Mussels",
-                'email' => "aptechdriedmussels" . '@gmail.com',
-                'address' => '778/10 Nguyễn Kiệm, Phường 3, Phú Nhuận, Thành phố Hồ Chí Minh 700990',
-                'phone' => '1800 282824',
-                'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),]
-        ]);
+        // WeighTag::insert([[
+        //     'mass' => 250,
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ], [
+        //     'mass' => 500,
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ], [
+        //     'mass' => 1000,
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ], [
+        //     'mass' => 2000,
+        //     'created_at' => Carbon::now(),
+        //     'updated_at' => Carbon::now(),
+        // ]]);
+        // Supplier::insert([
+        //     ['name' => "JSON Dry Tree Supply Company",
+        //         'email' => "jsondrytree" . '@gmail.com',
+        //         'address' => '35/6 Đường D5, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh 72308',
+        //         'phone' => '1800 1779',
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now(),],
+        //     ['name' => " Factory Supplying Aptech Dried Mussels",
+        //         'email' => "aptechdriedmussels" . '@gmail.com',
+        //         'address' => '778/10 Nguyễn Kiệm, Phường 3, Phú Nhuận, Thành phố Hồ Chí Minh 700990',
+        //         'phone' => '1800 282824',
+        //         'created_at' => Carbon::now(),
+        //         'updated_at' => Carbon::now(),]
+        // ]);
 
         // $this->craw();
 
