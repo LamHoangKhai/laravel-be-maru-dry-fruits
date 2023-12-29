@@ -17,6 +17,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
         // render view user table
