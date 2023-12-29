@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{  secure_asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/js/order/main-order.js') }}" type="module"></script>
+    <script src="{{  secure_asset('administrator/js/order/main-order.js') }}" type="module"></script>
 @endpush
 
 

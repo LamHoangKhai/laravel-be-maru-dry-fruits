@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{  secure_asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <script src="{{ asset('administrator/js/product/general.js') }}" type="module"></script>
+    <script src="{{  secure_asset('administrator/js/product/general.js') }}" type="module"></script>
 @endpush
 
 @push('handlejs')
