@@ -86,7 +86,7 @@ public function check_payment(Request $request)
 
     if ($paymentStatus == '00') {
         $order = Order::find($order_id);
-        $order->transaction_status = 2;
+        $order->transaction_status = 1;
         $order->save();
 
     }
