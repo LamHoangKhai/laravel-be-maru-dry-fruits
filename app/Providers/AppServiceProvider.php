@@ -18,10 +18,10 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      */
-    public function boot(): void
+   public function boot(UrlGenerator $url)
     {
-         If (env('APP_ENV') !== 'local') {
-            $this->app['request']->server->set('HTTPS', true);
+        if (env('APP_ENV') !== 'local') {
+            $url->forceSchema('https');
         }
         Paginator::useBootstrapFive();
         Paginator::useBootstrapFour();
