@@ -3,6 +3,7 @@
 /public/build
 /public/hot
 /public/storage
+/public/uploads
 /storage/*.key
 /vendor
 .env.backup
@@ -16,3 +17,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/uploads
+/public/qrcode

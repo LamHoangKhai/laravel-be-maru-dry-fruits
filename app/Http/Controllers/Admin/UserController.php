@@ -7,6 +7,8 @@ use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,28 +24,10 @@ class UserController extends Controller
         return view("admin.modules.user.index");
     }
 
-    /**
-     * Get , search , filter form Ajax
-     */
-    public function getUsers(Request $request)
+    public function create()
     {
-        // query filter, search 
-
-        $query = User::where("status", "!=", 3); // just get user when status 1,2
-        $search = $request->search ? $request->search : "";
-        $take = (int) $request->take;
-
-        // search email, phone ,name 
-        $query = $query->where(function ($query) use ($search) {
-            $query->where("full_name", "like", "%" . $search . "%")
-                ->orWhere("email", "like", "%" . $search . "%")
-                ->orWhere("phone", "like", "%" . $search . "%");
-        });
-
-        //return data
-        $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-
+        // render view create user
+        return view("admin.modules.user.create");
     }
 
     /**
@@ -76,7 +60,7 @@ class UserController extends Controller
 
         // check user has edit itself
         $mySelf = false;
-        if (Auth::user()->id == $user->id) {
+        if (Auth::guard("web")->user()->id == $user->id) {
             $mySelf = true;
         }
 
@@ -84,7 +68,7 @@ class UserController extends Controller
         $permission = false;
 
         // if user is Administrator allows delete all level
-        if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
+        if (Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }
 
@@ -143,7 +127,7 @@ class UserController extends Controller
         $permission = false;
 
         // if user is Administrator allows delete all level
-        if (Auth::user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" && $user->id != "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
+        if (Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" && $user->id != "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }
 
@@ -161,5 +145,29 @@ class UserController extends Controller
 
         // return if permission = false
         return redirect()->route("admin.user.index")->with("error", "Not allow delete!");
+    }
+
+    /**
+     * API get , search , filter 
+     */
+    public function getUsers(Request $request)
+    {
+        // query filter, search 
+
+        $query = User::where("status", "!=", 3); // just get user when status 1,2
+        $search = $request->search ? $request->search : "";
+        $take = (int) $request->take;
+
+        // search email, phone ,name 
+        $query = $query->where(function ($query) use ($search) {
+            $query->where("full_name", "like", "%" . $search . "%")
+                ->orWhere("email", "like", "%" . $search . "%")
+                ->orWhere("phone", "like", "%" . $search . "%");
+        });
+
+        //return data
+        $result = $query->orderBy("created_at", "desc")->paginate($take);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+
     }
 }
