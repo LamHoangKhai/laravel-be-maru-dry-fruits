@@ -40,10 +40,8 @@
 <script src="{{ secure_asset('administrator/assets/js/config.js') }}"></script>
 
 <!-- plugins CSS -->
-<link rel="stylesheet" href="{{ secure_asset('administrator/plugins/fontawesome-free/css/all.min.css') }}">
 <link rel="stylesheet"
     href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-
 
 <link rel="stylesheet" href="{{ secure_asset('administrator/plugins/summernote/summernote-bs4.min.css') }}">
 <link rel="stylesheet"
