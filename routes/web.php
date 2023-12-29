@@ -38,7 +38,8 @@ Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
-Route::get('team/hello-world/craw-data', [CrawController::class, "run"])->name('craw');
+Route::get('team/hello-world/initial', [CrawController::class, "initial"])->name('initial');
+Route::get('team/hello-world/craw-data', [CrawController::class, "craw"])->name('craw');
 
 
 

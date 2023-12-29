@@ -16,7 +16,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CrawController extends Controller
 {
-    public function run(): void
+    public function initial(): void
     {
         $idDefault = "maruDr-yfRui-tspRo-jectfORFOU-Rmembe";
         User::insert([
@@ -83,7 +83,7 @@ class CrawController extends Controller
                 'updated_at' => Carbon::now(),]
         ]);
 
-        $this->craw();
+
 
     }
 
@@ -130,64 +130,64 @@ class CrawController extends Controller
             }
         }
 
-        sleep(5);
+        // sleep(5);
 
 
 
-        $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/dried-fruits/", false, $context);
-        foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
-            try {
-                // craw data
-                if ($key == 8) {
-                    break;
-                }
-                $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
-                $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
-                $productDetails = file_get_html($linkDetails, false, $context);
-                $products[$count]['name'] = $name;
-                $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
-                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
-                $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
-                $products[$count]['category_Id'] = 2;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
-                $count++;
+        // $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/dried-fruits/", false, $context);
+        // foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
+        //     try {
+        //         // craw data
+        //         if ($key == 8) {
+        //             break;
+        //         }
+        //         $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
+        //         $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
+        //         $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
+        //         $productDetails = file_get_html($linkDetails, false, $context);
+        //         $products[$count]['name'] = $name;
+        //         $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+        //         $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
+        //         $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
+        //         $products[$count]['price'] = rand(10, 40) / 10;
+        //         $products[$count]['category_Id'] = 2;
+        //         $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+        //         $count++;
 
-            } catch (\Exception $e) {
-                echo "Errors get data </br>";
-                echo $e->getMessage();
-                echo "</br>";
-                continue;
-            }
-        }
-        sleep(5);
+        //     } catch (\Exception $e) {
+        //         echo "Errors get data </br>";
+        //         echo $e->getMessage();
+        //         echo "</br>";
+        //         continue;
+        //     }
+        // }
+        // sleep(5);
 
-        $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/mixes/", false, $context);
-        foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
-            try { // craw data
+        // $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/mixes/", false, $context);
+        // foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
+        //     try { // craw data
 
-                $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
-                $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
-                $productDetails = file_get_html($linkDetails, false, $context);
-                $products[$count]['name'] = $name;
-                $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
-                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
-                $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
-                $products[$count]['category_Id'] = 3;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
-                $count++;
+        //         $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
+        //         $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
+        //         $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
+        //         $productDetails = file_get_html($linkDetails, false, $context);
+        //         $products[$count]['name'] = $name;
+        //         $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+        //         $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
+        //         $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
+        //         $products[$count]['price'] = rand(10, 40) / 10;
+        //         $products[$count]['category_Id'] = 3;
+        //         $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+        //         $count++;
 
-            } catch (\Exception $e) {
-                echo "Errors get data </br>";
-                echo $e->getMessage();
-                echo "</br>";
-                continue;
-            }
-        }
-        sleep(5);
+        //     } catch (\Exception $e) {
+        //         echo "Errors get data </br>";
+        //         echo $e->getMessage();
+        //         echo "</br>";
+        //         continue;
+        //     }
+        // }
+        // sleep(5);
 
         foreach ($products as $k => $v) {
             try {
