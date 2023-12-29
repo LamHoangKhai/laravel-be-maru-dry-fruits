@@ -1,15 +1,15 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{  secure_asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
 @endpush
 
 @push('handlejs')
-    <script src="{{ asset('administrator/js/user/main.js') }}" type="module"></script>
+    <script src="{{  secure_asset('administrator/js/user/main.js') }}" type="module"></script>
 @endpush
 
 @push('css')
-    <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
+    <link rel="stylesheet" href="{{  secure_asset('administrator/css/dropdown-menu-filter.css') }}">
 @endpush
 
 @section('content')
