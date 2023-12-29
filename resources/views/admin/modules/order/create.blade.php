@@ -1,13 +1,13 @@
 @extends('admin.master')
 @push('css')
-    <link rel="stylesheet" href="{{  secure_asset('administrator/plugins/select2/css/select2.min.css') }}" />
-    <link rel="stylesheet" href="{{  secure_asset('administrator/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{  asset('administrator/plugins/select2/css/select2.min.css') }}" />
+    <link rel="stylesheet" href="{{  asset('administrator/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endpush
 
 @push('js')
     <script type="text/javascript" src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
-    <script src="{{  secure_asset('administrator/plugins/select2/js/select2.min.js') }}"></script>
-    <script src="{{  secure_asset('administrator/js/order/create-order.js') }}" type="module"></script>
+    <script src="{{  asset('administrator/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{  asset('administrator/js/order/create-order.js') }}" type="module"></script>
 @endpush
 
 

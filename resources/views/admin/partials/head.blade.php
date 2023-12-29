@@ -6,7 +6,7 @@
 <title>AdminPage</title>
 
 <!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="{{ secure_asset('administrator/assets/img/favicon/favicon.ico') }}" />
+<link rel="icon" type="image/x-icon" href="{{ asset('administrator/assets/img/favicon/favicon.ico') }}" />
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -16,36 +16,36 @@
     rel="stylesheet" />
 
 <!-- Icons. Uncomment required icon fonts -->
-<link rel="stylesheet" href="{{ secure_asset('administrator/assets/vendor/fonts/boxicons.css') }}" />
+<link rel="stylesheet" href="{{ asset('administrator/assets/vendor/fonts/boxicons.css') }}" />
 
 <!-- Core CSS -->
-<link rel="stylesheet" href="{{ secure_asset('administrator/assets/vendor/css/core.css') }}"
+<link rel="stylesheet" href="{{ asset('administrator/assets/vendor/css/core.css') }}"
     class="template-customizer-core-css" />
-<link rel="stylesheet" href="{{ secure_asset('administrator/assets/vendor/css/theme-default.css') }}"
+<link rel="stylesheet" href="{{ asset('administrator/assets/vendor/css/theme-default.css') }}"
     class="template-customizer-theme-css" />
-<link rel="stylesheet" href="{{ secure_asset('administrator/assets/css/demo.css') }}" />
+<link rel="stylesheet" href="{{ asset('administrator/assets/css/demo.css') }}" />
 
 <!-- Vendors CSS -->
 <link rel="stylesheet"
-    href="{{ secure_asset('administrator/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
+    href="{{ asset('administrator/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css') }}" />
 
-<link rel="stylesheet" href="{{ secure_asset('administrator/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
+<link rel="stylesheet" href="{{ asset('administrator/assets/vendor/libs/apex-charts/apex-charts.css') }}" />
 
 
 <!-- Helpers -->
-<script src="{{ secure_asset('administrator/assets/vendor/js/helpers.js') }}"></script>
+<script src="{{ asset('administrator/assets/vendor/js/helpers.js') }}"></script>
 
 <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
 <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
-<script src="{{ secure_asset('administrator/assets/js/config.js') }}"></script>
+<script src="{{ asset('administrator/assets/js/config.js') }}"></script>
 
 <!-- plugins CSS -->
 <link rel="stylesheet"
-    href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    href="{{ asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
-<link rel="stylesheet" href="{{ secure_asset('administrator/plugins/summernote/summernote-bs4.min.css') }}">
+<link rel="stylesheet" href="{{ asset('administrator/plugins/summernote/summernote-bs4.min.css') }}">
 <link rel="stylesheet"
-    href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+    href="{{ asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
@@ -54,5 +54,5 @@
 
 
 <!--! My style -->
-<link rel="stylesheet" href="{{ secure_asset('administrator/css/index.css') }}">
-<link rel="stylesheet" href="{{ secure_asset('administrator/css/alertsweet.css') }}">
+<link rel="stylesheet" href="{{ asset('administrator/css/index.css') }}">
+<link rel="stylesheet" href="{{ asset('administrator/css/alertsweet.css') }}">
