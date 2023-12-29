@@ -2,7 +2,7 @@
 @push('js')
     <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{ asset('administrator/js/user/main.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/user/main-user.js') }}" type="module"></script>
 @endpush
 
 @section('content')
@@ -68,7 +68,7 @@
 
 
                                 <tr>
-                                    <!-- render form administrator/js/user/main.js -->
+                                    <!-- render form administrator/js/user/main-user.js -->
                                 </tr>
                             </tbody>
 

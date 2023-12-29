@@ -29,7 +29,7 @@ class OrderController extends Controller
         return view("admin.modules.order.history");
     }
 
-    
+
     /**
      * Show the form for creating a new resource.
      */
@@ -78,10 +78,10 @@ class OrderController extends Controller
         // insert order 
         $order = new Order();
         $order->user_id = Auth::guard("web")->user()->id;
-        $order->full_name = "sold offline";
-        $order->email = "empty";
-        $order->phone = "empty";
-        $order->address = "empty";
+        $order->full_name = "";
+        $order->email = "";
+        $order->phone = "";
+        $order->address = "";
         $order->subtotal = $request->subtotalOrder;
         $order->discount = $request->discount;
         $order->total = $request->total;
@@ -167,14 +167,6 @@ class OrderController extends Controller
 
 
 
-    //API get products, weight tags
-    public function getProduct(Request $request)
-    {
-        $product = Product::findOrFail($request->id);
-        $weights = WeighTag::orderBy("mass", "ASC")->get();
-        $result = ["product" => $product, "weights" => $weights];
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-    }
 
     //API get order details
     public function getOrderDetail(Request $request)
@@ -200,5 +192,18 @@ class OrderController extends Controller
         $order->updated_at = Carbon::now();
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+    }
+
+    public function addDiscount(Request $request)
+    {
+        $request->validate([
+            "discount" => "numeric"
+        ]);
+        $order = Order::findOrFail($request->id);
+        $order->discount = $request->discount;
+        $order->total = $order->subtotal - ($order->subtotal * $request->discount / 100);
+        $order->update();
+
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "total" => $order->total]);
     }
 }

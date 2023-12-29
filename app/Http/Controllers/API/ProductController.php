@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redis;
 
 class ProductController extends Controller
@@ -17,46 +18,59 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        $products = $query->with("category")->orderBy("created_at", "desc")->paginate(9);
-        
+        $products = $query->with("category", "weightTags")
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->orderBy("created_at", "desc")->paginate(12);
+
         return response()->json([
-            'product' => $products
+            'data' => $products
         ], 200);
     }
 
     public function product_details(Request $request)
     {
         $product_id = $request->product_id;
-        $product_detail = Product::with('weightTags')->where('id', $product_id)->get();
+        $product_detail = Product::with('weightTags', 'reviews')
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('id', $product_id)->get();
+        foreach($product_detail[0]['reviews'] as $cut_user_id) {
+            unset($cut_user_id['user_id']);
+            unset($cut_user_id['user']['id']);
+        }
         return response()->json([
-            'product_detail' => $product_detail
+            'data' =>  $product_detail
         ]);
     }
 
     public function highest_rating_products()
     {
-        $highestRatingProducts = Product::orderBy('star', 'desc')
+        $highestRatingProducts = Product::with('weightTags')->orderBy('star', 'desc')
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->whereIn('star', [4, 5])
             ->limit(10)
             ->get();
         return response()->json([
-            'top10Product' => $highestRatingProducts
+            'data' => $highestRatingProducts
         ]);
     }
 
     public function featured_products()
     {
-        $featured_products = Product::where('feature', 1)->limit(5)->get();
+        $featured_products = Product::with('weightTags')
+            ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('feature', 1)->limit(5)->get();
         return response()->json([
-            'featuredProduct' => $featured_products
+            'data' => $featured_products
         ]);
     }
 
-    public function search_product(Request $request) {
+    public function search_product(Request $request)
+    {
         $search = $request->search_product;
-        $product = Product::where("name", "like", "%" . $search . "%")->get();
+        $product = Product::select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where("name", "like", "%" . $search . "%")->get();
         return response()->json([
-            'product' => $product
+            'data' => $product
         ]);
     }
 }

@@ -40,6 +40,17 @@
                         </div>
                     </div>
 
+
+                    <div class="row">
+                        <div class="col mb-2">
+                            <label for="sumary" class="form-label">Sumary</label>
+                            <input class="form-control" id="sumary" name="sumary" value='{{ old('sumary') }}' />
+                            @if ($errors->has('sumary'))
+                                <span class="text-danger">* {{ $errors->get('sumary')[0] }}</span>
+                            @endif
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="col mb-2">
                             <label for="description" class="form-label">Description</label>

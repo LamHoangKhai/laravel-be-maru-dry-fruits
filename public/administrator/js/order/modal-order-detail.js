@@ -30,7 +30,6 @@ const modalHtml = (data) => {
             element.weight > 1000
                 ? element.weight / 1000 + "kg"
                 : element.weight + "gram";
-        console.log(data);
         xhmtlItem += ` <div class="row g-3 mt-0 mb-4">
         <div class="col mt-0">
             <span>${element.product.name} (${formatText}) </span>
@@ -51,13 +50,25 @@ const modalHtml = (data) => {
 
     //append order details
     let text = statusText(data.status);
+
+    let discount =
+        data.status <= 2
+            ? `<input type="text" class="w-px-50 text-end discount" value=${data.discount} id="discount" data-id=${data.id} />`
+            : `<strong>${data.discount}%</strong>`;
+
     let xhmtDetails = ` 
     <div class="col mb-2">
         <ul type="none">
-            <li class="left">Status Order: <strong>${text[0]}</strong></li>
-            <li class="left">Subtotal: <strong>$${data.subtotal}</strong></li>
-            <li class="left">Discount: <strong>${data.discount}%</strong></li>
-            <li class="left">Total Price: <strong>$${data.total}</strong></li>
+            <li class="left mb-2 ">Status Order: <strong>${
+                text[0]
+            }</strong></li>
+            <li class="left mb-2">Subtotal: <strong>$${
+                data.subtotal
+            }</strong></li>
+            <li class="left mb-2">Discount:  ${discount}</li>
+            <li class="left mb-2">Total Price: <strong id="total">$${data.total.toFixed(
+                2
+            )}</strong></li>
         </ul>
     </div>`;
 
@@ -71,9 +82,9 @@ const modalHtml = (data) => {
     if (data.status <= 3) {
         xhtmlButton += `
         <button class="btn btn-primary " style="margin-right: 4px"
-            id="confirm" value=${data.id}>Confirm</button>
+            id="confirm" value=${data.id}>Confirm Order</button>
         <button class="btn btn-danger " style="margin-right: 4px"
-            id="cancel" value=${data.id}>Cancel</button>
+            id="cancel" value=${data.id}>Cancel Order</button>
     `;
     }
 

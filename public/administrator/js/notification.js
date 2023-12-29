@@ -1,13 +1,14 @@
-
 // Enable pusher logging - don't include this in production
 Pusher.logToConsole = true;
 
-var pusher = new Pusher('d66d111ae83fbb80e079', {
-  cluster: 'ap1'
+var pusher = new Pusher("d66d111ae83fbb80e079", {
+    cluster: "ap1",
 });
-
+var x = new Audio('/sound/ding-idea-40142.mp3');
 var channel = pusher.subscribe('popup-channel');
-channel.bind('user-order', function (data) {
+channel.bind('user-order', function () {
+  x.autoplay = true;
+  x.play();
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
@@ -17,7 +18,7 @@ channel.bind('user-order', function (data) {
       popup: "colored-toast",
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: true,
   });
   Toast.fire({
@@ -27,7 +28,8 @@ channel.bind('user-order', function (data) {
 });
 
 
-channel.bind('feedback', function (data) {
+channel.bind('feedback', function() {
+  x.play();
   const Toast = Swal.mixin({
     toast: true,
     position: "top",
@@ -37,7 +39,7 @@ channel.bind('feedback', function (data) {
       popup: "colored-toast",
     },
     showConfirmButton: false,
-    timer: 1500,
+    timer: 3000,
     timerProgressBar: true,
   });
   Toast.fire({
@@ -45,5 +47,3 @@ channel.bind('feedback', function (data) {
     title: "You have a feedback",
   });
 });
-
-

@@ -70,6 +70,12 @@ class AuthController extends Controller
             auth('api')->logout();
             return response()->json(['error' => 'Not found'], 403);
         }
+        if($user->status == 2) {
+            auth('api')->logout();
+            return response()->json([
+                'message' => 'Your account is locked'
+            ]);
+        }
         return $this->respondWithToken($token);
         
     }
@@ -83,7 +89,7 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ],200);
+            ],200); 
         }
         else {
             return response()->json([
@@ -103,7 +109,7 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth('api')->factory()->getTTL() * 60,
+            'expires_in' => auth('api')->factory()->getTTL() * 60
 
         ]);
     }

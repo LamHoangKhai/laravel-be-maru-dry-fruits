@@ -15,17 +15,17 @@ class WarehouseSeeder extends Seeder
     public function run(): void
     {
         $import = [];
-        for($i = 1 ; $i <= 23; $i++) {
+        for ($i = 1; $i <= 23; $i++) {
             $import = [
                 'product_id' => $i,
-                'supplier_id' => rand(1,2),
-                'input_price' => rand(0.5,1),
+                'supplier_id' => rand(1, 2),
+                'input_price' => rand(10, 30) / 10,
                 'transaction_type' => 1,
                 'quantity' => 200,
                 'current_quantity' => 200,
                 'expiration_date' => '2023-12-31',
                 'transaction_date' => now(),
-                'shipment' => rand(1000,99999) . Carbon::now()->timestamp,
+                'shipment' => rand(1000, 99999) . Carbon::now()->timestamp,
                 'created_at' => now(),
                 'updated_at' => now()
             ];
@@ -45,6 +45,9 @@ class WarehouseSeeder extends Seeder
                 'updated_at' => now()
             ];
             Warehouse::insert($export);
+            $importStore = Warehouse::where([['product_id', $import['product_id']], ['transaction_type', 1]])->first();
+            $importStore->current_quantity = $export['current_quantity'];
+            $importStore->update();
         }
     }
 }

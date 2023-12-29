@@ -39,7 +39,7 @@ Content type: application/json
 
 
 <!-- Profile { -->
-<!-- URL: http://localhost:8000/api/auth/profile,
+URL: http://localhost:8000/api/auth/profile,
 Method: GET
 Content type: application/json
 
@@ -49,13 +49,12 @@ Content type: application/json
 
 
 <!-- Edit profile { -->
-    URL: http://localhost:8000/api/edit_profile/edit_profile
+    URL: http://localhost:8000/api/auth/edit_profile
     Method: POST
     Content type: application/json
 
         data {
             'full_name'
-            'email'
             'phone'
             'address'
             password và password_confirmation nếu user có đổi password
@@ -67,7 +66,7 @@ Content type: application/json
 <!-- ///////////////////////////////////// CATEGORY /////////////////////////////////////////-->
 
 Category {
-URL: http://localhost:8000/api/product/category/,
+URL: http://localhost:8000/api/product/category,
 Method: GET
 Content type: application/json
 
@@ -110,8 +109,8 @@ METHOD: POST
     }
 
 
-<!-- Top 5 product co sao cao nhat theo category { -->
-URL: http://localhost:8000/api/product/highest_rating_products/{category_id}
+<!-- Top 5 product co sao cao nhat { -->
+URL: http://localhost:8000/api/product/highest_rating_products
 Method: get
 Content type: application/json
 
@@ -135,8 +134,9 @@ Content type: application/json
 
 
 
-<!-- Top 5 product noi bat theo category { -->
-URL: http://localhost:8000/api/product/featured_products/{category_id}
+<!-- Top 5 product noi bat  { -->
+URL: http://localhost:8000/api/product/featured_products
+METHOD: GET
 Content type: application/json
 
     return {
@@ -168,6 +168,7 @@ Method: POST
 Content type: application/json
 
     Data cua ORder: {
+    data_order: {
         'email' => $request->email,
         'full_name' => $request->full_name,
         'address' => $request->address,
@@ -175,8 +176,10 @@ Content type: application/json
         'transaction' => $request->transaction,
         'subtotal' => $request->subtotal,
     }
+    }
 
-    return cua order: {
+    return cua order:
+    data_order: {
         'message' : "Checkout successfully",
         'email'
         'full_name'
@@ -192,7 +195,7 @@ Content type: application/json
 
 
     Data của order items gửi xuống
-    "order_items": [
+    "data_orderDetail": [
         {
             $product_id = 1;
             $price = 123;
@@ -209,7 +212,8 @@ Content type: application/json
         ...
         ]
 
-    return cua order items: {
+    return cua order items:
+    data_orderDetail {
      'product_id' => $product_id,
         'order_id' => $latestOrder->id,
         'price' => $price,
@@ -223,7 +227,7 @@ Content type: application/json
     Method: GET
     Content type: application/json
     return: {
-        "history_order": [
+        "data": [
             {
                 "order_id": 2,
                 "status": 1,
@@ -243,7 +247,7 @@ Content type: application/json
         order_id
     }
     return {
-        "history_order_details": [
+        "data": [
         {
             "name": "Chuối sấy",
             "price": 500,
@@ -268,55 +272,30 @@ Method: POST
 
 <!-- ///////////////////////////////////// Review /////////////////////////////////////////-->
 <!-- Get Comments { -->
-URL: http://localhost:8000/api/review/get_comment
+URL: http://localhost:8000/api/review/review
 Method: POST
 Content type: application/json
 
     Data: {
         'content' => $request->content,
         'product_id' => $request->product_id,
+        'star' => $request->star
     }
 
     return {
-        'message': Comment successfully
+        'message': Review successfully
+        'status_code: 
+        
     }
-
-
-
-<!-- Get Rating { -->
-URL: http://localhost:8000/api/review/get_star
-Method: POST
-Content type: application/json
-
-    Data: {
-        'star' => $request->star,
-        'product_id' => $request->product_id,
-    }
-
-    return {
-         'message': Rating successfully
-    }
-
-
-
-<!-- Comment, Rating: Trả lên FE { -->
-URL: http://localhost:8000/api/review/return_review
-Method: GET
-Content type: application/json
-
-    return {
-         'full_name'
-        'content'
-        'star'
-        'date'
-        'product_id'
-    }
-
-
+    Status_code:
+        904: User chua mua hang
+        903: Cần phải đăng nhập
+        902: Đã comment rồi
+        901: Account bị khóa rồi 
 
 <!-- ///////////////////////////////////// Feedback /////////////////////////////////////////-->
 <!-- Feedback { -->
-    URL: http://localhost:8000/api/feedback/feedback
+ URL: http://localhost:8000/api/feedback/feedback
     Method: POST
     Content type: application/json
 
@@ -329,5 +308,20 @@ Content type: application/json
         return {
             'message' => 'Feedback is sent successfully'    
         }
+<!-- Payment -->
+URL: http://localhost:8000/api/vnpay/vnpay_payment
+METHOD: POST
+Data gửi xuống: {
+    $request->subtotal
+    $request->bank_code -> Ngân hàng gì: Vietcombank, NCB, TPBank (Phải đúng code)
 
+    return: {
+        {
+        "code": "00",
+        "message": "success",
+        "url": "" -> Đường dẫn tới cổng thanh toán
+        }
+    }
+    Khi thanh toán thành công sẽ trả 1 về trang bên client
+}
 
