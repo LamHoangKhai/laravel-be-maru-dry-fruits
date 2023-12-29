@@ -40,22 +40,21 @@
 <script src="{{ secure_asset('administrator/assets/js/config.js') }}"></script>
 
 <!-- plugins CSS -->
-<<<<<<< HEAD <link rel="stylesheet"
-    href="{{ secure_asset('administrator/plugins/fontawesome-free/css/all.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-
-    =======
-    <link rel="stylesheet" href="{{ secure_asset('administrator/plugins/summernote/summernote-bs4.min.css') }}">
-    <link rel="stylesheet"
-        href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-    >>>>>>> ec4d2ffd80f0c8d9a8ad4bbc5eee735cc9c2b443
-    @stack('css')
+<link rel="stylesheet" href="{{ secure_asset('administrator/plugins/fontawesome-free/css/all.min.css') }}">
+<link rel="stylesheet"
+    href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
 
 
+<link rel="stylesheet" href="{{ secure_asset('administrator/plugins/summernote/summernote-bs4.min.css') }}">
+<link rel="stylesheet"
+    href="{{ secure_asset('administrator/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css') }}">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
-    <!--! My style -->
-    <link rel="stylesheet" href="{{ secure_asset('administrator/css/index.css') }}">
-    <link rel="stylesheet" href="{{ secure_asset('administrator/css/alertsweet.css') }}">
+@stack('css')
+
+
+
+<!--! My style -->
+<link rel="stylesheet" href="{{ secure_asset('administrator/css/index.css') }}">
+<link rel="stylesheet" href="{{ secure_asset('administrator/css/alertsweet.css') }}">
