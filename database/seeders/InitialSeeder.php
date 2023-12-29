@@ -88,7 +88,7 @@ class InitialSeeder extends Seeder
                 'updated_at' => Carbon::now(),]
         ]);
 
-        $this->craw();
+        // $this->craw();
 
     }
 
