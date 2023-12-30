@@ -88,9 +88,12 @@ public function check_payment(Request $request)
         $order = Order::find($order_id);
         $order->transaction_status = 1;
         $order->save();
+        return redirect()->away('localhost:3000/pay-status/1');
+    }
 
+    else {
+        return redirect()->away('localhost:3000/pay-status/2');
     }
     // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
-    return redirect()->away('https://www.google.com/');
 }
 }

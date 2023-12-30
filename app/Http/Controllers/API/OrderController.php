@@ -42,7 +42,7 @@ class OrderController extends Controller
             // Realtime notification
             event(new UserOrder($order));
 
-            // send mail
+            // Mail structure
 
             $subject = '[MARU DRY FRUITS CONFIRMS ORDER]';
             $body = [
@@ -61,7 +61,6 @@ class OrderController extends Controller
 
             We sincerely look forward to serving you again and hope that you will be satisfied with our products and services."
             ];
-            Mail::to($order->email)->send(new SendMail($subject, $body));
             // Save order item
             $orderID = $order->id;
 
@@ -81,6 +80,15 @@ class OrderController extends Controller
                 ];
             }
             OrderItems::insert($orderDetail);
+
+            // Send mail
+            try {
+                Mail::to($order->email)->send(new SendMail($subject, $body));
+            }
+
+            catch(\Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
             return response()->json([
                 'message' => 'Checkout successfully',
             ], 200);
