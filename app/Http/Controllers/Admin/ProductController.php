@@ -118,12 +118,20 @@ class ProductController extends Controller
         // save image
         if (isset($request->image)) {
             $image = explode('/', $product->image);
-            $old_image = explode('.', $image[sizeof($image)-1]);  
-            Cloudinary::destroy("dry_fruits_image/" . $old_image[0]);
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                "folder" => 'dry_fruits_image'
-            ])->getSecurePath();
-            $product->image = $uploadedFileUrl;
+            $old_image = explode('.', $image[sizeof($image)-1]); 
+            
+            try {
+                Cloudinary::destroy("dry_fruits_image/" . $old_image[0]);
+                $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+                    "folder" => 'dry_fruits_image'
+                ])->getSecurePath();
+                $product->image = $uploadedFileUrl;
+            }
+            catch(\Exception $e) {
+                echo "Error </br>";
+                echo $e->getMessage();
+                echo "</br>";
+            }
         }
 
         //insert in table Product_Weight
