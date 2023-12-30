@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\BannerAndSlide;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BannerSliderController extends Controller
 {
@@ -46,9 +47,11 @@ class BannerSliderController extends Controller
         $data->created_at = Carbon::now();
         $data->updated_at = Carbon::now();
         if (isset($request->image)) {
-            $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
-            $request->image->move(public_path("uploads"), $filename);
-            $data->image = route("uploads") . "/" . $filename;
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+                "folder" => 'dry_fruits_image'
+            ])->getSecurePath();
+
+            $data->image = $uploadedFileUrl;
         }
         $data->save();
         return redirect()->route("admin.slider-banner.index")->with("success", "Create success!");
