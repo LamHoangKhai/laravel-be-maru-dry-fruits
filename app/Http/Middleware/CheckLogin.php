@@ -20,7 +20,6 @@ class CheckLogin
         if (Auth::guard("web")->check() && Auth::guard("web")->user()->level == 1 && Auth::guard("web")->user()->status == 1) {
             return $next($request);
         }
-        dd("run");
         return redirect()->route("login");
     }
 }

@@ -38,7 +38,6 @@ class CrawController extends Controller
         ]);
 
 
-
         Category::insert([[
             'name' => "Nuts",
             'status' => '1',
