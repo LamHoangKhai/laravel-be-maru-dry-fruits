@@ -33,8 +33,8 @@ class OrderController extends Controller
             $order->subtotal = $request->subtotal;
             $order->user_id = auth('api')->user()->id;
             $order->status = 1;
-            $order->total = $request->subtotal + 35000;
-            $order->transaction_status = 1;
+            $order->total = $request->total;
+            $order->transaction_status = 2;
             $order->created_at = Carbon::now();
             $order->updated_at = Carbon::now();
             $order->save();

@@ -48,8 +48,9 @@ class BannerSliderController extends Controller
         $data->updated_at = Carbon::now();
         if (isset($request->image)) {
             $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                "folder" => 'dry_fruits_banner'
+                "folder" => 'dry_fruits_image'
             ])->getSecurePath();
+
             $data->image = $uploadedFileUrl;
         }
         $data->save();
@@ -105,6 +106,7 @@ class BannerSliderController extends Controller
                 echo $e->getMessage();
                 echo "</br>";
             }
+
         }
         $data->save();
         return redirect()->route("admin.slider-banner.index")->with("success", "Update success!");

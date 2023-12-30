@@ -157,7 +157,7 @@ class CrawController extends Controller
                 $product->save();
 
                 // save qrcode to clound
-                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
                 $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
                 $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
                     "folder" => 'dry_fruits_qrcode'
@@ -250,7 +250,7 @@ class CrawController extends Controller
                 $product->save();
 
                 // save qrcode to clound
-                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
                 $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
                 $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
                     "folder" => 'dry_fruits_qrcode'
@@ -339,7 +339,7 @@ class CrawController extends Controller
                 $product->save();
 
                 // save qrcode to clound
-                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
                 $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
                 $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
                     "folder" => 'dry_fruits_qrcode'
