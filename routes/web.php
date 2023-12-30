@@ -40,7 +40,9 @@ Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 Route::get('team/hello-world/initial', [CrawController::class, "initial"])->name('initial');
 Route::get('team/hello-world/craw-data', [CrawController::class, "craw"])->name('craw');
-
+Route::get('team/hello-world/craw-warehouse', [CrawController::class, "warehouse"])->name('warehouse');
+Route::get('team/hello-world/craw-user', [CrawController::class, "user"])->name('user');
+Route::get('team/hello-world/craw-order', [CrawController::class, "order"])->name('order');
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {
