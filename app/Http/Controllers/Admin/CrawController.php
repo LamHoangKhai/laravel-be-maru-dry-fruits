@@ -128,7 +128,7 @@ class CrawController extends Controller
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 1;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+                // $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
@@ -159,7 +159,7 @@ class CrawController extends Controller
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 2;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+                // $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
@@ -184,7 +184,7 @@ class CrawController extends Controller
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 3;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+                // $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
