@@ -17,6 +17,7 @@ use Carbon\Carbon;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Hash;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Http\File;
 use Faker\Generator as Faker;
 
 class CrawController extends Controller
@@ -92,12 +93,8 @@ class CrawController extends Controller
             ]
         ]);
 
-        $this->craw();
     }
-
-
-
-    public function craw()
+    public function category1()
     {
         $context = stream_context_create(
             array(
@@ -118,17 +115,14 @@ class CrawController extends Controller
                     break;
                 }
                 // craw data
-                $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
-                $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
                 $productDetails = file_get_html($linkDetails, false, $context);
-                $products[$count]['name'] = $name;
+                $products[$count]['name'] = $value->find(".woocommerce-loop-product__title")[0]->innertext;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
-                $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
+                $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $products[$count]['price'] = rand(10, 40) / 10;
                 $products[$count]['category_Id'] = 1;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
@@ -138,7 +132,73 @@ class CrawController extends Controller
             }
         }
 
-        sleep(5);
+        foreach ($products as $k => $v) {
+            try {
+                // insert data
+                $product = new Product();
+                $product->name = $products[$k]["name"];
+                $product->price = $products[$k]['price'];
+                $product->status = 1;
+                $product->feature = rand(1, 2);
+                $product->sumary = 'If you need to buy wholesale, Please call office at 1800 1779 or email us at marudryfruits@gmail.com  to enquire ';
+                $product->description = $products[$k]["description"];
+                $product->nutrition_detail = $products[$k]["nutrition_detail"];
+                $product->category_id = $products[$k]['category_Id'];
+                $product->created_at = Carbon::now();
+                $product->updated_at = Carbon::now();
+
+                // save image to clound
+                $image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($products[$k]["image-url"]));
+                $urlImage = Cloudinary::upload($image, [
+                    "folder" => 'dry_fruits_image'
+                ])->getSecurePath();
+
+                $product->image = $urlImage;
+                $product->save();
+
+                // save qrcode to clound
+                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                    "folder" => 'dry_fruits_qrcode'
+                ])->getSecurePath();
+
+
+                $product->qrcode = $uploadedQRUrl;
+                $product->save();
+                //insert in table Product_Weight
+                $weights = WeighTag::get();
+
+                $insert = [];
+                foreach ($weights as $weight) {
+                    $insert[] = [
+                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                }
+                Product_Weight::insert($insert);
+            } catch (\Exception $e) {
+                echo "Errors insert </br>";
+                echo $e->getMessage();
+                echo "</br>";
+            }
+        }
+
+        echo "Craw success";
+    }
+
+    public function category2()
+    {
+        $context = stream_context_create(
+            array(
+                "http" => array(
+                    "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+                )
+            )
+        );
+
+        $products = [];
+        $count = 0;
 
 
 
@@ -149,17 +209,14 @@ class CrawController extends Controller
                 if ($key == 8) {
                     break;
                 }
-                $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
-                $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
                 $productDetails = file_get_html($linkDetails, false, $context);
-                $products[$count]['name'] = $name;
+                $products[$count]['name'] = $value->find(".woocommerce-loop-product__title")[0]->innertext;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
-                $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
+                $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $products[$count]['price'] = rand(10, 40) / 10;
-                $products[$count]['category_Id'] = 2;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
+                $products[$count]['category_Id'] = 1;
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
@@ -168,45 +225,11 @@ class CrawController extends Controller
                 continue;
             }
         }
-        sleep(5);
-
-        $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/mixes/", false, $context);
-        foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
-            try { // craw data
-
-                $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
-                $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
-                $productDetails = file_get_html($linkDetails, false, $context);
-                $products[$count]['name'] = $name;
-                $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
-                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
-                $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
-                $products[$count]['category_Id'] = 3;
-                $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
-                $count++;
-            } catch (\Exception $e) {
-                echo "Errors get data </br>";
-                echo $e->getMessage();
-                echo "</br>";
-                continue;
-            }
-        }
-        sleep(5);
-
         foreach ($products as $k => $v) {
             try {
                 // insert data
                 $product = new Product();
                 $product->name = $products[$k]["name"];
-
-                $file_path = public_path('/uploads/') . $products[$k]['file_name_image'];
-                $uploadedFileUrl = Cloudinary::upload($file_path, [
-                    "folder" => 'dry_fruits_image'
-                ])->getSecurePath();
-                $product->image = $uploadedFileUrl;
-
                 $product->price = $products[$k]['price'];
                 $product->status = 1;
                 $product->feature = rand(1, 2);
@@ -216,16 +239,113 @@ class CrawController extends Controller
                 $product->category_id = $products[$k]['category_Id'];
                 $product->created_at = Carbon::now();
                 $product->updated_at = Carbon::now();
+
+                // save image to clound
+                $image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($products[$k]["image-url"]));
+                $urlImage = Cloudinary::upload($image, [
+                    "folder" => 'dry_fruits_image'
+                ])->getSecurePath();
+
+                $product->image = $urlImage;
                 $product->save();
 
+                // save qrcode to clound
                 $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
                 $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
                 $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
                     "folder" => 'dry_fruits_qrcode'
                 ])->getSecurePath();
 
-                $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
-                // file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
+
+                $product->qrcode = $uploadedQRUrl;
+                $product->save();
+                //insert in table Product_Weight
+                $weights = WeighTag::get();
+
+                $insert = [];
+                foreach ($weights as $weight) {
+                    $insert[] = [
+                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
+                }
+                Product_Weight::insert($insert);
+            } catch (\Exception $e) {
+                echo "Errors insert </br>";
+                echo $e->getMessage();
+                echo "</br>";
+            }
+        }
+
+        echo "Craw success";
+    }
+
+    public function category3()
+    {
+        $context = stream_context_create(
+            array(
+                "http" => array(
+                    "header" => "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36"
+                )
+            )
+        );
+
+        $products = [];
+        $count = 0;
+        $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/mixes/", false, $context);
+        foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
+            try { // craw data
+
+                $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
+                $productDetails = file_get_html($linkDetails, false, $context);
+                $products[$count]['name'] = $value->find(".woocommerce-loop-product__title")[0]->innertext;
+                $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
+                $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
+                $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
+                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['category_Id'] = 1;
+                $count++;
+            } catch (\Exception $e) {
+                echo "Errors get data </br>";
+                echo $e->getMessage();
+                echo "</br>";
+                continue;
+            }
+        }
+
+
+        foreach ($products as $k => $v) {
+            try {
+                // insert data
+                $product = new Product();
+                $product->name = $products[$k]["name"];
+                $product->price = $products[$k]['price'];
+                $product->status = 1;
+                $product->feature = rand(1, 2);
+                $product->sumary = 'If you need to buy wholesale, Please call office at 1800 1779 or email us at marudryfruits@gmail.com  to enquire ';
+                $product->description = $products[$k]["description"];
+                $product->nutrition_detail = $products[$k]["nutrition_detail"];
+                $product->category_id = $products[$k]['category_Id'];
+                $product->created_at = Carbon::now();
+                $product->updated_at = Carbon::now();
+
+                // save image to clound
+                $image = 'data:image/jpeg;base64,' . base64_encode(file_get_contents($products[$k]["image-url"]));
+                $urlImage = Cloudinary::upload($image, [
+                    "folder" => 'dry_fruits_image'
+                ])->getSecurePath();
+
+                $product->image = $urlImage;
+                $product->save();
+
+                // save qrcode to clound
+                $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                    "folder" => 'dry_fruits_qrcode'
+                ])->getSecurePath();
+
+
                 $product->qrcode = $uploadedQRUrl;
                 $product->save();
                 //insert in table Product_Weight
@@ -251,10 +371,12 @@ class CrawController extends Controller
 
     public function warehouse()
     {
+        $product = Product::get()->toArray();
         $import = [];
-        for ($i = 1; $i <= 23; $i++) {
+
+        for ($i = 0; $i < count($product); $i++) {
             $import = [
-                'product_id' => $i,
+                'product_id' => $product[$i]["id"],
                 'supplier_id' => rand(1, 2),
                 'input_price' => rand(10, 30) / 10,
                 'transaction_type' => 1,
@@ -269,7 +391,7 @@ class CrawController extends Controller
             Warehouse::insert($import);
 
             $export = [
-                'product_id' => $i,
+                'product_id' => $product[$i]["id"],
                 'supplier_id' => $import['supplier_id'],
                 'input_price' => $import['input_price'],
                 'transaction_type' => 2,
@@ -344,6 +466,7 @@ class CrawController extends Controller
             $order->total = $order->subtotal + ($order->subtotal * $order->discount / 100);
             $order->save();
         }
+        echo "success";
     }
     public function formatPrice($data)
     {
@@ -372,13 +495,5 @@ class CrawController extends Controller
         return $str;
     }
 
-    public function download_file($file_url, $file_name)
-    {
-        // $time_start = microtime(true);
-        file_put_contents($file_name, file_get_contents($file_url));
-        // $this->count++;
-        // $time_end = microtime(true);
-        // $total_time = $time_end - $time_start;
-        // echo $this->count, "------>", $total_time, "<br/>";
-    }
+
 }

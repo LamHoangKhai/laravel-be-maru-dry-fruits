@@ -49,7 +49,6 @@ class ProductController extends Controller
     //create product
     public function store(StoreRequest $request)
     {
-
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -63,13 +62,11 @@ class ProductController extends Controller
         $product->updated_at = Carbon::now();
 
         //save  image
-        $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
         $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
             "folder" => 'dry_fruits_image'
         ])->getSecurePath();
 
-        // dd($request->image);
-        // $request->image->move(public_path("uploads"), $filename);
+
         $product->image = $uploadedFileUrl;
         $product->save();
 
@@ -80,10 +77,11 @@ class ProductController extends Controller
         $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
             "folder" => 'dry_fruits_qrcode'
         ])->getSecurePath();
-        $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
-        // file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
+
+
         $product->qrcode = $uploadedQRUrl;
         $product->save();
+
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {

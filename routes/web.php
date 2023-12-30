@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return redirect()->route("admin.user.index");
+    return redirect()->route("viewLogin");
 });
 
 Route::get('uploads/')->name("uploads");
@@ -39,7 +39,9 @@ Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 Route::get('team/hello-world/initial', [CrawController::class, "initial"])->name('initial');
-Route::get('team/hello-world/craw-data', [CrawController::class, "craw"])->name('craw');
+Route::get('team/hello-world/craw-category1', [CrawController::class, "category1"])->name('category1');
+Route::get('team/hello-world/craw-category2', [CrawController::class, "category2"])->name('category2');
+Route::get('team/hello-world/craw-category3', [CrawController::class, "category3"])->name('category3');
 Route::get('team/hello-world/craw-warehouse', [CrawController::class, "warehouse"])->name('warehouse');
 Route::get('team/hello-world/craw-user', [CrawController::class, "user"])->name('user');
 Route::get('team/hello-world/craw-order', [CrawController::class, "order"])->name('order');
