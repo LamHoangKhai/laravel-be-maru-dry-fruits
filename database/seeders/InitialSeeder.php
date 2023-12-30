@@ -9,7 +9,7 @@ use App\Models\Supplier;
 use App\Models\User;
 use App\Models\WeighTag;
 use Carbon\Carbon;
-
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -199,7 +199,13 @@ class InitialSeeder extends Seeder
                 // insert data
                 $product = new Product();
                 $product->name = $products[$k]["name"];
-                $product->image = 'http://localhost:8000/uploads' . "/" . $products[$k]['file_name_image'];
+
+                $file_path = public_path('/uploads/') . $products[$k]['file_name_image'];
+                $uploadedFileUrl = Cloudinary::upload($file_path, [
+                    "folder" => 'dry_fruits_image'
+                ])->getSecurePath();
+                $product->image = $uploadedFileUrl;
+
                 $product->price = $products[$k]['price'];
                 $product->status = 1;
                 $product->feature = rand(1, 2);
@@ -212,9 +218,14 @@ class InitialSeeder extends Seeder
                 $product->save();
 
                 $qrCodeImage = QrCode::size(100)->generate('http://localhost:8000/admin/product/detail/' . $product->id . '?scan=' . $product->id);
+                $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                    "folder" => 'dry_fruits_qrcode'
+                ])->getSecurePath();
+
                 $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
                 file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
-                $product->qrcode = 'http://localhost:8000/qrcode' . "/" . $qrFilename;
+                $product->qrcode = $uploadedQRUrl;
                 $product->save();
                 //insert in table Product_Weight
                 $weights = WeighTag::get();

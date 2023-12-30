@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
 {
@@ -63,17 +64,25 @@ class ProductController extends Controller
 
         //save  image
         $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
+        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+            "folder" => 'dry_fruits_image'
+        ])->getSecurePath();
+
         // dd($request->image);
         $request->image->move(public_path("uploads"), $filename);
-        $product->image = route("uploads") . "/" . $filename;
+        $product->image = $uploadedFileUrl;
         $product->save();
 
         // save qr code
 
         $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
+        $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+        $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+            "folder" => 'dry_fruits_qrcode'
+        ])->getSecurePath();
         $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
         file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
-        $product->qrcode = route("qrcode") . "/" . $qrFilename;
+        $product->qrcode = $uploadedQRUrl;
         $product->save();
         //insert in table Product_Weight
         $insert = [];
