@@ -81,7 +81,7 @@ class ProductController extends Controller
             "folder" => 'dry_fruits_qrcode'
         ])->getSecurePath();
         $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
-        file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
+        // file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
         $product->qrcode = $uploadedQRUrl;
         $product->save();
         //insert in table Product_Weight
