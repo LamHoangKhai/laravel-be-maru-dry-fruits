@@ -19,15 +19,26 @@ const loadProduct = (storage) => {
                 data.forEach((element, index) => {
                     let created_at = formatDate(new Date(element.created_at));
                     let updated_at = formatDate(new Date(element.updated_at));
+                    let user = ``;
+                    if (element.user.level == 2) {
+                        user = `
+                        <td class="max-110">${element.full_name}</td>
+                        <td class="max-110">${element.email}</td>
+                        <td class="max-250">${element.address}</td>
+                        <td>${element.phone}</td>
+                        `;
+                    } else {
+                        user = ` 
+                        <td class="max-110" colspan="2">${element.user.email}</td>
+                        <td class="max-110 text-center" colspan="2">Sold Offline</td>
+                        `;
+                    }
 
                     let type = statusText(element.status);
                     xhtml += `
                         <tr class="detail" data-id="${element.id}">
                             <td >${element.id}</td>
-                            <td class="max-110">${element.user.full_name}</td>
-                            <td class="max-110">${element.user.email}</td>
-                            <td class="max-250">${element.user.address}</td>
-                            <td>${element.user.phone}</td>
+                            ${user}
                             <td class="text-center">${element.discount}%</td>
                             <td>$${element.total}</td>
                             <td><span class="badge rounded-pill bg-${type[1]}">${type[0]}</span> </td>

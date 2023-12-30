@@ -17,34 +17,34 @@ const printInvoice = (data) => {
 const htmlString = (data) => {
     //head invoice
     let head = ` 
-        <div id='DivIdToPrint'>
-<!-- start invoice print -->
-<style type="text/css">
-    body {
-        font-size: 16px;
-        line-height: 24px;
-        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
-        color: #555;
-    }
+<div id='DivIdToPrint'>
+        <!-- start invoice print -->
+        <style type="text/css">
+            body {
+                font-size: 16px;
+                line-height: 24px;
+                font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+                color: #555;
+            }
+        
+            .table_border tr td {
+                border: 1px solid #555 !important;
+            }
+        
+            .itemrows td,
+            .heading td,
+            .padding td {
+                padding: 8px;
+            }
+        
+            .total td {
+                padding: 4px;
+            }
+        </style>
 
-    .table_border tr td {
-        border: 1px solid #555 !important;
-    }
-
-    .itemrows td,
-    .heading td,
-    .padding td {
-        padding: 8px;
-    }
-
-    .total td {
-        padding: 4px;
-    }
-</style>
-
-<table cellpadding="0" cellspacing="0">
-    <table style="border:0;width:100%;">
-    <tr>
+    <table cellpadding="0" cellspacing="0">
+        <table style="border:0;width:100%;">
+        <tr>
             <td colspan="4" align="center"><h3>Invoice</h3></td>
         </tr>
         <tr>
@@ -80,30 +80,32 @@ const htmlString = (data) => {
         </tr>
        `;
     }
-    userInformation += ` <tr class="padding">
-    <td><b>Date:</b> ${formatDate(new Date(data.created_at))}</td>
-</tr>
-<tr class="padding">
-    <td><b>Note:</b> ${data.note ? data.note : ""}</td>
-</tr>`;
+
+    userInformation += ` 
+    <tr class="padding">
+        <td><b>Date:</b> ${formatDate(new Date(data.created_at))}</td>
+    </tr>
+    <tr class="padding">
+        <td><b>Note:</b> ${data.note ? data.note : ""}</td>
+    </tr>`;
 
     //list items
     let listItems = `
-<tr class="heading" style="background:#eee;border-bottom:1px solid #ddd;font-weight:bold;">
-<td>
-    Item
-</td>
-<td>
-    Price
-</td>
-<td>
-    Quantity
-</td>
-<td>
-    Subtotal
-</td>
-</tr>
-`;
+            <tr class="heading" style="background:#eee;border-bottom:1px solid #ddd;font-weight:bold;">
+                <td>
+                    Item
+                </td>
+                <td>
+                    Price
+                </td>
+                <td>
+                    Quantity
+                </td>
+                <td>
+                    Subtotal
+                </td>
+            </tr>
+            `;
 
     data.order_items.forEach((element) => {
         let formatText =
@@ -123,31 +125,37 @@ const htmlString = (data) => {
 
     // order details
     let orderDetail = `
-    <tr class="total" stlye="margin-top:12px">
-<td align="right" colspan="3">
-    <b>Order #&nbsp;:&nbsp; ${data.id}</b>
-</td>
-</tr>
-<tr class="total" stlye="margin-top:12px">
-<td align="right" colspan="3">
-    <b>Subtotal&nbsp;:&nbsp;$${data.subtotal}</b>
-</td>
-</tr>
-<tr class="total" stlye="margin-top:12px">
-<td align="right" colspan="3">
-    <b>Subtotal&nbsp;:&nbsp;${data.discount}%</b>
-</td>
-</tr>
-<tr class="total" stlye="margin-top:12px">
-<td align="right" colspan="3">
-    <b>Total&nbsp;:&nbsp;$${data.total.toFixed(2)}</b>
-</td>
-</tr>
-<tr>
-<td colspan="4" align="center">Thank You ! Visit Again</td>
-</tr>
-</table>
-</table>
+            <tr class="total" stlye="margin-top:12px">
+                <td align="right" colspan="3">
+                    <b>Order #&nbsp;:&nbsp; ${data.id}</b>
+                </td>
+            </tr>
+            <tr class="total" stlye="margin-top:12px">
+                <td align="right" colspan="3">
+                    <b>Subtotal&nbsp;:&nbsp;$${data.subtotal}</b>
+                </td>
+                </tr>
+            <tr class="total" stlye="margin-top:12px">
+                <td align="right" colspan="3">
+                    <b>Subtotal&nbsp;:&nbsp;${data.discount}%</b>
+                </td>
+            </tr>
+            <tr class="total" stlye="margin-top:12px">
+                <td align="right" colspan="3">
+                    <b>Total&nbsp;:&nbsp;$${data.total.toFixed(2)}</b>
+                </td>
+            </tr>
+            <tr>
+           
+            <td colspan="4" align="center">Thank You ! Visit Again</td>
+        </tr>
+            <tr>
+                <td colspan="4" align="center"><strong>${
+                    data.transaction_status == 1 ? "Paid" : "Unpaid"
+                }</strong></td>
+            </tr>
+        </table>
+    </table>
 <!-- end invoice print -->
 </div>
 `;
