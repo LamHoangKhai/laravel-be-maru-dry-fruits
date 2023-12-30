@@ -3,10 +3,14 @@ import { statusText, formatDate } from "../function.js";
 const modalHtml = (data) => {
     $("#numberOrder").text("Order #" + data.id);
     $("#orderDate").text(formatDate(new Date(data.created_at)));
-    $("#userName").text(data.full_name);
-    $("#userPhone").text(data.phone);
-    $("#userEmail").text(data.email);
-    $("#userAddress").text(data.address);
+    if (data.user.level == 1) {
+        $(".user").html("<p><strong>Sold offline</strong></p>");
+    } else {
+        $("#userName").text(data.full_name);
+        $("#userPhone").text(data.phone);
+        $("#userEmail").text(data.email);
+        $("#userAddress").text(data.address);
+    }
     $("#userNote").text(data.note);
     // append item oder
     $("#items").html(
@@ -24,6 +28,7 @@ const modalHtml = (data) => {
                  </div>
             `
     );
+
     let xhmtlItem = ``;
     data.order_items.forEach((element) => {
         let formatText =
@@ -59,9 +64,7 @@ const modalHtml = (data) => {
     let xhmtDetails = ` 
     <div class="col mb-2">
         <ul type="none">
-            <li class="left mb-2 ">Status Order: <strong>${
-                text[0]
-            }</strong></li>
+           
             <li class="left mb-2">Subtotal: <strong>$${
                 data.subtotal
             }</strong></li>
@@ -70,7 +73,17 @@ const modalHtml = (data) => {
                 2
             )}</strong></li>
         </ul>
-    </div>`;
+    </div> <div class="col mb-2">
+    <ul type="none">
+        <li class="left mb-2 ">Status Order: <strong>${text[0]}</strong></li>
+        <li class="left mb-2">Transaction: <strong>${
+            data.transaction == 1 ? "Cash/Ship COD" : "VNPAY"
+        }</strong></li>
+        <li class="left mb-2">Transaction Status: <strong>${
+            data.transaction_status == 1 ? "Complete" : "Pending payment"
+        }</strong></li>
+    </ul>
+</div>`;
 
     $("#orderDetail").html(xhmtDetails);
 

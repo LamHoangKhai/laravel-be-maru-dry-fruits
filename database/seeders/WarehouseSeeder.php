@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -12,12 +13,14 @@ class WarehouseSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function warehouse()
     {
+        $product = Product::get()->toArray();
         $import = [];
-        for ($i = 1; $i <= 23; $i++) {
+
+        for ($i = 0; $i < count($product); $i++) {
             $import = [
-                'product_id' => $i,
+                'product_id' => $product[$i]["id"],
                 'supplier_id' => rand(1, 2),
                 'input_price' => rand(10, 30) / 10,
                 'transaction_type' => 1,
@@ -32,7 +35,7 @@ class WarehouseSeeder extends Seeder
             Warehouse::insert($import);
 
             $export = [
-                'product_id' => $i,
+                'product_id' => $product[$i]["id"],
                 'supplier_id' => $import['supplier_id'],
                 'input_price' => $import['input_price'],
                 'transaction_type' => 2,
@@ -50,4 +53,5 @@ class WarehouseSeeder extends Seeder
             $importStore->update();
         }
     }
+
 }

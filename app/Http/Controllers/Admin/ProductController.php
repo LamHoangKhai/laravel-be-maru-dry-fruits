@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
 {
@@ -48,7 +49,6 @@ class ProductController extends Controller
     //create product
     public function store(StoreRequest $request)
     {
-
         $product = new Product();
         $product->name = $request->name;
         $product->price = $request->price;
@@ -62,19 +62,26 @@ class ProductController extends Controller
         $product->updated_at = Carbon::now();
 
         //save  image
-        $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
-        // dd($request->image);
-        $request->image->move(public_path("uploads"), $filename);
-        $product->image = route("uploads") . "/" . $filename;
+        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+            "folder" => 'dry_fruits_image'
+        ])->getSecurePath();
+
+
+        $product->image = $uploadedFileUrl;
         $product->save();
 
         // save qr code
 
         $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
-        $qrFilename = rand(1, 10000) . time() . "." . $product->id . '.svg';
-        file_put_contents(public_path("qrcode/{$qrFilename}"), $qrCodeImage);
-        $product->qrcode = route("qrcode") . "/" . $qrFilename;
+        $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+        $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+            "folder" => 'dry_fruits_qrcode'
+        ])->getSecurePath();
+
+
+        $product->qrcode = $uploadedQRUrl;
         $product->save();
+
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
@@ -109,15 +116,11 @@ class ProductController extends Controller
 
         // save image
         if (isset($request->image)) {
-            $file = public_path("uploads/") . $product->image;
-
-            if (file_exists($file)) {
-                unlink($file);
-            }
-
-            $filename = rand(1, 10000) . time() . "." . $request->image->getClientOriginalName();
-            $request->image->move(public_path("uploads"), $filename);
-            $product->image = route("uploads") . "/" . $filename;
+            Cloudinary::destroy($product->image);
+            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+                "folder" => 'dry_fruits_image'
+            ])->getSecurePath();
+            $product->image = $uploadedFileUrl;
         }
 
         //insert in table Product_Weight

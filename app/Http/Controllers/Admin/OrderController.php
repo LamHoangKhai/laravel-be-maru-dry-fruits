@@ -190,6 +190,9 @@ class OrderController extends Controller
         $currentStatus = $order->status;
         $order->status = $currentStatus + 1;
         $order->updated_at = Carbon::now();
+        if ($order->status == 4) {
+            $order->transaction_status = 1;
+        }
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
