@@ -69,7 +69,7 @@ class ProductController extends Controller
         ])->getSecurePath();
 
         // dd($request->image);
-        $request->image->move(public_path("uploads"), $filename);
+        // $request->image->move(public_path("uploads"), $filename);
         $product->image = $uploadedFileUrl;
         $product->save();
 
