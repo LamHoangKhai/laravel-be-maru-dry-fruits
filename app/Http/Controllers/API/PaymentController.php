@@ -83,14 +83,17 @@ public function check_payment(Request $request)
 
     // Lấy order ID từ dữ liệu callback
     $order_id = $vnpResponseData['vnp_TxnRef'];
-
+    $order = Order::find($order_id);
     if ($paymentStatus == '00') {
-        $order = Order::find($order_id);
         $order->transaction_status = 1;
         $order->save();
-
+        return redirect()->away('localhost:3000/pay-status/1');
     }
+
+        $order->status = 5;
+        $order->note = 'Payment failed';
+        $order->update();
+        return redirect()->away('localhost:3000/pay-status/2');
     // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
-    return redirect()->away('https://www.google.com/');
 }
 }
