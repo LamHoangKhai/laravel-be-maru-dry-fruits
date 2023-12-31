@@ -92,6 +92,7 @@ public function check_payment(Request $request)
 
         $order->status = 5;
         $order->note = 'Payment failed';
+        $order->transaction_status = 2;
         $order->update();
         return redirect()->away('localhost:3000/pay-status/2');
     // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn

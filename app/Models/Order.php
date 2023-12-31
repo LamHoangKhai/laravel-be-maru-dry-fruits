@@ -18,11 +18,11 @@ class Order extends Model
         return $this->hasMany(Order::class, 'order_id');
     }
 
- 
+
 
     public function order_items()
     {
-        return $this->hasMany(OrderItems::class)->with("product");
+        return $this->hasMany(OrderItems::class)->withTrashed()->with("product");
     }
 
     public function user()
