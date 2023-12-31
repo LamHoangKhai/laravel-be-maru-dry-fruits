@@ -19,13 +19,13 @@ class OrderController extends Controller
     {
         // Save order
         if (auth('api')->user()) {
-            if(auth('api')->user()->status == 2) {
+            if (auth('api')->user()->status == 2) {
                 return response()->json([
                     'message' => 'Your account is locked'
                 ]);
             }
-            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2]])->count();
-            if($order_pending_payment >= 3) {
+            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2], ['status', "!=", 5]])->count();
+            if ($order_pending_payment >= 3) {
                 return response()->json([
                     'message' => 'Please pay for your order to continue shopping',
                     'status_code' => '910'
@@ -91,16 +91,13 @@ class OrderController extends Controller
             // Send mail
             try {
                 Mail::to($order->email)->send(new SendMail($subject, $body));
-            }
-
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo "Error: " . $e->getMessage();
             }
             return response()->json([
                 'message' => 'Checkout successfully',
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 'message' => "You are not logged in"
             ]);
@@ -108,10 +105,10 @@ class OrderController extends Controller
     }
     public function history_order()
     {
-        if(auth('api')->user()) {
+        if (auth('api')->user()) {
             $user = auth('api')->user()->id;
             $orders = Order::with('order_items')->where('user_id', $user)->paginate(10);
-            foreach($orders as $cut_user_id) {
+            foreach ($orders as $cut_user_id) {
                 unset($cut_user_id->user_id);
             }
             return response()->json([
@@ -120,40 +117,40 @@ class OrderController extends Controller
         }
     }
 }
-    //         $history_order = [];
-    //         foreach ($orders as $order) {
-    //             $quantity = OrderItems::where('order_id', $order->id)->get();
-    //             $order_items = [];
-    //             foreach($order['order_items'] as $order_item) {
-                    
-    //                 $order_items[] = [
-    //                     'order_id' => $order_item->order_id,
-    //                     'name' => $order_item['product']->name,
-    //                     'price' => $order_item->price,
-    //                     'weight' => $order_item->weight,
-    //                     'quantity' => $order_item->quantity,
-    //                     'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
-    //                 ];
-    //             }
-    //             $history_order[] = [
-    //                 'order_id' => $order->id,
-    //                 'status' => $order->status,
-    //                 'total' => $order->total,
-    //                 'created_at' => $order->created_at,
-    //                 'quantity' => count($quantity),
-    //                 'address' => $order->address,
-    //                 'phone' => $order->phone,
-    //                 'transaction_status' => $order->transaction_status,
-    //                 'order_items' => $order_items
-    //             ];
-    //         }
-    //         return response()->json([
-    //             'data' => $history_order
-    //         ],200);
-    //     }
-    //     else {
-    //         return response()->json([
-    //             'message' => 'Ypu are not logged in'
-    //         ]);
-    //     }
+//         $history_order = [];
+//         foreach ($orders as $order) {
+//             $quantity = OrderItems::where('order_id', $order->id)->get();
+//             $order_items = [];
+//             foreach($order['order_items'] as $order_item) {
+
+//                 $order_items[] = [
+//                     'order_id' => $order_item->order_id,
+//                     'name' => $order_item['product']->name,
+//                     'price' => $order_item->price,
+//                     'weight' => $order_item->weight,
+//                     'quantity' => $order_item->quantity,
+//                     'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
+//                 ];
+//             }
+//             $history_order[] = [
+//                 'order_id' => $order->id,
+//                 'status' => $order->status,
+//                 'total' => $order->total,
+//                 'created_at' => $order->created_at,
+//                 'quantity' => count($quantity),
+//                 'address' => $order->address,
+//                 'phone' => $order->phone,
+//                 'transaction_status' => $order->transaction_status,
+//                 'order_items' => $order_items
+//             ];
+//         }
+//         return response()->json([
+//             'data' => $history_order
+//         ],200);
+//     }
+//     else {
+//         return response()->json([
+//             'message' => 'Ypu are not logged in'
+//         ]);
+//     }
 

@@ -24,6 +24,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
+                        
                         <div class="input-group w-px-200">
                             <label class="input-group-text" for="inputGroupSelect01">Status</label>
                             <select id="select" class="form-select ">
@@ -34,7 +35,7 @@
                         </div>
 
                         <div class="input-group w-25" style="margin:0 12px ">
-                            <span class="input-group-text" h-px-40>Search</span>
+                            <span class="input-group-text">Search</span>
                             <input type="text" class="form-control" placeholder="Enter order No. , phone , email "
                                 id="search">
                         </div>
@@ -56,6 +57,7 @@
                                     <th>Discount</th>
                                     <th>Total</th>
                                     <th>Status</th>
+                                    <th>Paymen Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                 </tr>
@@ -77,6 +79,7 @@
                                     <th>Discount</th>
                                     <th>Total</th>
                                     <th>Status</th>
+                                    <th>Paymen Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                 </tr>

@@ -17,7 +17,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    
+
     public function index()
     {
         // render view user table
@@ -158,6 +158,11 @@ class UserController extends Controller
         $query = User::where("status", "!=", 3); // just get user when status 1,2
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
+        $select = $request->select;
+
+        if ($select > 0) {
+            $query = $query->where("status", "=", $select);
+        }
 
         // search email, phone ,name 
         $query = $query->where(function ($query) use ($search) {
