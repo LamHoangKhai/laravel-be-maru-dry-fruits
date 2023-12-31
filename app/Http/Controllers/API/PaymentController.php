@@ -12,6 +12,13 @@ class PaymentController extends Controller
     public function vnpay_payment(Request $request)
 {
     try {
+        $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2]])->count();
+        if($order_pending_payment >= 3) {
+            return response()->json([
+                'message' => 'Please pay for your order to continue shopping',
+                'status_code' => '910'
+            ]);
+        }
         $order = Order::latest()->select('id')->first();
         $subtotal = $request->subtotal;
         $bank_code = $request->bank_code;

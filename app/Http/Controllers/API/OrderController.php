@@ -25,13 +25,6 @@ class OrderController extends Controller
                 ]);
             }
 
-            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2]])->count();
-            if($order_pending_payment >= 3) {
-                return response()->json([
-                    'message' => 'Please pay for your order to continue shopping',
-                    'status_code' => '910'
-                ]);
-            }
             $order = new Order();
             $order->email = auth('api')->user()->email;
             $order->full_name = $request->full_name;
