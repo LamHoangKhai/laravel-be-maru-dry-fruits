@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Craw;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BannerSliderController;
+use App\Http\Controllers\Admin\ContactController;
 use App\Http\Controllers\Admin\CrawController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
@@ -218,6 +219,12 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::get('destroy/{id}', 'destroy')->name('destroy');
 
 
+    });
+
+
+    Route::prefix('contact')->name('contact.')->controller(ContactController::class)->group(function () {
+        //view
+        Route::get('index', 'index')->name('index');
     });
 
 });
