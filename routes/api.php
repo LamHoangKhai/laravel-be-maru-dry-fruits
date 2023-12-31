@@ -54,8 +54,8 @@ Route::middleware(['api'])->group(function () {
 
     Route::prefix('order')->group(function () {
         Route::post('order', [OrderController::class, 'order'])->name('order');
-        Route::get('history_order', [OrderController::class, 'history_order'])->name('history_order');
-        Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
+        Route::post('history_order', [OrderController::class, 'history_order'])->name('history_order');
+        // Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
     });
 
     Route::prefix('banner_and_slide')->group(function () {

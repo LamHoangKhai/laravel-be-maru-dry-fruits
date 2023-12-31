@@ -41,7 +41,7 @@ class OrderController extends Controller
             $order->subtotal = $request->subtotal;
             $order->user_id = auth('api')->user()->id;
             $order->status = 1;
-            $order->total = $request->subtotal + 35000;
+            $order->total = $request->total;
             $order->transaction_status = 2;
             $order->created_at = Carbon::now();
             $order->updated_at = Carbon::now();
@@ -111,47 +111,50 @@ class OrderController extends Controller
     {
         if(auth('api')->user()) {
             $user = auth('api')->user()->id;
-            $order = Order::where('user_id', $user)->get();
-            $history_order = [];
-            foreach ($order as $order) {
-                $quantity = OrderItems::where('order_id', $order->id)->get();
-
-                $history_order[] = [
-                    'order_id' => $order->id,
-                    'status' => $order->status,
-                    'subtotal' => $order->subtotal,
-                    'created_at' => $order->created_at,
-                    'quantity' => count($quantity)
-                ];
+            $orders = Order::with('order_items')->where('user_id', $user)->paginate(2);
+            foreach($orders as $cut_user_id) {
+                unset($cut_user_id->user_id);
             }
             return response()->json([
-                'data' => $history_order
-            ],200);
-        }
-        else {
-            return response()->json([
-                'message' => 'Ypu are not logged in'
+                'data' => $orders
             ]);
         }
     }
-    public function history_order_details(Request $request)
-    {
-        $order_id = $request->order_id;
-        $history_order = OrderItems::withTrashed()->where('order_id', $order_id)->get();
-        $history_order_details = [];
-        foreach ($history_order as $order_item) {
-            $product = Product::where('id', $order_item->product_id)->get();
-            $history_order_details[] = [
-                'name' => $product[0]->name,
-                'price' => $order_item->price,
-                'weight' => $order_item->weight,
-                'quantity' => $order_item->quantity,
-                'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
-            ];
-        }
-        return response()->json([
-            'data' => $history_order_details
-        ],200);
-    }
-
 }
+    //         $history_order = [];
+    //         foreach ($orders as $order) {
+    //             $quantity = OrderItems::where('order_id', $order->id)->get();
+    //             $order_items = [];
+    //             foreach($order['order_items'] as $order_item) {
+                    
+    //                 $order_items[] = [
+    //                     'order_id' => $order_item->order_id,
+    //                     'name' => $order_item['product']->name,
+    //                     'price' => $order_item->price,
+    //                     'weight' => $order_item->weight,
+    //                     'quantity' => $order_item->quantity,
+    //                     'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
+    //                 ];
+    //             }
+    //             $history_order[] = [
+    //                 'order_id' => $order->id,
+    //                 'status' => $order->status,
+    //                 'total' => $order->total,
+    //                 'created_at' => $order->created_at,
+    //                 'quantity' => count($quantity),
+    //                 'address' => $order->address,
+    //                 'phone' => $order->phone,
+    //                 'transaction_status' => $order->transaction_status,
+    //                 'order_items' => $order_items
+    //             ];
+    //         }
+    //         return response()->json([
+    //             'data' => $history_order
+    //         ],200);
+    //     }
+    //     else {
+    //         return response()->json([
+    //             'message' => 'Ypu are not logged in'
+    //         ]);
+    //     }
+
