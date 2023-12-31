@@ -22,7 +22,7 @@ class Order extends Model
 
     public function order_items()
     {
-        return $this->hasMany(OrderItems::class)->with("product");
+        return $this->hasMany(OrderItems::class)->withTrashed()->with("product");
     }
 
     public function user()

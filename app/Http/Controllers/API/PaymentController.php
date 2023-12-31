@@ -12,13 +12,13 @@ class PaymentController extends Controller
     public function vnpay_payment(Request $request)
 {
     try {
-        $order = Order::latest()->select('id')->where('user_id', auth('api')->user()->id)->first();
+        $order = Order::latest()->select('id')->first();
         $subtotal = $request->subtotal;
         $bank_code = $request->bank_code;
         $vnp_TmnCode = "VNA6LDMI"; // Mã website tại VNPAY
         $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Chuỗi bí mật
 
-        $vnp_TxnRef = $order->id;
+        $vnp_TxnRef = auth('api')->user()->id . '/' . time(). '/'. ($order->id + 1) ;
         $vnp_OrderInfo = "Pay bills";
         $vnp_OrderType = "Hello Wolrd Dry Fruits";
         $vnp_Amount = $subtotal * 100;
@@ -82,7 +82,8 @@ public function check_payment(Request $request)
     $paymentStatus = $vnpResponseData['vnp_ResponseCode'];
 
     // Lấy order ID từ dữ liệu callback
-    $order_id = $vnpResponseData['vnp_TxnRef'];
+    $cut = explode('/', $vnpResponseData['vnp_TxnRef']);
+    $order_id = $cut[sizeof($cut) - 1];
     $order = Order::find($order_id);
     if ($paymentStatus == '00') {
         $order->transaction_status = 1;

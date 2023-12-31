@@ -111,7 +111,7 @@ class OrderController extends Controller
     {
         if(auth('api')->user()) {
             $user = auth('api')->user()->id;
-            $orders = Order::with('order_items')->where('user_id', $user)->paginate(2);
+            $orders = Order::with('order_items')->where('user_id', $user)->paginate(10);
             foreach($orders as $cut_user_id) {
                 unset($cut_user_id->user_id);
             }
