@@ -34,7 +34,13 @@ const loadProduct = (storage) => {
 
                     xhtml += `
                         <tr>
-                            <td>${index + 1}</td>
+                            <td>${
+                                storage.page === 1
+                                    ? index + 1
+                                    : storage.take * storage.page -
+                                      storage.take +
+                                      index
+                            }</td>
                             <td class="max-250">${element.supplier.name}</td>
                             <td>${type[2] + element.quantity}kg</td>
                             <td class="text-center">$${element.input_price}</td>

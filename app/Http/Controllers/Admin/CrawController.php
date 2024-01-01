@@ -221,7 +221,7 @@ class CrawController extends Controller
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $products[$count]['price'] = rand(10, 20) / 10;
-                $products[$count]['category_Id'] = 1;
+                $products[$count]['category_Id'] = 2;
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
@@ -310,7 +310,7 @@ class CrawController extends Controller
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $products[$count]['price'] = rand(10, 20) / 10;
-                $products[$count]['category_Id'] = 1;
+                $products[$count]['category_Id'] = 3;
                 $count++;
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
