@@ -8,6 +8,7 @@ use App\Mail\SendMail;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -46,6 +47,15 @@ class OrderController extends Controller
             $order->updated_at = Carbon::now();
             $order->save();
 
+            $info_user = User::where('id', auth('api')->user()->id)->first();
+            if($info_user->full_name == 'Wait for update'|| !$info_user->address = 'Wait for update' || !$info_user->phone = 'Wait for update') {
+                $update_info = [
+                    'address' => $request->address,
+                    'phone' => $request->phone,
+                    'full_name' => $request->full_name
+                ];
+                User::where('id', auth('api')->user()->id)->update($update_info);
+            } 
             // Realtime notification
             event(new UserOrder($order));
 

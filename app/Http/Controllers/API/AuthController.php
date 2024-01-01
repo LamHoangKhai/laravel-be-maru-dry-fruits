@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -126,27 +127,43 @@ class AuthController extends Controller
                 'full_name' => $request->full_name,
                 'phone' => $request->phone,
             ];
-            $password = $request->password;
-            if(!empty($password)) {
-                $validator = Validator::make($request->all(), [
-                'password' => 'confirmed'
-                ], [
-                'password.confirmed' => 'Password confirmation is not correct'  
-                ]);
-            
-                $infoAfterEdit = ['password' => bcrypt($request->password)];
-                if($validator->fails()) {
-                    return response()->json(['error' => $validator->errors()], 422);
-                }
-            }
             User::where('id',auth('api')->user()->id)->update($infoAfterEdit);
             return response()->json([
                 'message' => 'Edit successfully'
             ],200);
-        }
-        
+        } 
         return response()->json([
             'message' => 'Error'
         ],401);
+    }
+
+    public function change_password(Request $request) {
+        $user_current_password = User::where('id', auth('api')->user()->id)->first();
+        if(Hash::check($request->current_password, $user_current_password->password)) {
+            $new_password = $request->password;
+            $validator = Validator::make($request->all(), [
+                'current_password' => 'required',
+                'password' => 'required|confirmed|min:8'
+                ], [
+                'current_password.required' => 'Please enter your current password',
+                'password.required' => 'Please enter your new password',
+                'password.confirmed' => 'Password confirmation is not correct'  
+                ]);
+                
+            $new_password = ['password' => bcrypt($request->password)];
+            User::where('id',auth('api')->user()->id)->update($new_password);
+            if($validator->fails()) {
+                return response()->json(['error' => $validator->errors()], 422);
+            }
+            return response()->json([
+                'message' => 'Change password successfully'
+            ]);
+        }
+        else {
+            return response()->json([
+                'message' => 'Current password is not correct',
+                'status_code' => '404'
+            ]);
+        }
     }
 }
