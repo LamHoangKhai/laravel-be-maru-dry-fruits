@@ -19,9 +19,16 @@ class OrderController extends Controller
     {
         // Save order
         if (auth('api')->user()) {
-            if(auth('api')->user()->status == 2) {
+            if (auth('api')->user()->status == 2) {
                 return response()->json([
                     'message' => 'Your account is locked'
+                ]);
+            }
+            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2], ['status', "!=", 5]])->count();
+            if ($order_pending_payment >= 3) {
+                return response()->json([
+                    'message' => 'Please pay for your order to continue shopping',
+                    'status_code' => '910'
                 ]);
             }
             $order = new Order();
@@ -42,7 +49,7 @@ class OrderController extends Controller
             // Realtime notification
             event(new UserOrder($order));
 
-            // send mail
+            // Mail structure
 
             $subject = '[MARU DRY FRUITS CONFIRMS ORDER]';
             $body = [
@@ -61,7 +68,6 @@ class OrderController extends Controller
 
             We sincerely look forward to serving you again and hope that you will be satisfied with our products and services."
             ];
-            Mail::to($order->email)->send(new SendMail($subject, $body));
             // Save order item
             $orderID = $order->id;
 
@@ -81,11 +87,17 @@ class OrderController extends Controller
                 ];
             }
             OrderItems::insert($orderDetail);
+
+            // Send mail
+            try {
+                Mail::to($order->email)->send(new SendMail($subject, $body));
+            } catch (\Exception $e) {
+                echo "Error: " . $e->getMessage();
+            }
             return response()->json([
                 'message' => 'Checkout successfully',
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 'message' => "You are not logged in"
             ]);
@@ -93,49 +105,52 @@ class OrderController extends Controller
     }
     public function history_order()
     {
-        if(auth('api')->user()) {
+        if (auth('api')->user()) {
             $user = auth('api')->user()->id;
-            $order = Order::where('user_id', $user)->get();
-            $history_order = [];
-            foreach ($order as $order) {
-                $quantity = OrderItems::where('order_id', $order->id)->get();
-
-                $history_order[] = [
-                    'order_id' => $order->id,
-                    'status' => $order->status,
-                    'subtotal' => $order->subtotal,
-                    'created_at' => $order->created_at,
-                    'quantity' => count($quantity)
-                ];
+            $orders = Order::with('order_items')->where('user_id', $user)->paginate(10);
+            foreach ($orders as $cut_user_id) {
+                unset($cut_user_id->user_id);
             }
             return response()->json([
-                'data' => $history_order
-            ],200);
-        }
-        else {
-            return response()->json([
-                'message' => 'Ypu are not logged in'
+                'data' => $orders
             ]);
         }
     }
-    public function history_order_details(Request $request)
-    {
-        $order_id = $request->order_id;
-        $history_order = OrderItems::withTrashed()->where('order_id', $order_id)->get();
-        $history_order_details = [];
-        foreach ($history_order as $order_item) {
-            $product = Product::where('id', $order_item->product_id)->get();
-            $history_order_details[] = [
-                'name' => $product[0]->name,
-                'price' => $order_item->price,
-                'weight' => $order_item->weight,
-                'quantity' => $order_item->quantity,
-                'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
-            ];
-        }
-        return response()->json([
-            'data' => $history_order_details
-        ],200);
-    }
-
 }
+//         $history_order = [];
+//         foreach ($orders as $order) {
+//             $quantity = OrderItems::where('order_id', $order->id)->get();
+//             $order_items = [];
+//             foreach($order['order_items'] as $order_item) {
+
+//                 $order_items[] = [
+//                     'order_id' => $order_item->order_id,
+//                     'name' => $order_item['product']->name,
+//                     'price' => $order_item->price,
+//                     'weight' => $order_item->weight,
+//                     'quantity' => $order_item->quantity,
+//                     'total' => $order_item->price / 100 * $order_item->weight * $order_item->quantity
+//                 ];
+//             }
+//             $history_order[] = [
+//                 'order_id' => $order->id,
+//                 'status' => $order->status,
+//                 'total' => $order->total,
+//                 'created_at' => $order->created_at,
+//                 'quantity' => count($quantity),
+//                 'address' => $order->address,
+//                 'phone' => $order->phone,
+//                 'transaction_status' => $order->transaction_status,
+//                 'order_items' => $order_items
+//             ];
+//         }
+//         return response()->json([
+//             'data' => $history_order
+//         ],200);
+//     }
+//     else {
+//         return response()->json([
+//             'message' => 'Ypu are not logged in'
+//         ]);
+//     }
+

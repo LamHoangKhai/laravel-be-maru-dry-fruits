@@ -89,6 +89,11 @@
             </a>
         </li>
 
+        <li class="menu-item {{ request()->is('admin/contact/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.contact.index') }}" class="menu-link">
+                <div data-i18n="Notifications"><i class='bx  tf-icons bxs-contact'></i> Contact</div>
+            </a>
+        </li>
 
 
     </ul>

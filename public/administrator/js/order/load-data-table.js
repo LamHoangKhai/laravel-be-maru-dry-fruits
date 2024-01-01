@@ -41,7 +41,16 @@ const loadProduct = (storage) => {
                             ${user}
                             <td class="text-center">${element.discount}%</td>
                             <td>$${element.total}</td>
-                            <td><span class="badge rounded-pill bg-${type[1]}">${type[0]}</span> </td>
+                            <td><span class="badge rounded-pill bg-${
+                                type[1]
+                            }">${type[0]}</span> </td>
+                            <td><span class="badge rounded-pill bg-${
+                                element.transaction_status == 1
+                                    ? "dark"
+                                    : "warning"
+                            }">${
+                        element.transaction_status == 1 ? "Paid" : "Unpaid"
+                    }</span> </td>
                             <td  class="max-110">${created_at}</td>
                             <td  class="max-110">${updated_at}</td>
                         </tr>

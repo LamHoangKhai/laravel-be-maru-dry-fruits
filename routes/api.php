@@ -39,7 +39,7 @@ Route::middleware(['api'])->group(function () {
         Route::post('logout', [AuthController::class, 'logout'])->name('logout');
         Route::post('register', [AuthController::class, 'register'])->name('register');
         Route::post('edit_profile', [AuthController::class, 'edit_profile'])->name('edit_profile');
-
+        Route::post('refresh', [AuthController::class, 'refresh'])->name('refresh');
         Route::get('profile', [AuthController::class, 'profile'])->name('profile');
     });
 
@@ -54,8 +54,8 @@ Route::middleware(['api'])->group(function () {
 
     Route::prefix('order')->group(function () {
         Route::post('order', [OrderController::class, 'order'])->name('order');
-        Route::get('history_order', [OrderController::class, 'history_order'])->name('history_order');
-        Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
+        Route::post('history_order', [OrderController::class, 'history_order'])->name('history_order');
+        // Route::post('history_order_details', [OrderController::class, 'history_order_details'])->name('history_order_details');
     });
 
     Route::prefix('banner_and_slide')->group(function () {

@@ -9,6 +9,7 @@ $(document).ready(() => {
         take: 25,
         totalData: 0,
         totalPage: 1,
+        select: 0,
         url: $("#url").data("url"),
         tableCols: 7,
     };
@@ -44,6 +45,15 @@ $(document).ready(() => {
         }, 500)
     );
     // end handle search
+
+    //handle select
+    $("#select").change((e) => {
+        storage.select = e.target.value;
+        loading(storage.tableCols);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
+
+    //end handle select
 
     //choose show entries
     $("#showEntries").change((e) => {

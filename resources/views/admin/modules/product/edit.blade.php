@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{  asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
+    <script src="{{ asset('administrator/plugins/summernote/summernote-bs4.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
-    <script src="{{  asset('administrator/js/product/general.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/product/general.js') }}" type="module"></script>
 @endpush
 
 @push('handlejs')
@@ -48,7 +48,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
-                    User / Edit
+                    Product / Edit
                 </h4>
 
             </div>
@@ -82,7 +82,8 @@
                     <div class="row">
                         <div class="col mb-2">
                             <label for="sumary" class="form-label">Sumary</label>
-                            <input class="form-control" id="sumary" name="sumary" value='{{ old('sumary', $data->sumary) }}' />
+                            <input class="form-control" id="sumary" name="sumary"
+                                value='{{ old('sumary', $data->sumary) }}' />
                             @if ($errors->has('sumary'))
                                 <span class="text-danger">* {{ $errors->get('sumary')[0] }}</span>
                             @endif

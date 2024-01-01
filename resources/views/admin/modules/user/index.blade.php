@@ -1,7 +1,6 @@
 @extends('admin.master')
 @push('js')
-    <script
-        src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
 @endpush
 
@@ -41,9 +40,19 @@
                             </select>entries </span>
                     </div>
 
-                    <div class="nav-item d-flex justify-content-end w-75">
+
+
+                    <div class="nav-item d-flex justify-content-end w-75 h-px-40">
+                        <div class="input-group w-px-200">
+                            <label class="input-group-text" for="inputGroupSelect01">Status</label>
+                            <select id="select" class="form-select ">
+                                <option value="0" selected>All</option>
+                                <option value="2">BlackList</option>
+                            </select>
+                        </div>
+
                         <div class="input-group w-25" style="margin:0 12px ">
-                            <span class="input-group-text" h-px-40>Search</span>
+                            <span class="input-group-text">Search</span>
                             <input type="text" class="form-control" id="search"
                                 placeholder="Enter name or email,phone..." />
                         </div>

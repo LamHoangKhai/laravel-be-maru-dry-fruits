@@ -178,20 +178,10 @@ Content type: application/json
     }
     }
 
-    return cua order:
-    data_order: {
-        'message' : "Checkout successfully",
-        'email'
-        'full_name'
-        'address'
-        'phone'
-        'transaction'
-        'subtotal'
-        'total' => $request->subtotal + 35000,
-        'status' => 1,
-        'transaction_status' => 1,
-        'created_at' => Carbon::now(),
+    return: {
+        'message' => 'Checkout successfully'
     }
+    status_code => 910 -> Please pay for your order to continue shopping 
 
 
     Data của order items gửi xuống

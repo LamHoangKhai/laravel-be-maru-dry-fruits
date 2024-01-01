@@ -31,7 +31,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Other /</span>
-                  Weight Tag
+                    Weight Tag
                 </h4>
 
             </div>
@@ -100,12 +100,12 @@
                                 </tr>
                             </tfoot>
                         </table>
+
                     </div>
+                    <div class="card mt-4  pagi-right"> {{ $weights->links() }} </div>
                 </div>
 
             </div>
-
-
 
         </div>
     </div>

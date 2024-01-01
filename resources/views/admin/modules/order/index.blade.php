@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{  asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{  asset('administrator/js/order/main-order.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/order/main-order.js') }}" type="module"></script>
 @endpush
 
 
@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="input-group w-25" style="margin:0 12px ">
-                            <span class="input-group-text" h-px-40>Search</span>
+                            <span class="input-group-text" >Search</span>
                             <input type="text" class="form-control" placeholder="Enter order No. , phone , email "
                                 id="search">
                         </div>
@@ -60,6 +60,7 @@
                                     <th>Discount</th>
                                     <th>Total</th>
                                     <th>Status</th>
+                                    <th>Paymen Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                 </tr>
@@ -81,6 +82,7 @@
                                     <th>Discount</th>
                                     <th>Total</th>
                                     <th>Status</th>
+                                    <th>Paymen Status</th>
                                     <th>Created At</th>
                                     <th>Updated At</th>
                                 </tr>
