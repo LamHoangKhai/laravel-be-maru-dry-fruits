@@ -391,7 +391,7 @@ class CrawController extends Controller
                 'transaction_type' => 1,
                 'quantity' => 200,
                 'current_quantity' => 200,
-                'expiration_date' => '2023-' . rand(3, 6) . '-' . rand(1, 30),
+                'expiration_date' => '2024-' . rand(3, 6) . '-' . rand(1, 30),
                 'transaction_date' => now(),
                 'shipment' => rand(1000, 99999) . Carbon::now()->timestamp,
                 'created_at' => now(),
