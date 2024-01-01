@@ -68,13 +68,15 @@ class UserController extends Controller
         // check permission
         $permission = false;
 
+
+
         // if user is Administrator allows delete all level
         if (Auth::guard("web")->user()->id == "maruDr-yfRui-tspRo-jectfORFOU-Rmembe") {
             $permission = true;
         }
 
-        // if admin edit itself allows editing
-        if ($mySelf) {
+        // if admin edit itself allows editing and edit  level member
+        if ($mySelf || $user->level === 2) {
             $permission = true;
         }
 
