@@ -110,10 +110,6 @@ class AuthController extends Controller
         return $this->respondWithToken(auth('api')->refresh());
     }
 
-    public function check_token() {
-        
-    }
-
     protected function respondWithToken($token)
     {
         return response()->json([
