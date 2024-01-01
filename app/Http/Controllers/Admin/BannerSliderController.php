@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\BannerAndSlide;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class BannerSliderController extends Controller
 {
@@ -93,17 +93,20 @@ class BannerSliderController extends Controller
         $data->position = $request->position;
         $data->updated_at = Carbon::now();
         if (isset($request->image)) {
-            $file = $data->image ? public_path("uploads/") . $data->image : "";
-
-            if (file_exists($file)) {
-                unlink($file);
+            $banner = explode('/', $data->image);
+            $old_banner = explode('.', $banner[sizeof($banner) - 1]);
+            try {
+                Cloudinary::destroy("dry_fruits_banner/" . $old_banner[0]);
+                $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+                    "folder" => 'dry_fruits_banner'
+                ])->getSecurePath();
+                $data->image = $uploadedFileUrl;
+            } catch (\Exception $e) {
+                echo "Error  </br>";
+                echo $e->getMessage();
+                echo "</br>";
             }
 
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                "folder" => 'dry_fruits_image'
-            ])->getSecurePath();
-
-            $data->image = $uploadedFileUrl;
         }
         $data->save();
         return redirect()->route("admin.slider-banner.index")->with("success", "Update success!");
@@ -115,6 +118,16 @@ class BannerSliderController extends Controller
     public function destroy(string $id)
     {
         $data = BannerAndSlide::findOrFail($id);
+
+        $banner = explode('/', $data->image);
+        $old_banner = explode('.', $banner[sizeof($banner) - 1]);
+        try {
+            Cloudinary::destroy("dry_fruits_banner/" . $old_banner[0]);
+        } catch (\Exception $e) {
+            echo "Error  </br>";
+            echo $e->getMessage();
+            echo "</br>";
+        }
         $data->delete();
         return redirect()->route('admin.slider-banner.index')->with("success", "Delete product success!");
     }
