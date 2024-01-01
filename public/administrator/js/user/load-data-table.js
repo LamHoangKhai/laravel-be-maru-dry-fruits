@@ -43,11 +43,21 @@ const loadUser = (storage) => {
                                   storage.take +
                                   index
                         }</td>
-                        <td>${element.full_name}</td>
+                        <td>${
+                            element.full_name
+                                ? element.full_name
+                                : "Wait For Update..."
+                        }</td>
                         <td>${element.email}</td>
-                        <td>${element.phone}</td>
+                        <td>${
+                            element.phone ? element.phone : "Wait For Update..."
+                        }</td>
                         <td  class="text-wrap" style="min-width:180px">
-                            ${element.address}
+                            ${
+                                element.address
+                                    ? element.address
+                                    : "Wait For Update..."
+                            }
                         </td>
                         <td>
                             <span class="badge rounded-pill 

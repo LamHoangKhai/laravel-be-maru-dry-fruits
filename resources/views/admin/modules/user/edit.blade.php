@@ -36,7 +36,7 @@
                     <div class="row">
                         <div class="col mb-2">
                             <label for="email" class="form-label">Email</label>
-                            <span class="form-control text-danger"
+                            <span class="form-control"
                                 style="cursor:no-drop; background: rgba(0, 0, 0, 0.253);font-weight: 700;">{{ old('email', $data->email) }}</span>
                             @if ($errors->has('email'))
                                 <span class="text-danger">* {{ $errors->get('email')[0] }}</span>
