@@ -40,40 +40,49 @@ class CrawController extends Controller
 
 
 
-        Category::insert([[
-            'name' => "Nuts",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'name' => "Dried Fruits",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'name' => "Mixes",
-            'status' => '1',
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]]);
+        Category::insert([
+            [
+                'name' => "Nuts",
+                'status' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => "Dried Fruits",
+                'status' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => "Mixes",
+                'status' => '1',
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        ]);
 
-        WeighTag::insert([[
-            'mass' => 250,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 500,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 1000,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ], [
-            'mass' => 2000,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]]);
+        WeighTag::insert([
+            [
+                'mass' => 250,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'mass' => 500,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'mass' => 1000,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'mass' => 2000,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]
+        ]);
         Supplier::insert([
             [
                 'name' => "JSON Dry Tree Supply Company",
@@ -111,9 +120,7 @@ class CrawController extends Controller
         $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/nuts-and-seeds/page/1/", false, $context);
         foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
             try {
-                if ($key == 8) {
-                    break;
-                }
+
                 // craw data
                 $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
                 $productDetails = file_get_html($linkDetails, false, $context);
@@ -121,7 +128,7 @@ class CrawController extends Controller
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] = rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 1;
                 $count++;
             } catch (\Exception $e) {
@@ -172,7 +179,9 @@ class CrawController extends Controller
                 $insert = [];
                 foreach ($weights as $weight) {
                     $insert[] = [
-                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        "product_id" => $product->id,
+                        "weight_tag_id" => $weight->id,
+                        'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 }
@@ -200,22 +209,18 @@ class CrawController extends Controller
         $products = [];
         $count = 0;
 
-
-
         $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/dried-fruits/", false, $context);
         foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
             try {
                 // craw data
-                if ($key == 8) {
-                    break;
-                }
+
                 $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
                 $productDetails = file_get_html($linkDetails, false, $context);
                 $products[$count]['name'] = $value->find(".woocommerce-loop-product__title")[0]->innertext;
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] = rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 1;
                 $count++;
             } catch (\Exception $e) {
@@ -265,7 +270,9 @@ class CrawController extends Controller
                 $insert = [];
                 foreach ($weights as $weight) {
                     $insert[] = [
-                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        "product_id" => $product->id,
+                        "weight_tag_id" => $weight->id,
+                        'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 }
@@ -302,7 +309,7 @@ class CrawController extends Controller
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['image-url'] = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] = rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 1;
                 $count++;
             } catch (\Exception $e) {
@@ -354,7 +361,9 @@ class CrawController extends Controller
                 $insert = [];
                 foreach ($weights as $weight) {
                     $insert[] = [
-                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        "product_id" => $product->id,
+                        "weight_tag_id" => $weight->id,
+                        'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
                 }
@@ -382,7 +391,7 @@ class CrawController extends Controller
                 'transaction_type' => 1,
                 'quantity' => 200,
                 'current_quantity' => 200,
-                'expiration_date' => '2023-12-31',
+                'expiration_date' => '2023-' . rand(3, 6) . '-' . rand(1, 30),
                 'transaction_date' => now(),
                 'shipment' => rand(1000, 99999) . Carbon::now()->timestamp,
                 'created_at' => now(),
@@ -395,8 +404,8 @@ class CrawController extends Controller
                 'supplier_id' => $import['supplier_id'],
                 'input_price' => $import['input_price'],
                 'transaction_type' => 2,
-                'quantity' => 20,
-                'current_quantity' => $import['quantity'] - 20,
+                'quantity' => 200,
+                'current_quantity' => $import['quantity'] - 200,
                 'expiration_date' => $import['expiration_date'],
                 'transaction_date' => $import['transaction_date'],
                 'shipment' => $import['shipment'],

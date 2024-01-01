@@ -95,13 +95,13 @@ class PaymentController extends Controller
         if ($paymentStatus == '00') {
             $order->transaction_status = 1;
             $order->save();
-            return redirect()->away('https://maru-dry-fruits-adminpage.up.railway.app/auth/login');
+            return redirect()->away('http://localhost:3000/cart/payment-status/1');
         }
 
         $order->status = 5;
         $order->note = 'Payment failed';
         $order->update();
-        return redirect()->away('https://maru-dry-fruits-adminpage.up.railway.app/auth/login');
+        return redirect()->away('http://localhost:3000/cart/payment-status/2');
         // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
     }
 }
