@@ -48,14 +48,14 @@ class OrderController extends Controller
             $order->save();
 
             $info_user = User::where('id', auth('api')->user()->id)->first();
-            if($info_user->full_name == 'Wait for update'|| !$info_user->address = 'Wait for update' || !$info_user->phone = 'Wait for update') {
+            if (!$info_user->full_name || !$info_user->address || !$info_user->phone) {
                 $update_info = [
                     'address' => $request->address,
                     'phone' => $request->phone,
                     'full_name' => $request->full_name
                 ];
                 User::where('id', auth('api')->user()->id)->update($update_info);
-            } 
+            }
             // Realtime notification
             event(new UserOrder($order));
 
