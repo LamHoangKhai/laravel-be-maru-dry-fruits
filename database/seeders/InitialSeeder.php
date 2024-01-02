@@ -74,22 +74,25 @@ class InitialSeeder extends Seeder
             'updated_at' => Carbon::now(),
         ]]);
         Supplier::insert([
-            ['name' => "JSON Dry Tree Supply Company",
+            [
+                'name' => "JSON Dry Tree Supply Company",
                 'email' => "jsondrytree" . '@gmail.com',
                 'address' => '35/6 Đường D5, Phường 25, Bình Thạnh, Thành phố Hồ Chí Minh 72308',
                 'phone' => '1800 1779',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),],
-            ['name' => " Factory Supplying Aptech Dried Mussels",
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'name' => " Factory Supplying Aptech Dried Mussels",
                 'email' => "aptechdriedmussels" . '@gmail.com',
                 'address' => '778/10 Nguyễn Kiệm, Phường 3, Phú Nhuận, Thành phố Hồ Chí Minh 700990',
                 'phone' => '1800 282824',
                 'created_at' => Carbon::now(),
-                'updated_at' => Carbon::now(),]
+                'updated_at' => Carbon::now(),
+            ]
         ]);
 
         $this->craw();
-
     }
 
 
@@ -111,9 +114,7 @@ class InitialSeeder extends Seeder
         $nutsAndSeed = file_get_html("https://gardenpicks.com.sg/product-category/nuts-and-seeds/page/1/", false, $context);
         foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
             try {
-                if ($key == 8) {
-                    break;
-                }
+
                 // craw data
                 $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
                 $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
@@ -123,7 +124,7 @@ class InitialSeeder extends Seeder
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] =  rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 1;
                 $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
@@ -143,9 +144,7 @@ class InitialSeeder extends Seeder
         foreach ($nutsAndSeed->find('.status-publish') as $key => $value) {
             try {
                 // craw data
-                if ($key == 8) {
-                    break;
-                }
+
                 $name = $value->find(".woocommerce-loop-product__title")[0]->innertext;
                 $imageURL = $value->find(".woocommerce-LoopProduct-link img")[0]->attr["src"];
                 $linkDetails = $value->find(".woocommerce-LoopProduct-link")[0]->attr["href"];
@@ -154,11 +153,10 @@ class InitialSeeder extends Seeder
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] =  rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 2;
                 $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
-
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
                 echo $e->getMessage();
@@ -180,11 +178,10 @@ class InitialSeeder extends Seeder
                 $products[$count]['description'] = $productDetails->find(".woocommerce-product-details__short-description")[0]->innertext;
                 $products[$count]['nutrition_detail'] = $productDetails->find(".panel-body")[0]->innertext;
                 $products[$count]['file_name_image'] = $this->slugify($name) . ".jpg";
-                $products[$count]['price'] = rand(10, 40) / 10;
+                $products[$count]['price'] =  rand(10, 20) / 10;
                 $products[$count]['category_Id'] = 3;
                 $this->download_file($imageURL, public_path('/uploads/' . $products[$count]['file_name_image']));
                 $count++;
-
             } catch (\Exception $e) {
                 echo "Errors get data </br>";
                 echo $e->getMessage();
@@ -221,17 +218,17 @@ class InitialSeeder extends Seeder
 
                 $insert = [];
                 foreach ($weights as $weight) {
-                    $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),];
+                    $insert[] = [
+                        "product_id" => $product->id, "weight_tag_id" => $weight->id, 'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now(),
+                    ];
                 }
                 Product_Weight::insert($insert);
-
             } catch (\Exception $e) {
                 echo "Errors insert </br>";
                 echo $e->getMessage();
                 echo "</br>";
             }
-
         }
 
         echo "Craw success";
