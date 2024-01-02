@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -92,16 +93,22 @@ class PaymentController extends Controller
         $cut = explode('/', $vnpResponseData['vnp_TxnRef']);
         $order_id = $cut[sizeof($cut) - 1];
         $order = Order::find($order_id);
+
         if ($paymentStatus == '00') {
-            $order->transaction_status = 1;
-            $order->save();
-            return redirect()->away('http://localhost:3000/cart/payment-status/1');
+            try {
+                $order->transaction_status = 1;
+                $order->save();
+                return redirect()->away('http://localhost:3000/cart/1');
+            } catch (Exception) {
+                return redirect()->away('http://localhost:3000/cart/2');
+            }
         }
+
 
         $order->status = 5;
         $order->note = 'Payment failed';
         $order->update();
-        return redirect()->away('http://localhost:3000/cart/payment-status/2');
+        return redirect()->away('http://localhost:3000/cart/2');
         // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
     }
 }

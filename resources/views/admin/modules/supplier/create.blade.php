@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Other /</span>
-                  Supplier /Edit
+                  Supplier / Create
                 </h4>
 
             </div>

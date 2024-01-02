@@ -62,7 +62,6 @@ class OrderController extends Controller
             $orderItems[$i]["quantity"] = $quantity[$i];
         }
         return view("admin.modules.order.checking", ['orderItems' => $orderItems, "discount" => $discount, "note" => $note]);
-
     }
 
 
@@ -127,10 +126,10 @@ class OrderController extends Controller
         // search order No.,user phone ,email , name 
         $query = $query
             ->whereHas("user", function ($query) use ($search) {
-                $query->where("full_name", "like", "%" . $search . "%")
-                    ->orWhere("email", "like", "%" . $search . "%")
+                $query->where("email", "like", "%" . $search . "%")
                     ->orWhere("phone", "like", "%" . $search . "%")
-                    ->orWhere("orders.id", "like", "%" . $search . "%");
+                    ->orWhere("orders.id", "like", "%" . $search . "%")
+                    ->orWhere("orders.phone", "like", "%" . $search . "%");
             });
         //return data
         $result = $query->orderBy("created_at", "desc")->paginate($take);
@@ -153,10 +152,10 @@ class OrderController extends Controller
         // search order No.,user phone ,email , name 
         $query = $query
             ->whereHas("user", function ($query) use ($search) {
-                $query->where("full_name", "like", "%" . $search . "%")
-                    ->orWhere("email", "like", "%" . $search . "%")
+                $query->where("email", "like", "%" . $search . "%")
                     ->orWhere("phone", "like", "%" . $search . "%")
-                    ->orWhere("orders.id", "like", "%" . $search . "%");
+                    ->orWhere("orders.id", "like", "%" . $search . "%")
+                    ->orWhere("orders.phone", "like", "%" . $search . "%");
             });
         //return data
         $result = $query->orderBy("created_at", "desc")->paginate($take);

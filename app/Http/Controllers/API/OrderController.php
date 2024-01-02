@@ -20,13 +20,13 @@ class OrderController extends Controller
     {
         // Save order
         if (auth('api')->user()) {
-            if(auth('api')->user()->status == 2) {
+            if (auth('api')->user()->status == 2) {
                 return response()->json([
                     'message' => 'Your account is locked'
                 ]);
             }
-            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2]])->count();
-            if($order_pending_payment >= 3) {
+            $order_pending_payment = Order::where([['user_id', auth('api')->user()->id], ['transaction_status', 2], ['status', "!=", 5]])->count();
+            if ($order_pending_payment >= 3) {
                 return response()->json([
                     'message' => 'Please pay for your order to continue shopping',
                     'status_code' => '910'
@@ -48,14 +48,14 @@ class OrderController extends Controller
             $order->save();
 
             $info_user = User::where('id', auth('api')->user()->id)->first();
-            if(!$info_user->full_name || !$info_user->address|| !$info_user->phone) {
+            if (!$info_user->full_name || !$info_user->address || !$info_user->phone) {
                 $update_info = [
                     'address' => $request->address,
                     'phone' => $request->phone,
                     'full_name' => $request->full_name
                 ];
                 User::where('id', auth('api')->user()->id)->update($update_info);
-            } 
+            }
             // Realtime notification
             event(new UserOrder($order));
 
@@ -101,16 +101,13 @@ class OrderController extends Controller
             // Send mail
             try {
                 Mail::to($order->email)->send(new SendMail($subject, $body));
-            }
-
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo "Error: " . $e->getMessage();
             }
             return response()->json([
                 'message' => 'Checkout successfully',
             ], 200);
-        }
-        else {
+        } else {
             return response()->json([
                 'message' => "You are not logged in"
             ]);
@@ -118,10 +115,10 @@ class OrderController extends Controller
     }
     public function history_order()
     {
-        if(auth('api')->user()) {
+        if (auth('api')->user()) {
             $user = auth('api')->user()->id;
             $orders = Order::with('order_items')->where('user_id', $user)->paginate(10);
-            foreach($orders as $cut_user_id) {
+            foreach ($orders as $cut_user_id) {
                 unset($cut_user_id->user_id);
             }
             return response()->json([
@@ -166,4 +163,3 @@ class OrderController extends Controller
     //             'message' => 'Ypu are not logged in'
     //         ]);
     //     }
-
