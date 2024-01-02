@@ -98,9 +98,9 @@ class PaymentController extends Controller
             try {
                 $order->transaction_status = 1;
                 $order->save();
-                return redirect()->away('http://localhost:3000/cart/1');
+                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/1');
             } catch (Exception) {
-                return redirect()->away('http://localhost:3000/cart/2');
+                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
             }
         }
 
@@ -108,7 +108,7 @@ class PaymentController extends Controller
         $order->status = 5;
         $order->note = 'Payment failed';
         $order->update();
-        return redirect()->away('http://localhost:3000/cart/2');
+        return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
         // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
     }
 }

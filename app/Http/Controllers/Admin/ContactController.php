@@ -14,7 +14,7 @@ class ContactController extends Controller
     public function index()
     {
         $contacts = Feedback::paginate(10);
-       return view("admin.modules.contact.index",["contacts"=>$contacts]);
+        return view("admin.modules.contact.index", ["contacts" => $contacts]);
     }
 
     /**
