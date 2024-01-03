@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call([
             InitialSeeder::class,
             UserSeeder::class,
-            WarehouseSeeder::class
         ]);
     }
 }
