@@ -1,17 +1,17 @@
 import { statusText, formatDate } from "../function.js";
 
 const modalHtml = (data) => {
-    $("#numberOrder").text("Order #" + data.id);
-    $("#orderDate").text(formatDate(new Date(data.created_at)));
+    $("#numberOrder").html("Order #" + data.id);
+    $("#orderDate").html(formatDate(new Date(data.created_at)));
     if (data.user.level == 1) {
         $(".user").html("<p><strong>Sold offline</strong></p>");
     } else {
-        $("#userName").text(data.full_name);
-        $("#userPhone").text(data.phone);
-        $("#userEmail").text(data.email);
-        $("#userAddress").text(data.address);
+        $(".user").html(` <p>Username: <strong >${data.full_name}</strong></p>
+        <p>Phone: <strong >${data.phone}</strong></p>
+        <p>Email: <strong >${data.email})</strong></p>
+        <p>Address: <strong >${data.address}</strong></p>`);
     }
-    $("#userNote").text(data.note);
+    $("#userNote").html(data.note);
     // append item oder
     $("#items").html(
         `       <div class="col mb-4">
