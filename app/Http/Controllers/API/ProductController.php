@@ -18,6 +18,19 @@ class ProductController extends Controller
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
+        
+        if($request->search != '') {
+            $query = $query->where("name", "like", "%" . $request->search . "%");
+        }
+        // Sort by price from high to low
+        if($request->filter == 2) {
+            $query = $query->orderBy('price', 'desc');
+        }
+        
+        // Sort by price from low to high
+        if($request->filter == 1) {
+            $query = $query->orderBy('price', 'asc');
+        }
         $products = $query->with("category", "weightTags")
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->orderBy("created_at", "desc")->paginate(12);
@@ -25,6 +38,16 @@ class ProductController extends Controller
         return response()->json([
             'data' => $products
         ], 200);
+    }
+
+    public function search_product(Request $request)
+    {
+        $search = $request->search_product;
+        $product = Product::select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where("name", "like", "%" . $search . "%")->get();
+        return response()->json([
+            'data' => $product
+        ]);
     }
 
     public function product_details(Request $request)
@@ -64,13 +87,4 @@ class ProductController extends Controller
         ]);
     }
 
-    public function search_product(Request $request)
-    {
-        $search = $request->search_product;
-        $product = Product::select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
-            ->where("name", "like", "%" . $search . "%")->get();
-        return response()->json([
-            'data' => $product
-        ]);
-    }
 }
