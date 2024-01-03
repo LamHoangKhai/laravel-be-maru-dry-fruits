@@ -5,13 +5,11 @@
 @endpush
 
 @push('handlejs')
-    <script src="{{ asset('administrator/js/user/main.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/user/main-user.js') }}" type="module"></script>
 @endpush
 
 @push('css')
     <link rel="stylesheet" href="{{ asset('administrator/css/dropdown-menu-filter.css') }}">
-
-    <script src="{{ asset('administrator/js/user/main-user.js') }}" type="module"></script>
 @endpush
 
 @section('content')
