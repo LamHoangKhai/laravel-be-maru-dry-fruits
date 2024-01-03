@@ -79,7 +79,7 @@
 
                     <div class="row g-2">
                         <div class="col mb-2">
-                            <label for="status" class="form-label ">Stataus</label>
+                            <label for="status" class="form-label ">Status</label>
                             <select id="status" class="form-select" name="status">
                                 <option value="1" {{ old('status', $data->status) == 1 ? 'selected' : '' }}>Show
                                 </option>
