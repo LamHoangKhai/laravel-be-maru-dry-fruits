@@ -40,16 +40,6 @@ class ProductController extends Controller
         ], 200);
     }
 
-    public function search_product(Request $request)
-    {
-        $search = $request->search_product;
-        $product = Product::select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
-            ->where("name", "like", "%" . $search . "%")->get();
-        return response()->json([
-            'data' => $product
-        ]);
-    }
-
     public function product_details(Request $request)
     {
         $product_id = $request->product_id;
