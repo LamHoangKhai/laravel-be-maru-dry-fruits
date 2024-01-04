@@ -9,5 +9,4 @@
 <p>---</p>
 <p>Run Data example</p>
 <p>1.php artisan db:seed --class=InitialSeeder</p>
-<p>2.php artisan db:seed --class=WarehouseSeeder</p>
 <p>3.php artisan db:seed --class=UserSeeder</p>

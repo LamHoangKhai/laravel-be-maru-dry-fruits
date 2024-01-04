@@ -25,8 +25,6 @@
 
 <script src="{{ asset('administrator/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
-<script src="{{ asset('administrator/assets/js/main.js') }}"></script>
-
 
 <script>
     const loading = () => {
