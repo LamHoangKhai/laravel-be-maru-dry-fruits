@@ -8,7 +8,7 @@ const modalHtml = (data) => {
     } else {
         $(".user").html(` <p>Username: <strong >${data.full_name}</strong></p>
         <p>Phone: <strong >${data.phone}</strong></p>
-        <p>Email: <strong >${data.email})</strong></p>
+        <p>Email: <strong >${data.email}</strong></p>
         <p>Address: <strong >${data.address}</strong></p>`);
     }
     $("#userNote").html(data.note);
@@ -57,7 +57,7 @@ const modalHtml = (data) => {
     let text = statusText(data.status);
 
     let discount =
-        data.status <= 2 && data.transaction == 2
+        data.status <= 2 && data.transaction == 1
             ? `<input type="text" class="w-px-50 text-end discount" value=${data.discount} id="discount" data-id=${data.id} />`
             : `<strong>${data.discount}%</strong>`;
 
