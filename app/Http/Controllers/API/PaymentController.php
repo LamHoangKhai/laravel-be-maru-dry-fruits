@@ -26,7 +26,7 @@ class PaymentController extends Controller
             $vnp_TmnCode = "VNA6LDMI"; // Mã website tại VNPAY
             $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Chuỗi bí mật
 
-            $vnp_TxnRef = auth('api')->user()->id . '/' . time() . rand(1,999999);
+            $vnp_TxnRef = auth('api')->user()->id . time() . rand(1,999999);
             $vnp_OrderInfo = "Pay bills";
             $vnp_OrderType = "Hello Wolrd Dry Fruits";
             $vnp_Amount = $total * 100;
