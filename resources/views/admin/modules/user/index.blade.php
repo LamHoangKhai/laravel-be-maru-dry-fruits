@@ -78,6 +78,7 @@
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Level</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
 
                                 </tr>
@@ -99,6 +100,7 @@
                                     <th>Phone</th>
                                     <th>Address</th>
                                     <th>Level</th>
+                                    <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
                             </tfoot>

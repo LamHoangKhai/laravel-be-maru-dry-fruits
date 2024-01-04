@@ -7,6 +7,7 @@ use App\Http\Requests\Order\StoreRequest;
 use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
+use App\Models\Product_Weight;
 use App\Models\WeighTag;
 use Exception;
 use Carbon\Carbon;
@@ -35,8 +36,8 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $products = Product::get();
-        return view("admin.modules.order.create", ["products" => $products]);
+        $data = Product_Weight::with(["weight_tag", "product"])->get();
+        return view("admin.modules.order.create", ["products" => $data]);
     }
 
     public function checking(Request $request)
@@ -107,6 +108,13 @@ class OrderController extends Controller
         return redirect()->route("admin.order.history")->with("success", "Create order success!");
     }
 
+    //API get product
+    public function product(Request $request)
+    {
+        $product = Product_Weight::with(["weight_tag", "product"])->findOrFail($request->id)->toArray();
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $product]);
+    }
+
 
 
     // API get list order according to status , search order No. ,user email,phone  ,name
@@ -161,6 +169,7 @@ class OrderController extends Controller
         $result = $query->orderBy("created_at", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
+
 
 
 

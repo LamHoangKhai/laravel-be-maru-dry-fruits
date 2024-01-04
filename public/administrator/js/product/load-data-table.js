@@ -1,6 +1,8 @@
-import { formatDate, setTotalPages } from "../function.js";
+import { formatDate, loading, setTotalPages } from "../function.js";
 
 const loadProduct = (storage) => {
+    const numberOfTH = $("thead th").length;
+    loading(numberOfTH);
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -12,12 +14,11 @@ const loadProduct = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td valign="top" colspan="12" class="text-center">No matching records found</td>
+                    <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
                 data.forEach((element, index) => {
-                    let created_at = formatDate(new Date(element.created_at));
                     let updated_at = formatDate(new Date(element.updated_at));
                     // get url edit
                     let urlEdit = $("#url-edit")
@@ -67,7 +68,6 @@ const loadProduct = (storage) => {
                         type[0]
                     }</span>
                     </td>
-                    <td  class="max-110">${created_at}</td>
                     <td  class="max-110">${updated_at}</td>
                     
                     <td class="g-2" >
@@ -129,8 +129,10 @@ const detailProduct = (product_id) => {
         data: { id: product_id },
         dataType: "json",
         success: (res) => {
+            console.log(res);
             let product = res.data.product;
             let warehouse = res.data.warehouse;
+            let qrCode = res.data.qr_weight_tag;
             $(".card-img").attr("src", product.image);
             $(".name").html(product.name);
             $(".category").html("Category: " + product.category.name);
@@ -157,6 +159,20 @@ const detailProduct = (product_id) => {
                 "Total Quantity: " +
                     (product.stock_quantity + product.store_quantity)
             );
+
+            let btnHTMl = ``;
+            qrCode.map((item) => {
+                return (btnHTMl += `<button type="button" class="btn rounded-pill btn-info btn-xs qr" style="margin-right:4px;" value=${
+                    item.qrcode
+                }>${
+                    item.weight_tag.mass >= 1000
+                        ? item.weight_tag.mass / 1000 + "kg"
+                        : item.weight_tag.mass + "gram"
+                }</button>`);
+            });
+
+            $(".qr_weight_tag").html(btnHTMl);
+
             $("#exLargeModal").modal("show");
         },
         error: function (error) {

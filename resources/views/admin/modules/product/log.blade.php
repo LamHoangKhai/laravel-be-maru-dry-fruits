@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{  asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{  asset('administrator/js/log-import-export/main-log.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/log-import-export/main-log.js') }}" type="module"></script>
 @endpush
 
 
@@ -34,7 +34,7 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40 ">
                         <div class="input-group w-25" style="margin:0 0 0 16px">
-                            <span class="input-group-text" >Search</span>
+                            <span class="input-group-text">Search</span>
                             <input type="text" class="form-control" id="search" placeholder="Enter shipment" />
                         </div>
                     </div>
@@ -54,7 +54,6 @@
                                     <th>Type</th>
                                     <th>Expiration Date</th>
                                     <th>Transaction Date</th>
-                                    <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
@@ -76,7 +75,6 @@
                                     <th>Type</th>
                                     <th>Expiration Date</th>
                                     <th>Transaction Date</th>
-                                    <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>

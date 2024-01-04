@@ -113,9 +113,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
             //api 
             Route::post('get-log', 'getLog')->name('getLog');
-
         });
-
     });
 
 
@@ -162,6 +160,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::post('update-status', 'updateStatus')->name('updateStatus');
         Route::post('cancel-order', 'cancelOrder')->name('cancelOrder');
         Route::post('add-discount', 'addDiscount')->name('addDiscount');
+        Route::post('product', 'product')->name('product');
     });
 
 
@@ -217,8 +216,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
 
         //destroy
         Route::get('destroy/{id}', 'destroy')->name('destroy');
-
-
     });
 
 
@@ -226,7 +223,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         //view
         Route::get('index', 'index')->name('index');
     });
-
 });
 
 Route::fallback(function () {

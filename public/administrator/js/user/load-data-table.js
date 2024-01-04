@@ -1,6 +1,8 @@
-import { setTotalPages } from "../function.js";
+import { formatDate, loading, setTotalPages } from "../function.js";
 
 const loadUser = (storage) => {
+    const numberOfTH = $("thead th").length;
+    loading(numberOfTH);
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -12,11 +14,13 @@ const loadUser = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td valign="top" colspan="7" class="text-center">No matching records found</td>
+                    <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
                 data.forEach((element, index) => {
+                    let updated_at = formatDate(new Date(element.updated_at));
+
                     let urlEdit = $("#url-edit")
                         .attr("data-url")
                         .replace(/id/g, element.id);
@@ -63,6 +67,7 @@ const loadUser = (storage) => {
                             <span class="badge rounded-pill 
                             bg-${level[1]}">${level[0]}</span>
                         </td>
+                        <td>${updated_at}</td>
                         <td class="g-2" >
                         <div class="dropdown">
                             <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

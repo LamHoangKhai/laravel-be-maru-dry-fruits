@@ -1,4 +1,4 @@
-import { Mydebounce, loading } from "../function.js";
+import { Mydebounce } from "../function.js";
 import { loadProduct } from "./load-data-table.js";
 import { modalHtml } from "./modal-order-detail.js";
 import { printInvoice } from "./print-invoice.js";
@@ -13,7 +13,6 @@ $(document).ready(() => {
         totalPage: 1,
         select: 0,
         url: $("#url").data("url"),
-        tableCols: 9,
     };
     //handle search
     $("#search").keypress(
@@ -23,7 +22,7 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
-            loading(storage.tableCols);
+
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
@@ -32,7 +31,7 @@ $(document).ready(() => {
         // access the clipboard using the api
         storage.search = e.originalEvent.clipboardData.getData("text");
         storage.page = 1;
-        loading(storage.tableCols);
+
         $("#pagination").simplePaginator("changePage", 1);
     });
 
@@ -41,7 +40,7 @@ $(document).ready(() => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
                 storage.page = 1;
-                loading(storage.tableCols);
+
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -52,7 +51,7 @@ $(document).ready(() => {
     //handle select
     $("#select").change((e) => {
         storage.select = e.target.value;
-        loading(storage.tableCols);
+
         $("#pagination").simplePaginator("changePage", 1);
     });
 
@@ -71,7 +70,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loading(storage.tableCols);
+
             loadProduct(storage);
         },
     });
@@ -110,7 +109,7 @@ $(document).ready(() => {
             dataType: "json",
             success: (res) => {
                 $("#modalOrderDetail").modal("toggle");
-                loading(storage.tableCols);
+
                 $("#pagination").simplePaginator("changePage", 1);
             },
             error: function (error) {
@@ -139,7 +138,7 @@ $(document).ready(() => {
                     dataType: "json",
                     success: (res) => {
                         $("#modalOrderDetail").modal("toggle");
-                        loading(storage.tableCols);
+
                         $("#pagination").simplePaginator("changePage", 1);
                     },
                     error: function (error) {

@@ -1,8 +1,8 @@
 @extends('admin.master')
 @push('js')
-    <script src="{{  asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
+    <script src="{{ asset('administrator/plugins/simple-bootstrap-paginator-master/simple-bootstrap-paginator.js') }}">
     </script>
-    <script src="{{  asset('administrator/js/product/main-product.js') }}" type="module"></script>
+    <script src="{{ asset('administrator/js/product/main-product.js') }}" type="module"></script>
 @endpush
 
 @push('handlejs')
@@ -33,7 +33,7 @@
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
                         <div class="input-group w-25" style="margin:0 12px ">
-                            <span class="input-group-text" >Search</span>
+                            <span class="input-group-text">Search</span>
                             <input type="text" class="form-control  w-25" id="search"
                                 placeholder="Enter product name" />
                         </div>
@@ -59,7 +59,6 @@
                                     <th class="max-110">Stock Quantity</th>
                                     <th class="max-110">Store Quantity</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
@@ -81,7 +80,6 @@
                                     <th class="max-110">Stock Quantity</th>
                                     <th class="max-110">Store Quantity</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
                                     <th>Updated At</th>
                                     <th>Action</th>
                                 </tr>
@@ -120,7 +118,7 @@
                                         <h5 class="card-text stock_quantity"></h5>
                                         <h5 class="card-text store_quantity"></h5>
                                         <h5 class="card-text total_quantity"></h5>
-
+                                        <h5 class="card-text ">QR Code: <span class="qr_weight_tag"></span></h5>
                                     </div>
                                 </div>
                             </div>

@@ -13,7 +13,7 @@
 
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-        <input type="hidden" id="url-detail" data-url="{{ route('admin.product.detail') }}">
+        <input type="hidden" id="url-detail" data-url="{{ route('admin.order.product') }}">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
@@ -31,16 +31,16 @@
                         <div class="col mb-2">
                             <select class="form-select js-example-basic-single" id="select">
                                 <option value="" disabled selected>Please choose item</option>
-                                @foreach ($products as $product)
-                                    <option value="{{ $product->id }}">
-                                        {{ $product->name }}
+                                @foreach ($products as $item)
+                                    @php $formatMass = $item->weight_tag->mass >= 1000 ? number_format($item->weight_tag->mass / 1000, 1, ',', '') . 'kg' : $item->weight_tag->mass . 'gram'; @endphp
+                                    <option value="{{ $item->id }}">
+                                        {{ $item->product->name . '(' . $formatMass . ')' }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
 
                     </div>
-
 
                     <div class="row">
                         <div class="row">
@@ -101,21 +101,7 @@
 
 
 
-        <!-- The Modal -->
-        <div class="modal fade" id="showScan">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <input type="hidden" class="close closeModal" data-dismiss="modal" aria-label="Close">
 
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        <video id="preview" style="width: 100%;height:auto"></video>
-                    </div>
-                </div>
-            </div>
-        </div>
 
 
 

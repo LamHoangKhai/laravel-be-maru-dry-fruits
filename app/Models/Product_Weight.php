@@ -11,8 +11,13 @@ class Product_Weight extends Model
     protected $table = 'product_weight';
     protected $guarded = [];
 
-    public function weights()
+    public function weight_tag()
     {
         return $this->belongsTo(WeighTag::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

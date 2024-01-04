@@ -37,7 +37,7 @@
                         </div>
 
                         <div class="input-group w-25" style="margin:0 12px ">
-                            <span class="input-group-text" >Search</span>
+                            <span class="input-group-text">Search</span>
                             <input type="text" class="form-control" placeholder="Enter order No. , phone , email "
                                 id="search">
                         </div>
@@ -62,7 +62,6 @@
                                     <th>Status</th>
                                     <th>Paymen Status</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
                                 </tr>
                             </thead>
 
@@ -84,7 +83,6 @@
                                     <th>Status</th>
                                     <th>Paymen Status</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
                                 </tr>
                             </tfoot>
                         </table>

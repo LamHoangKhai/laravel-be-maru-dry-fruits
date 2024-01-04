@@ -32,7 +32,7 @@ const modalHtml = (data) => {
     let xhmtlItem = ``;
     data.order_items.forEach((element) => {
         let formatText =
-            element.weight > 1000
+            element.weight >= 1000
                 ? element.weight / 1000 + "kg"
                 : element.weight + "gram";
         xhmtlItem += ` <div class="row g-3 mt-0 mb-4">
@@ -57,7 +57,7 @@ const modalHtml = (data) => {
     let text = statusText(data.status);
 
     let discount =
-        data.status <= 2
+        data.status && data.transaction_type != 2 <= 2
             ? `<input type="text" class="w-px-50 text-end discount" value=${data.discount} id="discount" data-id=${data.id} />`
             : `<strong>${data.discount}%</strong>`;
 

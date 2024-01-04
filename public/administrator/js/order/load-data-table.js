@@ -1,6 +1,8 @@
-import { formatDate, setTotalPages, statusText } from "../function.js";
+import { formatDate, loading, setTotalPages, statusText } from "../function.js";
 
 const loadProduct = (storage) => {
+    const numberOfTH = $("thead th").length;
+    loading(numberOfTH);
     $.ajax({
         type: "POST",
         url: storage.url,
@@ -12,13 +14,12 @@ const loadProduct = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td valign="top" colspan="12" class="text-center">No matching records found</td>
+                    <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
                 data.forEach((element, index) => {
                     let created_at = formatDate(new Date(element.created_at));
-                    let updated_at = formatDate(new Date(element.updated_at));
                     let user = ``;
                     if (element.user.level == 2) {
                         user = `
@@ -52,7 +53,6 @@ const loadProduct = (storage) => {
                         element.transaction_status == 1 ? "Paid" : "Unpaid"
                     }</span> </td>
                             <td  class="max-110">${created_at}</td>
-                            <td  class="max-110">${updated_at}</td>
                         </tr>
                          `;
                 });

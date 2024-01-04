@@ -29,15 +29,14 @@ class ProductController extends Controller
 
     public function detail(Request $request)
     {
-        $product = Product::with("category")->findOrFail($request->id);
+        $product = Product::with(["category"])->findOrFail($request->id);
         $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
             ->first();
-        $weights = WeighTag::orderBy("mass", "ASC")->get();
-        $result = ["product" => $product, "weights" => $weights, "warehouse" => $warehouse];
+        $qrWeightTags =  Product_Weight::with("weight_tag")->where("product_id", $product->id,)->get();
+        $result = ["product" => $product, "warehouse" => $warehouse, "qr_weight_tag" => $qrWeightTags];
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-
-
     }
+
     //view create product
     public function create()
     {
@@ -83,10 +82,17 @@ class ProductController extends Controller
         $product->qrcode = $uploadedQRUrl;
         $product->save();
 
+
+
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
-            $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
+            $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
+            $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+            $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                "folder" => 'dry_fruits_qrcode'
+            ])->getSecurePath();
+            $insert[] = ["id" => $product->id . $weight, "product_id" => $product->id, "weight_tag_id" => $weight, "qrcode" => $uploadedQRUrl];
         }
         Product_Weight::insert($insert);
 
@@ -118,16 +124,15 @@ class ProductController extends Controller
         // save image
         if (isset($request->image)) {
             $image = explode('/', $product->image);
-            $old_image = explode('.', $image[sizeof($image)-1]); 
-            
+            $old_image = explode('.', $image[sizeof($image) - 1]);
+
             try {
                 Cloudinary::destroy("dry_fruits_image/" . $old_image[0]);
                 $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
                     "folder" => 'dry_fruits_image'
                 ])->getSecurePath();
                 $product->image = $uploadedFileUrl;
-            }
-            catch(\Exception $e) {
+            } catch (\Exception $e) {
                 echo "Error </br>";
                 echo $e->getMessage();
                 echo "</br>";
@@ -190,7 +195,4 @@ class ProductController extends Controller
         $product_weight->delete();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
-
-
-
 }

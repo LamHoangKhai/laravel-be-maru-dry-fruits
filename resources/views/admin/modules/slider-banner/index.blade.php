@@ -42,7 +42,7 @@
                             <tbody class="table-border-bottom-0" id="renderData">
                                 @if (!count($sliderBanner))
                                     <tr>
-                                        <td valign="top" colspan="7" class="text-center">No matching records found</td>
+                                        <td valign="top" colspan="9" class="text-center">No matching records found</td>
                                     </tr>
                                 @endif
                                 @foreach ($sliderBanner as $item)
@@ -73,7 +73,6 @@
                                         </td>
                                         <td>{{ date('Y/m/d H:i:s', strtotime($item->created_at)) }}</td>
                                         <td>{{ date('Y/m/d H:i:s', strtotime($item->updated_at)) }}</td>
-
                                         <td class="g-2">
                                             <div class="dropdown">
                                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow"

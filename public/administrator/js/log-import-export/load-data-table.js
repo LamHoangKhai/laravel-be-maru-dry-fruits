@@ -1,6 +1,8 @@
-import { formatDate, setTotalPages } from "../function.js";
+import { formatDate, setTotalPages, loading } from "../function.js";
 
 const loadProduct = (storage) => {
+    const numberOfTH = $("thead th").length;
+    loading(numberOfTH);
     let text = storage.select == 1 ? "Import Quantity" : "Export Quantity";
     $("#quantity").html(text);
     $.ajax({
@@ -15,12 +17,11 @@ const loadProduct = (storage) => {
             if (data.length === 0) {
                 xhtml += `
                     <tr>
-                    <td valign="top" colspan="12" class="text-center">No matching records found</td>
+                    <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
                     </tr>
                      `;
             } else {
                 data.forEach((element, index) => {
-                    let created_at = formatDate(new Date(element.created_at));
                     let updated_at = formatDate(new Date(element.updated_at));
                     // get url edit
                     let urlEdit = $("#url-edit-import")
@@ -51,7 +52,6 @@ const loadProduct = (storage) => {
                             </td>
                             <td>${element.expiration_date}</td>
                             <td>${element.transaction_date}</td>
-                            <td  class="max-110">${created_at}</td>
                             <td  class="max-110">${updated_at}</td>
                             <td class="g-2" >
                                 <div class="dropdown ">

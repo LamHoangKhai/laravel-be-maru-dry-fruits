@@ -1,4 +1,4 @@
-import { Mydebounce, isURL, loading } from "../function.js";
+import { Mydebounce, isURL } from "../function.js";
 import { loadProduct, detailProduct } from "./load-data-table.js";
 //  call api Search
 
@@ -28,7 +28,6 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         url: $("#url").data("url"),
-        tableCols: 12,
     };
     //handle search
     $("#search").keypress(
@@ -38,7 +37,7 @@ $(document).ready(() => {
             }
             storage.search = e.target.value;
             storage.page = 1;
-            loading(storage.tableCols);
+
             $("#pagination").simplePaginator("changePage", 1);
         }, 500)
     );
@@ -47,7 +46,7 @@ $(document).ready(() => {
         // access the clipboard using the api
         storage.search = e.originalEvent.clipboardData.getData("text");
         storage.page = 1;
-        loading(storage.tableCols);
+
         $("#pagination").simplePaginator("changePage", 1);
     });
 
@@ -55,7 +54,7 @@ $(document).ready(() => {
         Mydebounce((e) => {
             if (e.keyCode === 8) {
                 storage.search = e.target.value;
-                loading(storage.tableCols);
+
                 $("#pagination").simplePaginator("changePage", 1);
             }
             return 0;
@@ -76,7 +75,7 @@ $(document).ready(() => {
         pageChange: function (page) {
             storage.page = parseInt(page);
             this.currentPage = storage.page;
-            loading(storage.tableCols);
+
             loadProduct(storage);
         },
     });
@@ -117,6 +116,14 @@ $(document).ready(() => {
     });
 
     $("#renderData").on("click", ".qr", async (e) => {
+        Swal.fire({
+            imageUrl: e.target.value,
+            imageHeight: 100,
+            imageAlt: "A tall image",
+        });
+    });
+
+    $("#exLargeModal").on("click", ".qr", async (e) => {
         Swal.fire({
             imageUrl: e.target.value,
             imageHeight: 100,

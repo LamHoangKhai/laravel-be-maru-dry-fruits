@@ -59,7 +59,6 @@
                                     <th>Status</th>
                                     <th>Paymen Status</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
                                 </tr>
                             </thead>
 
@@ -81,7 +80,6 @@
                                     <th>Status</th>
                                     <th>Paymen Status</th>
                                     <th>Created At</th>
-                                    <th>Updated At</th>
                                 </tr>
                             </tfoot>
                         </table>
