@@ -177,9 +177,17 @@ class CrawController extends Controller
 
                 $insert = [];
                 foreach ($weights as $weight) {
+                    $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
+                    $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                    $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                        "folder" => 'dry_fruits_qrcode'
+                    ])->getSecurePath();
+
                     $insert[] = [
+                        "id" => $product->id . $weight,
                         "product_id" => $product->id,
-                        "weight_tag_id" => $weight->id,
+                        "weight_tag_id" => $weight,
+                        "qrcode" => $uploadedQRUrl,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
@@ -268,9 +276,17 @@ class CrawController extends Controller
 
                 $insert = [];
                 foreach ($weights as $weight) {
+                    $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
+                    $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                    $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                        "folder" => 'dry_fruits_qrcode'
+                    ])->getSecurePath();
+
                     $insert[] = [
+                        "id" => $product->id . $weight,
                         "product_id" => $product->id,
-                        "weight_tag_id" => $weight->id,
+                        "weight_tag_id" => $weight,
+                        "qrcode" => $uploadedQRUrl,
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                     ];
