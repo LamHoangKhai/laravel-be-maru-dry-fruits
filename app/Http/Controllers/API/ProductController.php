@@ -32,6 +32,7 @@ class ProductController extends Controller
             $query = $query->orderBy('price', 'asc');
         }
         $products = $query->with("category", "weightTags")
+            ->where('status', '1')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->orderBy("created_at", "desc")->paginate(12);
 
@@ -45,6 +46,7 @@ class ProductController extends Controller
         $product_id = $request->product_id;
         $product_detail = Product::with('weightTags', 'reviews')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('status', '1')
             ->where('id', $product_id)->get();
         foreach($product_detail[0]['reviews'] as $cut_user_id) {
             unset($cut_user_id['user_id']);
@@ -59,6 +61,7 @@ class ProductController extends Controller
     {
         $highestRatingProducts = Product::with('weightTags')->orderBy('star', 'desc')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('status', '1')
             ->whereIn('star', [4, 5])
             ->limit(10)
             ->get();
@@ -71,6 +74,7 @@ class ProductController extends Controller
     {
         $featured_products = Product::with('weightTags')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
+            ->where('status', '1')
             ->where('feature', 1)->limit(5)->get();
         return response()->json([
             'data' => $featured_products

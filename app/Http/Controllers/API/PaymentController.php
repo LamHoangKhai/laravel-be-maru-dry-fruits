@@ -20,16 +20,16 @@ class PaymentController extends Controller
                     'status_code' => '910'
                 ]);
             }
-            $order = Order::latest()->select('id')->first();
-            $subtotal = $request->subtotal;
+            // $order = Order::latest()->select('id')->first();
+            $total = $request->total;
             $bank_code = $request->bank_code;
             $vnp_TmnCode = "VNA6LDMI"; // Mã website tại VNPAY
             $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Chuỗi bí mật
 
-            $vnp_TxnRef = auth('api')->user()->id . '/' . time() . '/' . ($order->id + 1);
+            $vnp_TxnRef = auth('api')->user()->id . '/' . time() . rand(1,999999);
             $vnp_OrderInfo = "Pay bills";
             $vnp_OrderType = "Hello Wolrd Dry Fruits";
-            $vnp_Amount = $subtotal * 100;
+            $vnp_Amount = $total * 100;
             $vnp_Locale = "VN";
             $vnp_BankCode = $bank_code;
             $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
@@ -39,6 +39,7 @@ class PaymentController extends Controller
             $returnData = [
                 'code' => '00',
                 'message' => 'success',
+                'unique_code' => $vnp_TxnRef,
                 'url' => $vnp_Url
             ];
 
@@ -89,26 +90,13 @@ class PaymentController extends Controller
         // Kiểm tra trạng thái thanh toán từ dữ liệu
         $paymentStatus = $vnpResponseData['vnp_ResponseCode'];
 
-        // Lấy order ID từ dữ liệu callback
-        $cut = explode('/', $vnpResponseData['vnp_TxnRef']);
-        $order_id = $cut[sizeof($cut) - 1];
-        $order = Order::find($order_id);
-
         if ($paymentStatus == '00') {
             try {
-                $order->transaction_status = 1;
-                $order->save();
-                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/1');
+                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/' . $vnpResponseData['vnp_TxnRef']);
             } catch (Exception) {
                 return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
             }
         }
-
-
-        $order->status = 5;
-        $order->note = 'Payment failed';
-        $order->update();
         return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
-        // Điều hướng hoặc trả về phản hồi tùy thuộc vào logic của bạn
     }
 }

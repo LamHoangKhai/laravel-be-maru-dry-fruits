@@ -10,7 +10,7 @@ class BannerAndSlideController extends Controller
 {
     public function banner_and_slide(Request $request) {
         $position = $request->position;
-        $banner_and_slide = BannerAndSlide::where('position', $position)->get();
+        $banner_and_slide = BannerAndSlide::where([['position', $position], ['status', '1']])->get();
         return response()->json([
             'data' => $banner_and_slide
         ],200);
