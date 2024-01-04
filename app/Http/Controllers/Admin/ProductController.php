@@ -144,7 +144,12 @@ class ProductController extends Controller
         foreach ($request->weights as $weight) {
             $checkExist = Product_Weight::where([["product_id", $product->id], ["weight_tag_id", $weight]])->first();
             if (!$checkExist) {
-                $insert[] = ["product_id" => $product->id, "weight_tag_id" => $weight];
+                $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
+                $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
+                $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
+                    "folder" => 'dry_fruits_qrcode'
+                ])->getSecurePath();
+                $insert[] = ["id" => $product->id . $weight, "product_id" => $product->id, "weight_tag_id" => $weight, "qrcode" => $uploadedQRUrl];
             }
         }
         Product_Weight::insert($insert);
@@ -192,6 +197,16 @@ class ProductController extends Controller
         if (!$product_weight) {
             return response()->json(['status_code' => 200, '404' => "Errors"]);
         }
+        $image = explode('/', $product_weight->qrcode);
+        $old_image = explode('.', $image[sizeof($image) - 1]);
+        try {
+            Cloudinary::destroy("dry_fruits_qrcode/" . $old_image[0]);
+        } catch (\Exception $e) {
+            echo "Error </br>";
+            echo $e->getMessage();
+            echo "</br>";
+        }
+
         $product_weight->delete();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }

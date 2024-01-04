@@ -57,7 +57,7 @@ const modalHtml = (data) => {
     let text = statusText(data.status);
 
     let discount =
-        data.status && data.transaction_type != 2 <= 2
+        data.status <= 2 && data.transaction == 2
             ? `<input type="text" class="w-px-50 text-end discount" value=${data.discount} id="discount" data-id=${data.id} />`
             : `<strong>${data.discount}%</strong>`;
 
