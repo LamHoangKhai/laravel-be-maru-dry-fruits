@@ -45,7 +45,6 @@ Route::get('team/hello-world/craw-category2', [CrawController::class, "category2
 Route::get('team/hello-world/craw-category3', [CrawController::class, "category3"])->name('category3');
 Route::get('team/hello-world/craw-warehouse', [CrawController::class, "warehouse"])->name('warehouse');
 Route::get('team/hello-world/craw-user', [CrawController::class, "user"])->name('user');
-Route::get('team/hello-world/craw-order', [CrawController::class, "order"])->name('order');
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {

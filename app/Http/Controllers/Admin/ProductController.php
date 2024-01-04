@@ -92,6 +92,7 @@ class ProductController extends Controller
             $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
                 "folder" => 'dry_fruits_qrcode'
             ])->getSecurePath();
+
             $insert[] = ["id" => $product->id . $weight, "product_id" => $product->id, "weight_tag_id" => $weight, "qrcode" => $uploadedQRUrl];
         }
         Product_Weight::insert($insert);
