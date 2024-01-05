@@ -443,6 +443,48 @@ class CrawController extends Controller
         }
     }
 
+    public function order(Faker $faker)
+    {
+        $users = User::inRandomOrder()->take(5)->get();
+        // dd($users);
+        foreach ($users as $user) {
+            $order = new Order();
+            $order->user_id = $user->id;
+            $order->status = 1;
+            $order->discount = 0;
+            $order->transaction = 1;
+            $order->transaction_status = 2;
+            $order->email = $user->email;
+            $order->full_name = $user->full_name;
+            $order->address = $user->address;
+            $order->phone = $faker->phoneNumber;
+            $order->subtotal = 0;
+            $order->total = 0;
+            $order->save();
+
+            $order_items = [];
+            for ($k = 1; $k <= 3; $k++) {
+
+                $order_items[$k]['product_id'] = rand(1, 20);
+                $order_items[$k]['order_id'] = $order->id;
+                $order_items[$k]['quantity'] = rand(1, 4);
+                $order_items[$k]['weight'] = 250;
+                $product = Product::findOrFail($order_items[$k]['product_id']);
+                $order_items[$k]['price'] = $product->price * ($order_items[$k]['weight'] / 100 * $order_items[$k]['quantity']);
+            }
+            OrderItems::insert($order_items);
+
+            $orderItems = OrderItems::where("order_id", $order->id)->get();
+
+            foreach ($orderItems as $item) {
+                $order->subtotal += $item->price;
+            }
+            $order->total = $order->subtotal + ($order->subtotal * $order->discount / 100);
+            $order->save();
+        }
+        echo "success";
+    }
+
 
     public function formatPrice($data)
     {
