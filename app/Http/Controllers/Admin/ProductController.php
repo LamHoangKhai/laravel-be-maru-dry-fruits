@@ -22,20 +22,13 @@ class ProductController extends Controller
     public function index()
     {
         $product = Product::all();
+        $categories = Category::all();
         return view('admin.modules.product.index', [
-            'product' => $product
+            'product' => $product,
+            'categories' => $categories
         ]);
     }
 
-    public function detail(Request $request)
-    {
-        $product = Product::with(["category"])->findOrFail($request->id);
-        $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
-            ->first();
-        $qrWeightTags =  Product_Weight::with("weight_tag")->where("product_id", $product->id,)->get();
-        $result = ["product" => $product, "warehouse" => $warehouse, "qr_weight_tag" => $qrWeightTags];
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-    }
 
     //view create product
     public function create()
@@ -70,23 +63,11 @@ class ProductController extends Controller
         $product->image = $uploadedFileUrl;
         $product->save();
 
-        // save qr code
-
-        $qrCodeImage = QrCode::size(100)->generate(route('admin.product.detail', ['id' => $product->id, 'scan' => $product->id]));
-        $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
-        $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
-            "folder" => 'dry_fruits_qrcode'
-        ])->getSecurePath();
-
-
-        $product->qrcode = $uploadedQRUrl;
-        $product->save();
-
-
 
         //insert in table Product_Weight
         $insert = [];
         foreach ($request->weights as $weight) {
+            //save qr code
             $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
             $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
             $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
@@ -174,14 +155,31 @@ class ProductController extends Controller
 
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
+        $select = $request->select;
 
+        if ($select > 0) {
+            $query = $query->where("category_id", "=", $select);
+        }
         // search name 
         $query = $query->where("name", "like", "%" . $search . "%");
 
         //return data
-        $result = $query->with("category")->orderBy("created_at", "desc")->paginate($take);
+        $result = $query->with(["category", "product_weight"])->orderBy("created_at", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
     }
+
+    //api scan qr
+    public function detail(Request $request)
+    {
+        $product_id = $request->id;
+        $product = Product::with(["category"])->findOrFail($product_id);
+        $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
+            ->first();
+        $qrWeightTags =  Product_Weight::with("weight_tag")->where("product_id", $product->id,)->get();
+        $result = ["product" => $product, "warehouse" => $warehouse, "qr_weight_tag" => $qrWeightTags];
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+    }
+
 
     // check total quantity product
     public function checkQuantity(Request $request)

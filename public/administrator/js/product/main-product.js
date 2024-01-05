@@ -1,4 +1,4 @@
-import { Mydebounce, isURL } from "../function.js";
+import { Mydebounce } from "../function.js";
 import { loadProduct, detailProduct } from "./load-data-table.js";
 //  call api Search
 
@@ -8,11 +8,10 @@ $(document).ready(() => {
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
         if (code == 13 || code == 9) {
-            if (isURL(barcode)) {
-                let url = new URL(barcode);
-                let product_id = url.search.split("=")[1];
-                detailProduct(product_id);
+            if (!barcode) {
+                return;
             }
+            detailProduct(barcode);
             barcode = "";
         } else {
             barcode = barcode + String.fromCharCode(code);
@@ -28,6 +27,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         url: $("#url").data("url"),
+        select: 0,
     };
     //handle search
     $("#search").keypress(
@@ -61,6 +61,15 @@ $(document).ready(() => {
         }, 500)
     );
     // end handle search
+
+    //handle select
+    $("#select").change((e) => {
+        storage.select = e.target.value;
+
+        $("#pagination").simplePaginator("changePage", 1);
+    });
+
+    //end handle select
 
     // load pagination
     $("#pagination").simplePaginator({

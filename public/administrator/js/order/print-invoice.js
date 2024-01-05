@@ -137,7 +137,7 @@ const htmlString = (data) => {
                 </tr>
             <tr class="total" stlye="margin-top:12px">
                 <td align="right" colspan="3">
-                    <b>Subtotal&nbsp;:&nbsp;${data.discount}%</b>
+                    <b>Discount&nbsp;:&nbsp;${data.discount}%</b>
                 </td>
             </tr>
             <tr class="total" stlye="margin-top:12px">

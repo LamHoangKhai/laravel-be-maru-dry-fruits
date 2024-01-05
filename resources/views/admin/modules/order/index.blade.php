@@ -12,7 +12,6 @@
     <input type="hidden" id="url-detail" data-url="{{ route('admin.order.getOrderDetail') }}">
     <input type="hidden" id="url-update-status" data-url="{{ route('admin.order.updateStatus') }}">
     <input type="hidden" id="url-cancel" data-url="{{ route('admin.order.cancelOrder') }}">
-    <input type="hidden" id="url-add-discount" data-url="{{ route('admin.order.addDiscount') }}">
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">

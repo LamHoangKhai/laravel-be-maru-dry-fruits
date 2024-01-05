@@ -7,11 +7,6 @@ const Mydebounce = (callback, timeout = 500) => {
         }, timeout);
     };
 };
-function isURL(str) {
-    var urlPattern =
-        /^(https?|ftp):\/\/(www\.)?(([\w-]+\.)*[\w-]+|localhost)(:\d+)?(\/[\w-./?%&=]*)?$/;
-    return urlPattern.test(str);
-}
 
 function formatDate(date) {
     let year = date.getFullYear();
@@ -68,4 +63,4 @@ const statusText = (text) => {
     }
 };
 
-export { Mydebounce, formatDate, setTotalPages, loading, statusText, isURL };
+export { Mydebounce, formatDate, setTotalPages, loading, statusText };

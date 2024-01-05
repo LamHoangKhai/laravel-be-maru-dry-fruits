@@ -20,6 +20,8 @@ const loadProduct = (storage) => {
             } else {
                 data.forEach((element, index) => {
                     let updated_at = formatDate(new Date(element.updated_at));
+                    let qr = element.product_weight[0].qrcode;
+
                     // get url edit
                     let urlEdit = $("#url-edit")
                         .attr("data-url")
@@ -78,9 +80,7 @@ const loadProduct = (storage) => {
                             </button>
 
                             <div class="dropdown-menu" style="">
-                            <button value="${
-                                element.qrcode
-                            }" class="dropdown-item qr" i><i class='bx bx-qr'></i> QR</button>
+                            <button value="${qr}" class="dropdown-item qr" i><i class='bx bx-qr'></i> QR</button>
                             <a href="${urlImport}" class="dropdown-item"><i class='bx bx-import'></i> Import</a>
                             <a href="${urlExport}" class="dropdown-item"><i class='bx bx-export'></i> Export</a>
                             <a href="${urlLog}" class="dropdown-item"><i class='bx bx-history'></i> Log I/E</a>

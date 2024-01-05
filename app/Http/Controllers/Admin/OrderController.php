@@ -204,17 +204,4 @@ class OrderController extends Controller
         $order->save();
         return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
     }
-
-    public function addDiscount(Request $request)
-    {
-        $request->validate([
-            "discount" => "numeric"
-        ]);
-        $order = Order::findOrFail($request->id);
-        $order->discount = $request->discount;
-        $order->total = $order->subtotal - ($order->subtotal * $request->discount / 100);
-        $order->update();
-
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "total" => $order->total]);
-    }
 }

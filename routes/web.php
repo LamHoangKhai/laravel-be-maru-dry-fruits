@@ -148,7 +148,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::post('get-order-detail', 'getOrderDetail')->name('getOrderDetail');
         Route::post('update-status', 'updateStatus')->name('updateStatus');
         Route::post('cancel-order', 'cancelOrder')->name('cancelOrder');
-        Route::post('add-discount', 'addDiscount')->name('addDiscount');
         Route::post('product', 'product')->name('product');
     });
 

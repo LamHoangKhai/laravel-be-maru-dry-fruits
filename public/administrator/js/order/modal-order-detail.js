@@ -56,19 +56,16 @@ const modalHtml = (data) => {
     //append order details
     let text = statusText(data.status);
 
-    let discount =
-        data.status <= 2 && data.transaction == 1
-            ? `<input type="text" class="w-px-50 text-end discount" value=${data.discount} id="discount" data-id=${data.id} />`
-            : `<strong>${data.discount}%</strong>`;
-
     let xhmtDetails = ` 
     <div class="col mb-2">
         <ul type="none">
            
-            <li class="left mb-2">Subtotal: <strong>$${
-                data.subtotal
-            }</strong></li>
-            <li class="left mb-2">Discount:  ${discount}</li>
+            <li class="left mb-2">Subtotal: <strong>$${data.subtotal.toFixed(
+                2
+            )}</strong></li>
+            <li class="left mb-2">Discount:  <strong>${
+                data.discount
+            }%</strong></li>
             <li class="left mb-2">Total Price: <strong id="total">$${data.total.toFixed(
                 2
             )}</strong></li>
