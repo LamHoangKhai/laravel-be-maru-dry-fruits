@@ -2,19 +2,16 @@
 
 
 use App\Http\Controllers\Admin\CategoryController;
-use App\Http\Controllers\Admin\Craw;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BannerSliderController;
 use App\Http\Controllers\Admin\ContactController;
-use App\Http\Controllers\Admin\CrawController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
-use App\Models\Order;
 use Illuminate\Support\Facades\Route;
 
 
@@ -38,13 +35,6 @@ Route::get('qrcode/')->name('qrcode');
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
-
-Route::get('team/hello-world/initial', [CrawController::class, "initial"])->name('initial');
-Route::get('team/hello-world/craw-category1', [CrawController::class, "category1"])->name('category1');
-Route::get('team/hello-world/craw-category2', [CrawController::class, "category2"])->name('category2');
-Route::get('team/hello-world/craw-category3', [CrawController::class, "category3"])->name('category3');
-Route::get('team/hello-world/craw-warehouse', [CrawController::class, "warehouse"])->name('warehouse');
-Route::get('team/hello-world/craw-user', [CrawController::class, "user"])->name('user');
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {

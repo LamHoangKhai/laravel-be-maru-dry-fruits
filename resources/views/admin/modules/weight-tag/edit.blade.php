@@ -28,7 +28,7 @@
 
                     <div class="row ">
                         <div class="col d-flex  justify-content-end">
-                            <button type="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
+                            <button type="submit" id="submit" class="btn btn-primary " style="margin-right: 4px">Update</button>
                             <a href="{{ route('admin.weight-tag.index') }}" class="btn btn-secondary">Cancel</a>
                         </div>
 

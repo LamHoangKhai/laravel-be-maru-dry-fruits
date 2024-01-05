@@ -160,7 +160,7 @@
                                     <i class='bx bx-printer'></i>&nbsp;
                                     Print</button>
                             </div>
-                            <div class="p-2 bd-highlight"> <button type="submit" class="btn btn-primary "
+                            <div class="p-2 bd-highlight"> <button type="submit"  class="btn btn-primary "
                                     style="margin:0 4px" id="submit">Create</button></div>
                             <div class="p-2 bd-highlight"> <a href="{{ route('admin.order.create') }}"
                                     class="btn btn-secondary">Cancel</a></div>

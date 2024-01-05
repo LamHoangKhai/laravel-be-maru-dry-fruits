@@ -3,7 +3,7 @@
 
 
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default"
-    data-assets-path="{{  asset('administrator/assets/') }}" data-template="vertical-menu-template-free">
+    data-assets-path="{{ asset('administrator/assets/') }}" data-template="vertical-menu-template-free">
 
 <head>
     @include('admin.partials.head')
@@ -26,7 +26,7 @@
                 <!-- / Navbar -->
 
                 <!-- Content wrapper -->
-                <div class="content-wrapper">
+                <div class="content-wrapper" id="main-content">
                     <!-- loading -->
                     <div id="loading" class="page-loader flex-column">
                         <div>
@@ -34,6 +34,7 @@
                             <span class="text-muted fs-6 fw-semibold ">Loading...</span>
                         </div>
                     </div>
+
                     <!-- Content -->
 
                     @if (Session::has('success'))
@@ -103,6 +104,20 @@
     <!-- / Layout wrapper -->
 
     @include('admin.partials.foot')
+    <script>
+        $(document).ready(() => {
+            $("#submit").click(() => {
+                console.log("run")
+                $('#main-content').append(`<div id="loading" class="page-loader flex-column">
+        <div>
+            <span class="spinner-border text-primary" role="status"></span>
+            <span class="text-muted fs-6 fw-semibold ">Loading...</span>
+        </div>
+    </div>`);
+            })
+
+        })
+    </script>
 </body>
 
 </html>

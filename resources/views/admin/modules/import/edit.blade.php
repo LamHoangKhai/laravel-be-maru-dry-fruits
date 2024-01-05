@@ -78,7 +78,7 @@
 
                     <div class="row ">
                         <div class="col d-flex  justify-content-end">
-                            <button type="submit" class="btn btn-primary" style="margin-right: 4px">Edit</button>
+                            <button type="submit" id="submit" class="btn btn-primary" style="margin-right: 4px">Edit</button>
                             <a type="button" class="btn btn-outline-secondary" href="{{ route('admin.product.index') }}">
                                 Cancel
                             </a>

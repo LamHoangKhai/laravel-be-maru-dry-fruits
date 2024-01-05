@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-primary d-grid w-100" type="submit">
+                                <button class="btn btn-primary d-grid w-100" type="submit" id="submit">
                                     Sign in
                                 </button>
                             </div>
