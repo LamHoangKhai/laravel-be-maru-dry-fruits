@@ -7,6 +7,7 @@ use App\Models\Order;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Ramsey\Uuid\Uuid;
 
 class PaymentController extends Controller
 {
@@ -20,13 +21,17 @@ class PaymentController extends Controller
                     'status_code' => '910'
                 ]);
             }
-            // $order = Order::latest()->select('id')->first();
+            
             $total = $request->total;
             $bank_code = $request->bank_code;
-            $vnp_TmnCode = "VNA6LDMI"; // Mã website tại VNPAY
-            $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Chuỗi bí mật
+            $vnp_TmnCode = "VNA6LDMI"; // Website code at VNPAY
+            $vnp_HashSecret = "IYGRVEUICTOQLKPPLPBKGIZARQXMXIHL"; // Secret key
 
-            $vnp_TxnRef = rand(1,999999) . time() . rand(1000,99999);
+            // CREATE ORDER ID BY UUID
+            $uuid = Uuid::uuid4();
+            $uuidString = str_replace('-', '', $uuid->toString()); // Eliminate '-' in UUID
+            $shortOrderCode = substr($uuidString, 0, 6); // Get 6 charactors
+            $vnp_TxnRef = $shortOrderCode;
             $vnp_OrderInfo = "Pay bills";
             $vnp_OrderType = "Hello Wolrd Dry Fruits";
             $vnp_Amount = $total * 100;
