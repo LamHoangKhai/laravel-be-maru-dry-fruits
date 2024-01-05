@@ -35,7 +35,7 @@ class ReviewController extends Controller
                 'star' => $averageStar
             ]);
             return response()->json([
-                'message' => 'Review successfully'
+                'message' => 'Review Successfully'
             ]);
         }
     }
@@ -45,20 +45,20 @@ class ReviewController extends Controller
         if (auth('api')->user()) {
             if (auth('api')->user()->status == 2) {
                 return response()->json([
-                    'message' => 'Your account is locked',
+                    'message' => 'Your Account Is Locked',
                     'status_code' => '901'
                 ]);
             }
             $check = Review::where([['user_id', auth('api')->user()->id], ['product_id', $request->product_id]])->get()->first();
             if(!empty($check->content) || !empty($check->star)) {
                 return response()->json([
-                    'message' => 'You have already reviewed',
+                    'message' => 'You Have Already Reviewed',
                     'status_code' => '902'
                 ]);
         }
         } else {
             return response()->json([
-                'message' => 'You are not logged in',
+                'message' => 'You Are Not Logged In',
                 'status_code' => '903'
             ]);
         }
@@ -75,7 +75,7 @@ class ReviewController extends Controller
         }
         if (!$is_exist_order_items) {
             return response()->json([
-                'message' => 'You must buy this product to review',
+                'message' => 'You Must Buy This Product To Review',
                 'status_code' => '904'
             ]);
         }

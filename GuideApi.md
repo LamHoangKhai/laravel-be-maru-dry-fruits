@@ -1,4 +1,10 @@
 <!-- ///////////////////////////////////// AUTH /////////////////////////////////////////-->
+STATUS_CODE: 
+910: COn 3 don hang chua thanh toan, hay thanh toan roi mua tiep
+904: User chua mua hang
+903: Cần phải đăng nhập
+902: Đã comment rồi
+901: Account bị khóa rồi 
 <!-- Login { -->
 URL: http://localhost:8000/api/auth/login,
 Method: POST
