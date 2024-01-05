@@ -41,7 +41,7 @@ class AuthController extends Controller
         ]);
         
         return response()->json([
-            'message' => 'User successfully registered',
+            'message' => 'User Successfully Registered',
         ],201);
     }
 
@@ -69,12 +69,13 @@ class AuthController extends Controller
         $user = auth('api')->user();
         if($user->level == 1) {
             auth('api')->logout();
-            return response()->json(['error' => 'Not found'], 403);
+            return response()->json(['error' => 'Not Found'], 403);
         }
         if($user->status == 2) {
             auth('api')->logout();
             return response()->json([
-                'message' => 'Your account is locked'
+                'message' => 'Your Account Is Locked',
+                'status_codde' => '901'
             ]);
         }
         return $this->respondWithToken($token);
@@ -94,7 +95,8 @@ class AuthController extends Controller
         }
         else {
             return response()->json([
-                'message' => 'You need to login to get profile'
+                'message' => 'You Need To Login To Get Profile',
+                'status_code' => '903'
             ]);
         }
     }
@@ -102,7 +104,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth('api')->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        return response()->json(['message' => 'Successfully Logged Out']);
     }
 
     public function refresh()
@@ -129,7 +131,7 @@ class AuthController extends Controller
             ];
             User::where('id',auth('api')->user()->id)->update($infoAfterEdit);
             return response()->json([
-                'message' => 'Edit successfully'
+                'message' => 'Edit Successfully'
             ],200);
         } 
         return response()->json([
@@ -145,9 +147,9 @@ class AuthController extends Controller
                 'current_password' => 'required',
                 'password' => 'required|confirmed|min:8'
                 ], [
-                'current_password.required' => 'Please enter your current password',
-                'password.required' => 'Please enter your new password',
-                'password.confirmed' => 'Password confirmation is not correct'  
+                'current_password.required' => 'Please Enter Your Current Password',
+                'password.required' => 'Please Enter Your New Password',
+                'password.confirmed' => 'Password Confirmation Is Not Correct'  
                 ]);
                 
             $new_password = ['password' => bcrypt($request->password)];
@@ -156,12 +158,12 @@ class AuthController extends Controller
                 return response()->json(['error' => $validator->errors()], 422);
             }
             return response()->json([
-                'message' => 'Change password successfully'
+                'message' => 'Change Password Successfully'
             ]);
         }
         else {
             return response()->json([
-                'message' => 'Current password is not correct',
+                'message' => 'Current Password Is Not Correct',
                 'status_code' => '404'
             ]);
         }

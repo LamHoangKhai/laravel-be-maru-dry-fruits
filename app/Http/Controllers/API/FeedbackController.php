@@ -24,7 +24,7 @@ class FeedbackController extends Controller
         event(new UserFeedback($new_feedback));
 
         return response()->json([
-            'message' => 'Feedback is sent successfully.'
+            'message' => 'Feedback Is Sent Successfully.'
         ],200);
 
     }
