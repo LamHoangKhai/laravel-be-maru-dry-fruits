@@ -171,8 +171,8 @@ class ProductController extends Controller
     //api scan qr
     public function detail(Request $request)
     {
-        $product_id = $request->id;
-        $product = Product::with(["category"])->findOrFail($product_id);
+        $data = Product_Weight::findOrFail($request->id);
+        $product = Product::with(["category"])->findOrFail($data->product_id);
         $warehouse = Warehouse::select(["expiration_date", "input_price"])->where([["product_id", $product->id], ["transaction_type", 2]])->orderBy("created_at", "DESC")
             ->first();
         $qrWeightTags =  Product_Weight::with("weight_tag")->where("product_id", $product->id,)->get();

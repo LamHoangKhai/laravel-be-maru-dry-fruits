@@ -8,9 +8,11 @@ $(document).ready(() => {
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
         if (code == 13 || code == 9) {
-            if (!barcode) {
+            if (barcode.length < 1) {
                 return;
             }
+            console.log(barcode);
+
             detailProduct(barcode);
             barcode = "";
         } else {

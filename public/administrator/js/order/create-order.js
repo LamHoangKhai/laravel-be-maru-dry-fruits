@@ -1,4 +1,3 @@
-import { isURL } from "../function.js";
 
 $(document).ready(() => {
     $("#select").change((e) => {
