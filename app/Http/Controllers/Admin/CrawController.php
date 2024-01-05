@@ -173,7 +173,7 @@ class CrawController extends Controller
                 $product->qrcode = $uploadedQRUrl;
                 $product->save();
                 //insert in table Product_Weight
-                $weights = WeighTag::get();
+                $weights = WeighTag::inRandomOrder()->take(rand(2, 4))->get();
 
                 $insert = [];
                 foreach ($weights as $weight) {
@@ -265,7 +265,7 @@ class CrawController extends Controller
                 $product->qrcode = $uploadedQRUrl;
                 $product->save();
                 //insert in table Product_Weight
-                $weights = WeighTag::get();
+                $weights = WeighTag::inRandomOrder()->take(rand(2, 4))->get();
 
                 $insert = [];
                 foreach ($weights as $weight) {
@@ -357,7 +357,7 @@ class CrawController extends Controller
                 $product->qrcode = $uploadedQRUrl;
                 $product->save();
                 //insert in table Product_Weight
-                $weights = WeighTag::get();
+                $weights = WeighTag::inRandomOrder()->take(rand(2, 4))->get();
 
                 $insert = [];
                 foreach ($weights as $weight) {
