@@ -11,7 +11,7 @@
             <span class="menu-header-text">Home</span>
         </li>
         <!-- Dashboard -->
-        <li class="menu-item {{ request()->is('admin/dasboard') ? 'active' : '' }}">
+        <li class="menu-item {{ request()->is('admin/dashboard/index') ? 'active' : '' }}">
             <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>

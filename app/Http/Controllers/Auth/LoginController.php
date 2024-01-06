@@ -13,7 +13,7 @@ class LoginController extends Controller
     {
 
         if (Auth::guard("web")->check()) {
-            return redirect()->route("admin.user.index");
+            return back();
         }
         return view("auth.login");
     }
@@ -34,11 +34,9 @@ class LoginController extends Controller
 
         if (Auth::guard("web")->attempt($credentials)) {
 
-            return redirect()->route('admin.user.index')->with('success', "Login success");
+            return redirect()->route('admin.dashboard.index')->with('success', "Login success");
         }
 
         return back();
     }
 }
-
-
