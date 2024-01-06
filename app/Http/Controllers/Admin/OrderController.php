@@ -149,13 +149,16 @@ class OrderController extends Controller
         $search = $request->search ? $request->search : "";
         $take = (int) $request->take;
         $select = $request->select;
-
-        $query = Order::with("user");
+        $date = $request->date;
+        $query = Order::with("user")
+            ->whereDate('updated_at', $date);
 
         // if select  0 get  all status order else  status order  = select
         $query = $select > 0
             ? $query->where("status", "=", $select)
             : $query->where("status", ">", 3);
+
+
 
         // search order No.,user phone ,email , name 
         $query = $query

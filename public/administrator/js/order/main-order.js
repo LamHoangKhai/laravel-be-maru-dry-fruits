@@ -13,6 +13,7 @@ $(document).ready(() => {
         totalPage: 1,
         select: 0,
         url: $("#url").data("url"),
+        date: $("#date").val(),
     };
     //handle search
     $("#search").keypress(
@@ -47,6 +48,12 @@ $(document).ready(() => {
         }, 500)
     );
     // end handle search
+
+    $("#date").change((e) => {
+        storage.date = e.target.value;
+        console.log(storage);
+        $("#pagination").simplePaginator("changePage", 1);
+    });
 
     //handle select
     $("#select").change((e) => {

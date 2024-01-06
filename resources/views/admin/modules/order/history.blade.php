@@ -24,8 +24,12 @@
             <div class="card">
                 <div class="card-header">
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
-
                         <div class="input-group w-px-200">
+                            <label class="input-group-text" for="inputGroupSelect01">Date</label>
+                            <input class="form-control" type="date" value="{{ date('Y-m-d') }}" id="date">
+                        </div>
+
+                        <div class="input-group w-px-200" style="margin:0 12px ">
                             <label class="input-group-text" for="inputGroupSelect01">Status</label>
                             <select id="select" class="form-select ">
                                 <option value="0" selected>All</option>
@@ -34,7 +38,7 @@
                             </select>
                         </div>
 
-                        <div class="input-group w-25" style="margin:0 12px ">
+                        <div class="input-group w-25">
                             <span class="input-group-text">Search</span>
                             <input type="text" class="form-control" placeholder="Enter order No. , phone , email "
                                 id="search">
