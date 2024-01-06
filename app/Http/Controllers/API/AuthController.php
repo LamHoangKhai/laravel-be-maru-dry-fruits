@@ -152,11 +152,11 @@ class AuthController extends Controller
                 'password.confirmed' => 'Password Confirmation Is Not Correct'  
                 ]);
                 
-            $new_password = ['password' => bcrypt($request->password)];
-            User::where('id',auth('api')->user()->id)->update($new_password);
             if($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 422);
             }
+            $new_password = ['password' => bcrypt($request->password)];
+            User::where('id',auth('api')->user()->id)->update($new_password);
             return response()->json([
                 'message' => 'Change Password Successfully'
             ]);
