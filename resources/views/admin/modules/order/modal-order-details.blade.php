@@ -5,9 +5,14 @@
         <div class="modal-content">
 
             <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title " id="numberOrder"></h4>
-                <h6 class="modal-title " id="orderDate"></h6>
+            <div class="modal-header text-center mb-2">
+                <h4 class="modal-title mt-0" id="numberOrder"></h4>
+                <span>Created At:
+                    <h6 class="modal-title " id="created_at"></h6>
+                </span>
+                <span>Updated At:
+                    <h6 class="modal-title " id="updated_at"></h6>
+                </span>
             </div>
 
             <!-- Modal body -->
@@ -15,7 +20,7 @@
                 <div class="user">
 
                 </div>
-                
+
                 <p>Note: <strong id="userNote"></strong></p>
                 <div class="container" style="padding-top:4px ">
                     <h5>Item Details</h5>

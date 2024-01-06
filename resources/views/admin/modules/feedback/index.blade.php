@@ -13,7 +13,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Other /</span>
-                    Contact
+                    Feedback
                 </h4>
 
             </div>
@@ -30,30 +30,37 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Date</th>
+
                                     <th class="max-110">Action</th>
                                 </tr>
                             </thead>
 
                             <tbody class="table-border-bottom-0" id="renderData">
-                                @if (!count($contacts))
+                                @if (!count($feedbacks))
                                     <tr>
                                         <td valign="top" colspan="7" class="text-center">No matching records found</td>
                                     </tr>
                                 @endif
 
-                                @foreach ($contacts as $contact)
+                                @foreach ($feedbacks as $feedback)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $contact->full_name }}</td>
-                                        <td>{{ $contact->email }}</td>
-                                        <td class="">{{ $contact->phone }}</td>
+                                        <td>{{ $loop->iteration }} </td>
+                                        <td>{{ $feedback->full_name }}</td>
+                                        <td>{{ $feedback->email }}</td>
+                                        <td class="">{{ $feedback->phone }}</td>
+                                        <td>{{ date('Y/m/d H:i:s', strtotime($feedback->created_at)) }}</td>
+
                                         <td style="width: 200px">
                                             <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal"
                                                 data-bs-target="#exLargeModal{{ $loop->iteration }}">
                                                 Detail
                                             </button>
+
+
+
                                         </td>
-                                        @include('admin.modules.contact.modal')
+                                        @include('admin.modules.feedback.modal')
                                     </tr>
                                 @endforeach
 
@@ -65,12 +72,13 @@
                                     <th>Name</th>
                                     <th>Email</th>
                                     <th>Phone</th>
+                                    <th>Date</th>
                                     <th class="max-110">Action</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
-                    <div class="card mt-4  pagi-right"> {{ $contacts->links() }} </div>
+                    <div class="card mt-4  pagi-right"> {{ $feedbacks->links() }} </div>
                 </div>
 
             </div>

@@ -19,12 +19,11 @@ const loadProduct = (storage) => {
                      `;
             } else {
                 data.forEach((element, index) => {
-                    let created_at = formatDate(new Date(element.created_at));
                     let user = ``;
                     if (element.user.level == 2) {
                         user = `
-                        <td class="max-110">${element.full_name}</td>
-                        <td class="max-110">${element.email}</td>
+                        <td class="max-250">${element.full_name}</td>
+                        <td class="max-250">${element.email}</td>
                         <td class="max-250">${element.address}</td>
                         <td>${element.phone}</td>
                         `;
@@ -38,21 +37,20 @@ const loadProduct = (storage) => {
                     let type = statusText(element.status);
                     xhtml += `
                         <tr class="detail" data-id="${element.id}">
-                            <td >${element.id}</td>
+                            <td class="max-110">${element.id}</td>
                             ${user}
                             <td class="text-center">${element.discount}%</td>
-                            <td>$${element.total}</td>
-                            <td><span class="badge rounded-pill bg-${
+                            <td class="max-110">$${element.total}</td>
+                            <td class="max-110"><span class="badge rounded-pill bg-${
                                 type[1]
                             }">${type[0]}</span> </td>
-                            <td><span class="badge rounded-pill bg-${
+                            <td class="max-110"><span class="badge rounded-pill bg-${
                                 element.transaction_status == 1
                                     ? "dark"
                                     : "warning"
                             }">${
                         element.transaction_status == 1 ? "Paid" : "Unpaid"
                     }</span> </td>
-                            <td  class="max-110">${created_at}</td>
                         </tr>
                          `;
                 });

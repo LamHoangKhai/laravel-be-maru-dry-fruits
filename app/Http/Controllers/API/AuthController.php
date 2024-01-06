@@ -17,8 +17,9 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function register(RegisterRequest $request) {
-                // Use request default of laravel
+    public function register(RegisterRequest $request)
+    {
+        // Use request default of laravel
         // $validator = Validator::make($request->all(), [
         //     'email' => 'required|email|unique:users,email',
         //     'password' => 'required|confirmed|min:6'
@@ -39,16 +40,16 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
-        
+
         return response()->json([
             'message' => 'User Successfully Registered',
-        ],201);
+        ], 201);
     }
 
     public function login(LoginRequest $request)
     {
         $credentials = $request->all();
-                // Use the default request of laravel
+        // Use the default request of laravel
         // $validator = Validator::make($request->all(), [
         //     'email' => 'required|email',
         //     'password' => 'required|min:6'
@@ -67,11 +68,11 @@ class AuthController extends Controller
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         $user = auth('api')->user();
-        if($user->level == 1) {
+        if ($user->level == 1) {
             auth('api')->logout();
             return response()->json(['error' => 'Not Found'], 403);
         }
-        if($user->status == 2) {
+        if ($user->status == 2) {
             auth('api')->logout();
             return response()->json([
                 'message' => 'Your Account Is Locked',
@@ -79,11 +80,11 @@ class AuthController extends Controller
             ]);
         }
         return $this->respondWithToken($token);
-        
     }
 
-    public function profile() {
-        if(auth('api')->user()) {
+    public function profile()
+    {
+        if (auth('api')->user()) {
             return response()->json([
                 'email' => auth('api')->user()->email,
                 'full_name' => auth('api')->user()->full_name,
@@ -91,9 +92,8 @@ class AuthController extends Controller
                 'address' => auth('api')->user()->address,
                 'level' => auth('api')->user()->level,
                 'status' => auth('api')->user()->status,
-            ],200); 
-        }
-        else {
+            ], 200);
+        } else {
             return response()->json([
                 'message' => 'You Need To Login To Get Profile',
                 'status_code' => '903'
@@ -122,46 +122,47 @@ class AuthController extends Controller
         ]);
     }
 
-    public function edit_profile(Request $request) {
-        if(auth('api')->user()) {
+    public function edit_profile(Request $request)
+    {
+        if (auth('api')->user()) {
             $infoAfterEdit = [
                 'address' => $request->address,
                 'full_name' => $request->full_name,
                 'phone' => $request->phone,
             ];
-            User::where('id',auth('api')->user()->id)->update($infoAfterEdit);
+            User::where('id', auth('api')->user()->id)->update($infoAfterEdit);
             return response()->json([
                 'message' => 'Edit Successfully'
-            ],200);
-        } 
+            ], 200);
+        }
         return response()->json([
             'message' => 'Error'
-        ],401);
+        ], 401);
     }
 
-    public function change_password(Request $request) {
+    public function change_password(Request $request)
+    {
         $user_current_password = User::where('id', auth('api')->user()->id)->first();
-        if(Hash::check($request->current_password, $user_current_password->password)) {
+        if (Hash::check($request->current_password, $user_current_password->password)) {
             $new_password = $request->password;
             $validator = Validator::make($request->all(), [
                 'current_password' => 'required',
                 'password' => 'required|confirmed|min:8'
-                ], [
+            ], [
                 'current_password.required' => 'Please Enter Your Current Password',
                 'password.required' => 'Please Enter Your New Password',
-                'password.confirmed' => 'Password Confirmation Is Not Correct'  
-                ]);
-                
+                'password.confirmed' => 'Password Confirmation Is Not Correct'
+            ]);
+
             $new_password = ['password' => bcrypt($request->password)];
-            User::where('id',auth('api')->user()->id)->update($new_password);
-            if($validator->fails()) {
+            User::where('id', auth('api')->user()->id)->update($new_password);
+            if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()], 422);
             }
             return response()->json([
                 'message' => 'Change Password Successfully'
             ]);
-        }
-        else {
+        } else {
             return response()->json([
                 'message' => 'Current Password Is Not Correct',
                 'status_code' => '404'

@@ -77,7 +77,6 @@
                                     <th>Name</th>
                                     <th>Parent</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
                                     <th>Update At</th>
                                     <th>Action</th>
                                 </tr>
@@ -111,7 +110,6 @@
                                                 class="badge rounded-pill bg-{{ $category->status == 1 ? 'info' : 'dark' }}">
                                                 {{ $category->status == 1 ? 'Show' : 'Hidden' }}</span>
                                         </td>
-                                        <td>{{ date('Y/m/d H:i:s', strtotime($category->created_at)) }}</td>
                                         <td>{{ date('Y/m/d H:i:s', strtotime($category->updated_at)) }}</td>
                                         <td class="g-2">
                                             <div class="dropdown">
@@ -141,7 +139,6 @@
                                     <th>Name</th>
                                     <th>Parent</th>
                                     <th>Status</th>
-                                    <th>Created At</th>
                                     <th>Update At</th>
                                     <th>Action</th>
                                 </tr>

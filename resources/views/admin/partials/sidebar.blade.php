@@ -12,7 +12,7 @@
         </li>
         <!-- Dashboard -->
         <li class="menu-item {{ request()->is('admin/dasboard') ? 'active' : '' }}">
-            <a href="javascript:void(0);" class="menu-link">
+            <a href="{{ route('admin.dashboard.index') }}" class="menu-link">
                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
                 <div data-i18n="Analytics">Dashboard</div>
             </a>
@@ -89,9 +89,9 @@
             </a>
         </li>
 
-        <li class="menu-item {{ request()->is('admin/contact/index') ? 'active' : '' }}">
-            <a href="{{ route('admin.contact.index') }}" class="menu-link">
-                <div data-i18n="Notifications"><i class='bx  tf-icons bxs-contact'></i> Contact</div>
+        <li class="menu-item {{ request()->is('admin/feedback/index') ? 'active' : '' }}">
+            <a href="{{ route('admin.feedback.index') }}" class="menu-link">
+                <div data-i18n="Notifications"><i class='bx  tf-icons bxs-contact'></i> Feedback</div>
             </a>
         </li>
 

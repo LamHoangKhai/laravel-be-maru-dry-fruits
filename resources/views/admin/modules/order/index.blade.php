@@ -60,7 +60,6 @@
                                     <th>Total</th>
                                     <th>Status</th>
                                     <th>Paymen Status</th>
-                                    <th>Created At</th>
                                 </tr>
                             </thead>
 
@@ -81,7 +80,6 @@
                                     <th>Total</th>
                                     <th>Status</th>
                                     <th>Paymen Status</th>
-                                    <th>Created At</th>
                                 </tr>
                             </tfoot>
                         </table>

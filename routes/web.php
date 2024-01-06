@@ -5,7 +5,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\BannerSliderController;
-use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\FeedbackController;
 use App\Http\Controllers\Admin\SupplierController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\WarehouseController;
@@ -38,6 +39,9 @@ Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {
+    Route::prefix('dashboard')->name('dashboard.')->controller(DashboardController::class)->group(function () {
+        Route::get('index', 'index')->name('index');
+    });
 
     Route::prefix('category')->name('category.')->controller(CategoryController::class)->group(function () {
         //view
@@ -207,7 +211,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
     });
 
 
-    Route::prefix('contact')->name('contact.')->controller(ContactController::class)->group(function () {
+    Route::prefix('feedback')->name('feedback.')->controller(FeedbackController::class)->group(function () {
         //view
         Route::get('index', 'index')->name('index');
     });

@@ -2,7 +2,8 @@ import { statusText, formatDate } from "../function.js";
 
 const modalHtml = (data) => {
     $("#numberOrder").html("Order #" + data.id);
-    $("#orderDate").html(formatDate(new Date(data.created_at)));
+    $("#created_at").html(formatDate(new Date(data.created_at)));
+    $("#updated_at").html(formatDate(new Date(data.updated_at)));
     if (data.user.level == 1) {
         $(".user").html("<p><strong>Sold offline</strong></p>");
     } else {
