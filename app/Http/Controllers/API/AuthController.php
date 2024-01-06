@@ -17,9 +17,8 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
-    public function register(RegisterRequest $request)
-    {
-        // Use request default of laravel
+    public function register(RegisterRequest $request) {
+                // Use request default of laravel
         // $validator = Validator::make($request->all(), [
         //     'email' => 'required|email|unique:users,email',
         //     'password' => 'required|confirmed|min:6'
@@ -49,7 +48,7 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->all();
-        // Use the default request of laravel
+                // Use the default request of laravel
         // $validator = Validator::make($request->all(), [
         //     'email' => 'required|email',
         //     'password' => 'required|min:6'
