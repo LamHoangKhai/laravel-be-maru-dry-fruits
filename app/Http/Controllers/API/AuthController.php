@@ -18,23 +18,6 @@ class AuthController extends Controller
     }
 
     public function register(RegisterRequest $request) {
-                // Use request default of laravel
-        // $validator = Validator::make($request->all(), [
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|confirmed|min:6'
-        // ], [
-        //     'email.required' => 'Please enter your email',
-        //     'email.email' => 'It\'s not an email',
-        //     'email.unique' => 'This email was exist',
-        //     'password.required' => 'Please enter your password',
-        //     'password.confirmed' => 'Password confirmation is not correct',
-        //     'password.min' => 'Password must be at least 6 charactors',
-        // ]);
-
-        // if($validator->fails()) {
-        //     return response()->json(['error' => $validator->errors()],400);
-        // }
-
         User::create([
             'email' => $request->email,
             'password' => bcrypt($request->password)
@@ -48,20 +31,6 @@ class AuthController extends Controller
     public function login(LoginRequest $request)
     {
         $credentials = $request->all();
-                // Use the default request of laravel
-        // $validator = Validator::make($request->all(), [
-        //     'email' => 'required|email',
-        //     'password' => 'required|min:6'
-        // ], [
-        //     'email.required' => 'Please enter your email',
-        //     'email.email' => 'It\'s not an email',
-        //     'password.required' => 'Please enter your password',
-        //     'password.min' => 'Password must be at least 6 charactors',
-        // ]);
-
-        // if($validator->fails()) {
-        //     return response()->json(['error' => $validator->errors()], 422);
-        // }
 
         if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
