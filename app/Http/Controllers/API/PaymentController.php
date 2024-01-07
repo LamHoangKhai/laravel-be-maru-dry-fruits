@@ -21,7 +21,7 @@ class PaymentController extends Controller
                     'status_code' => '910'
                 ]);
             }
-            
+
             $total = $request->total;
             $bank_code = $request->bank_code;
             $vnp_TmnCode = "VNA6LDMI"; // Website code at VNPAY
@@ -97,11 +97,11 @@ class PaymentController extends Controller
 
         if ($paymentStatus == '00') {
             try {
-                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/' . $vnpResponseData['vnp_TxnRef']);
+                return redirect()->away('http://localhost:3000/cart/' . $vnpResponseData['vnp_TxnRef']);
             } catch (Exception) {
-                return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
+                return redirect()->away('http://localhost:3000/cart/2');
             }
         }
-        return redirect()->away('https://fe-mary-dry-fruits.vercel.app/cart/2');
+        return redirect()->away('http://localhost:3000/cart/2');
     }
 }
