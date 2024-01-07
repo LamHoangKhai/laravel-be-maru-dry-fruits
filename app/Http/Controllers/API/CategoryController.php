@@ -8,11 +8,10 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function category()
-    {
+    public function category() {
         $categories = Category::where("status", 1)->get();
         return response()->json([
             'data' => $categories
-        ], 200);
+        ],200);
     }
 }
