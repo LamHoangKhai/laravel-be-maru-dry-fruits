@@ -15,26 +15,33 @@ class ProductController extends Controller
     {
         $category = $request->category;
         $query = new Product();
+
         if ($category > 0) {
             $query = $query->where("category_id", $category);
         }
-        
-        if($request->search != '') {
+
+        if ($request->search != '') {
             $query = $query->where("name", "like", "%" . $request->search . "%");
         }
+
         // Sort by price from high to low
-        if($request->filter == 2) {
+        if ($request->filter == 2) {
             $query = $query->orderBy('price', 'desc');
         }
-        
+
         // Sort by price from low to high
-        if($request->filter == 1) {
+        if ($request->filter == 1) {
             $query = $query->orderBy('price', 'asc');
         }
+
         $products = $query->with("category", "weightTags")
+            ->whereHas('category', function ($q) {
+                $q->where('status', 1);
+            })
             ->where('status', '1')
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
-            ->orderBy("created_at", "desc")->paginate(12);
+            ->orderBy("created_at", "desc")
+            ->paginate(12);
 
         return response()->json([
             'data' => $products
@@ -48,7 +55,7 @@ class ProductController extends Controller
             ->select('id', 'category_id', 'name', 'image', 'description', 'nutrition_detail', 'price', 'feature', "star", "sumary")
             ->where('status', '1')
             ->where('id', $product_id)->get();
-        foreach($product_detail[0]['reviews'] as $cut_user_id) {
+        foreach ($product_detail[0]['reviews'] as $cut_user_id) {
             unset($cut_user_id['user_id']);
             unset($cut_user_id['user']['id']);
         }
@@ -80,5 +87,4 @@ class ProductController extends Controller
             'data' => $featured_products
         ]);
     }
-
 }
