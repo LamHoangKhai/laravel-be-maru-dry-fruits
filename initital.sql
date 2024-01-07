@@ -437,7 +437,7 @@ INSERT INTO `order_items` (`id`, `product_id`, `order_id`, `price`, `weight`, `q
 (45, 9, 15, 2.50, 250, 1, NULL, NULL, NULL),
 (46, 29, 16, 1.80, 250, 3, NULL, NULL, NULL),
 (47, 29, 16, 1.80, 500, 2, NULL, NULL, NULL),
-(48, 53, 17, 1.50, 250, 2, NULL, NULL, NULL);
+(48, 53, 17, 7.50, 250, 2, NULL, NULL, NULL);
 
 
 INSERT INTO `feedback` (`id`, `full_name`, `email`, `phone`, `content`, `timestamps`, `created_at`, `updated_at`) VALUES
