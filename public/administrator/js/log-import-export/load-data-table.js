@@ -40,7 +40,8 @@ const loadProduct = (storage) => {
                                     ? index + 1
                                     : storage.take * storage.page -
                                       storage.take +
-                                      index
+                                      index +
+                                      1
                             }</td>
                             <td class="max-250">${element.supplier.name}</td>
                             <td>${type[2] + element.quantity}kg</td>
