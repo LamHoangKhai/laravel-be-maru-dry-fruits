@@ -143,6 +143,19 @@ class ProductController extends Controller
     public function destroy(string $id)
     {
         $product = Product::findOrFail($id);
+        $weightTags = Product_Weight::where("product_id", $product->id)->get();
+        foreach ($weightTags as $tag) {
+            $image = explode('/', $tag->qrcode);
+            $old_image = explode('.', $image[sizeof($image) - 1]);
+            try {
+                Cloudinary::destroy("dry_fruits_qrcode/" . $old_image[0]);
+            } catch (\Exception $e) {
+                echo "Error </br>";
+                echo $e->getMessage();
+                echo "</br>";
+            }
+            $tag->delete();
+        }
         $product->delete();
         return redirect()->route('admin.product.index')->with("success", "Delete product success!");
     }
