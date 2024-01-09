@@ -53,7 +53,10 @@ const loadProduct = (storage) => {
                     <td>${
                         storage.page === 1
                             ? index + 1
-                            : storage.take * storage.page - storage.take + index
+                            : storage.take * storage.page -
+                              storage.take +
+                              index +
+                              1
                     }</td>
                     <td class="max-250">${element.name}</td>
                     <td>${element.category.name}</td>
