@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Product\StoreRequest;
 use App\Http\Requests\Product\UpdateRequest;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
 use App\Models\Product_Weight;
@@ -198,15 +199,19 @@ class ProductController extends Controller
     // check total quantity product
     public function checkDelete(Request $request)
     {
+        $product_id = $request->product_id;
+        
+        $query  = Order::with("order_items")->where("status", "<=", 3);
+        $isNotComplete = $query
+            ->whereHas("order_items", function ($query) use ($product_id) {
+                $query->where("product_id", $product_id);
+            })->first();
 
 
-        $orders = Product::with("orderItems")
-            ->where("id", $request->product_id)->first();
-        foreach ($orders['orderItems'] as $order) {
-            if ($order->status <= 3) {
-                return response()->json(['status_code' => 200, 'msg' => "This product has order not complete, cannot delete!!!.", "permission" => false]);
-            };
-        }
+        if (!is_null($isNotComplete)) {
+            return response()->json(['status_code' => 200, 'msg' => "This product has order not complete, cannot delete!!!.", "permission" => false]);
+        };
+
 
         $product = Product::findOrFail($request->product_id);
         $totalQuantity = $product->stock_quantity + $product->store_quantity;
