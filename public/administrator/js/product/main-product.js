@@ -118,7 +118,7 @@ $(document).ready(() => {
                     });
                     return;
                 }
-
+                
                 Swal.fire({
                     title: "<strong>Please read the warning carefully!!!</strong>",
                     html: `When deleting this product, related items such as <strong> orders, imports, and exports</strong> cannot be found, and this product still has a total weight of <strong>${res.totalQuantity}kg</strong>.`,

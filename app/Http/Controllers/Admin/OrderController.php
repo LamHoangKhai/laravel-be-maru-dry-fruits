@@ -8,7 +8,6 @@ use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
 use App\Models\Product_Weight;
-use App\Models\WeighTag;
 use Exception;
 use Carbon\Carbon;
 
@@ -150,8 +149,12 @@ class OrderController extends Controller
         $take = (int) $request->take;
         $select = $request->select;
         $date = $request->date;
-        $query = Order::with("user")
-            ->whereDate('updated_at', $date);
+        $query = Order::with("user");
+
+        if ($date) {
+            $query = $query->whereDate('updated_at', $date);
+        }
+
 
         // if select  0 get  all status order else  status order  = select
         $query = $select > 0

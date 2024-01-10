@@ -45,7 +45,8 @@ const loadUser = (storage) => {
                                 ? index + 1
                                 : storage.take * storage.page -
                                   storage.take +
-                                  index
+                                  index +
+                                  1
                         }</td>
                         <td>${
                             element.full_name

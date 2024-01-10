@@ -12,6 +12,7 @@ const loadProduct = (storage) => {
             let xhtml = "";
             let data = res?.data?.data || [];
             if (data.length === 0) {
+                console.log(data);
                 xhtml += `
                     <tr>
                     <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
@@ -59,7 +60,11 @@ const loadProduct = (storage) => {
                               1
                     }</td>
                     <td class="max-250">${element.name}</td>
-                    <td>${element.category.name}</td>
+                    <td>${
+                        element.category && element.category.name
+                            ? element.category.name
+                            : "Has deleted."
+                    }</td>
                     <td >
 			      <img src="${
                       element.image
