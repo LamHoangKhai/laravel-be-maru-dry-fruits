@@ -83,7 +83,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::post('detail', 'detail')->name('detail');
         Route::post('get-products', 'getProducts')->name('getProducts');
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
-        Route::post('check-quantity', 'checkQuantity')->name('checkQuantity');
+        Route::post('check-delete', 'checkDelete')->name('checkDelete');
 
 
 

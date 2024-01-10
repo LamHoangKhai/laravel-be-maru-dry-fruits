@@ -106,6 +106,19 @@ $(document).ready(() => {
             },
             dataType: "json",
             success: (res) => {
+                if (res && !res.permission) {
+                    console.log(res.permission);
+                    Swal.fire({
+                        title: "<strong>Please read the warning carefully!!!</strong>",
+                        html: `<strong>${res.msg}</strong>`,
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                    });
+                    return;
+                }
+
                 Swal.fire({
                     title: "<strong>Please read the warning carefully!!!</strong>",
                     html: `When deleting this product, related items such as <strong> orders, imports, and exports</strong> cannot be found, and this product still has a total weight of <strong>${res.totalQuantity}kg</strong>.`,

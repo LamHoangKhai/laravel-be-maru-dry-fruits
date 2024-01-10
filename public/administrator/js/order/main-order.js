@@ -51,7 +51,6 @@ $(document).ready(() => {
 
     $("#date").change((e) => {
         storage.date = e.target.value;
-        console.log(storage);
         $("#pagination").simplePaginator("changePage", 1);
     });
 

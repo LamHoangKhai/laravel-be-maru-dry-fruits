@@ -32,4 +32,8 @@ class Product extends Model
     {
         return $this->hasMany(Review::class)->with('user');
     }
+    public function orderItems()
+    {
+        return $this->belongsToMany(Order::class, 'order_items', 'product_id', 'order_id');
+    }
 }

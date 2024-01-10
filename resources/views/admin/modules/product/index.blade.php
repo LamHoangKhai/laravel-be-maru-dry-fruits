@@ -14,7 +14,7 @@
     <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
     <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
     <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
-    <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkQuantity') }}">
+    <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkDelete') }}">
     <input type="hidden" id="url-detail" data-url="{{ route('admin.product.detail') }}">
     <input type="hidden" id="url-import" data-url="{{ route('admin.product.warehouse.createImport', 'id') }}">
     <input type="hidden" id="url-export" data-url="{{ route('admin.product.warehouse.createExport', 'id') }}">

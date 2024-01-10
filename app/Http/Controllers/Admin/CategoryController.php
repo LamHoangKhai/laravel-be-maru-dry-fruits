@@ -63,6 +63,7 @@ class CategoryController extends Controller
 
     public function checkRelatedCategory(Request $request)
     {
+        
         // count product in category
         $categories = Category::with("product")->findOrFail($request->category_id);
         $countProduct = $categories->product->count();
