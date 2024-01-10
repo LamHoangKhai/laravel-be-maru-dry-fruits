@@ -197,9 +197,18 @@ class ProductController extends Controller
     // check total quantity product
     public function checkQuantity(Request $request)
     {
+
+        $orders = Product::with("orderItems")
+            ->where("id", $request->product_id)->first();
+        foreach ($orders['orderItems'] as $order) {
+            if ($order->status <= 3) {
+                return response()->json(['status_code' => 200, 'msg' => "This product has order not complete, cannot delete!!!.", "permission" => false]);
+            };
+        }
+
         $product = Product::findOrFail($request->product_id);
         $totalQuantity = $product->stock_quantity + $product->store_quantity;
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "totalQuantity" => $totalQuantity]);
+        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "totalQuantity" => $totalQuantity, "permission" => true]);
     }
 
     //remove weight tag

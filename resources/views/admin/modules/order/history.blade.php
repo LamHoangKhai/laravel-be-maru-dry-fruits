@@ -26,7 +26,7 @@
                     <div class="nav-item d-flex justify-content-end w-100 h-px-40">
                         <div class="input-group w-px-200">
                             <label class="input-group-text" for="inputGroupSelect01">Date</label>
-                            <input class="form-control" type="date" value="{{ date('Y-m-d') }}" id="date">
+                            <input class="form-control" type="date" value="" id="date">
                         </div>
 
                         <div class="input-group w-px-200" style="margin:0 12px ">
