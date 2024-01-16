@@ -1,4 +1,4 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, getUrl } from "../function.js";
 import { loadProduct } from "./load-data-table.js";
 import { modalHtml } from "./modal-order-detail.js";
 import { printInvoice } from "./print-invoice.js";
@@ -12,7 +12,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         select: 0,
-        url: $("#url").data("url"),
+        url: getUrl("/order"),
         date: $("#date").val(),
     };
     //handle search
@@ -83,11 +83,10 @@ $(document).ready(() => {
     // end pagination
 
     $("#table").on("click", ".detail", (e) => {
-        let urlDetail = $("#url-detail").data("url");
         let orderId = $(e.target).parent().data("id");
         $.ajax({
             type: "POST",
-            url: urlDetail,
+            url: storage.url + "/get-order-detail",
             data: { id: orderId },
             dataType: "json",
             success: (res) => {
@@ -106,11 +105,10 @@ $(document).ready(() => {
     });
 
     $("#modalOrderDetail").on("click", "#confirm", (e) => {
-        const urlUpdateStatus = $("#url-update-status").data("url");
         let orderId = e.target.value;
         $.ajax({
             type: "POST",
-            url: urlUpdateStatus,
+            url: storage.url + "/update-status",
             data: { id: orderId },
             dataType: "json",
             success: (res) => {
@@ -125,7 +123,6 @@ $(document).ready(() => {
     });
 
     $("#modalOrderDetail").on("click", "#cancel", (e) => {
-        const urlCancel = $("#url-cancel").data("url");
         let orderId = e.target.value;
         Swal.fire({
             title: "<strong>Warning!!!</strong>",
@@ -139,7 +136,7 @@ $(document).ready(() => {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "POST",
-                    url: urlCancel,
+                    url: storage.url + "/cancel-order",
                     data: { id: orderId },
                     dataType: "json",
                     success: (res) => {
@@ -156,11 +153,10 @@ $(document).ready(() => {
     });
 
     $("#modalOrderDetail").on("click", "#btnPrintInvoice", (e) => {
-        let urlDetail = $("#url-detail").data("url");
         let orderId = e.target.value;
         $.ajax({
             type: "POST",
-            url: urlDetail,
+            url: storage.url + "/get-order-detail",
             data: { id: orderId },
             dataType: "json",
             success: (res) => {
@@ -177,12 +173,11 @@ $(document).ready(() => {
         "keypress",
         "#discount",
         Mydebounce((e) => {
-            let urlAddDiscount = $("#url-add-discount").data("url");
             let orderId = $("#discount").data("id");
             let discount = e.target.value;
             $.ajax({
                 type: "POST",
-                url: urlAddDiscount,
+                url: storage.url + "/get-order-detail",
                 data: { id: orderId, discount },
                 dataType: "json",
                 success: (res) => {

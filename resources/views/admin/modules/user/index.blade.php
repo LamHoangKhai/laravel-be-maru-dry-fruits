@@ -13,18 +13,12 @@
 @endpush
 
 @section('content')
-    <input type="hidden" id="url" data-url="{{ route('admin.user.getUsers') }}">
-    <input type="hidden" id="url-edit" data-url="{{ route('admin.user.edit', 'id') }}">
-    <input type="hidden" id="url-destroy" data-url="{{ route('admin.user.destroy', 'id') }}">
-
-
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Manage /</span>
                     User
                 </h4>
-
             </div>
 
             <div class="card">

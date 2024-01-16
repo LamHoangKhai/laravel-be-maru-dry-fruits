@@ -1,3 +1,4 @@
+import { getUrl } from "../function.js";
 
 $(document).ready(() => {
     $("#select").change((e) => {
@@ -49,7 +50,7 @@ let listItem = [];
 const createItems = (id) => {
     $.ajax({
         type: "POST",
-        url: $("#url-detail").data("url"),
+        url: getUrl("/order/product"),
         data: { id: parseInt(id) },
         dataType: "json",
         success: (res) => {

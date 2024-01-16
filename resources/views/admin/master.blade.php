@@ -10,6 +10,8 @@
 </head>
 
 <body>
+    <input type="hidden" id="url" data-url="{{ route('home') }}">
+
     <!-- Layout wrapper -->
     <div class="layout-wrapper layout-content-navbar">
         <div class="layout-container">

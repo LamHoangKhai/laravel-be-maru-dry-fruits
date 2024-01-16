@@ -1,18 +1,51 @@
-import { formatDate, loading, setTotalPages } from "../function.js";
+import { formatDate, loading, setTotalPages, renderLink } from "../function.js";
 
 const loadProduct = (storage) => {
+    const links = [
+        {
+            url: storage.url + "/warehouse/create-import/",
+            text: "Import",
+            classBootstrap: "",
+            classIcon: "bx bx-import",
+        },
+        {
+            url: storage.url + "/warehouse/create-export/",
+            text: "Export",
+            classBootstrap: "",
+            classIcon: "bx bx-export",
+        },
+        {
+            url: storage.url + "/warehouse/log/",
+            text: "Log I/E",
+            classBootstrap: "",
+            classIcon: "bx bx-history",
+        },
+        {
+            url: storage.url + "/edit/",
+            text: "Edit",
+            classBootstrap: "",
+            classIcon: "bx bx-edit-alt me-1",
+        },
+        {
+            url: storage.url + "/destroy/",
+            text: "Delete",
+            classBootstrap: "text-danger delete",
+            classIcon: "bx bx-trash me-1",
+        },
+    ];
+
     const numberOfTH = $("thead th").length;
     loading(numberOfTH);
+
     $.ajax({
         type: "POST",
-        url: storage.url,
+        url: storage.url + "/get-products",
         data: storage,
         dataType: "json",
         success: (res) => {
             let xhtml = "";
             let data = res?.data?.data || [];
             if (data.length === 0) {
-                console.log(data);
                 xhtml += `
                     <tr>
                     <td valign="top" colspan=${numberOfTH} class="text-center">No matching records found</td>
@@ -21,33 +54,17 @@ const loadProduct = (storage) => {
             } else {
                 data.forEach((element, index) => {
                     let updated_at = formatDate(new Date(element.updated_at));
-                    let qr = element.product_weight[0].qrcode;
 
-                    // get url edit
-                    let urlEdit = $("#url-edit")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    // get url delete
-                    let urlDelete = $("#url-destroy")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    //get url import product
-                    let urlImport = $("#url-import")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    //get url export product
-                    let urlExport = $("#url-export")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    //get url export product
-                    let urlLog = $("#url-log")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
+                    let qr =
+                        element.product || element.product_weight.length > 0
+                            ? element.product_weight[0].qrcode
+                            : "";
 
                     let type =
                         element.status === 1
                             ? ["Show", "primary"]
                             : ["Hidden", "dark"];
+
 
                     xhtml += `
                     <tr>
@@ -89,14 +106,9 @@ const loadProduct = (storage) => {
 
                             <div class="dropdown-menu" style="">
                             <button value="${qr}" class="dropdown-item qr" i><i class='bx bx-qr'></i> QR</button>
-                            <a href="${urlImport}" class="dropdown-item"><i class='bx bx-import'></i> Import</a>
-                            <a href="${urlExport}" class="dropdown-item"><i class='bx bx-export'></i> Export</a>
-                            <a href="${urlLog}" class="dropdown-item"><i class='bx bx-history'></i> Log I/E</a>
-                            <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                            <a  href="${urlDelete}" id="delete" value="${
-                        element.id
-                    }" class="text-danger delete dropdown-item"><i class="bx bx-trash me-1"></i> Delete</a>
+                            ${renderLink(links, element.id)}
                             </div>
+
                          </div>
                     </td>
 
@@ -121,7 +133,7 @@ const loadProduct = (storage) => {
 };
 
 //load detail product
-const detailProduct = (product_id) => {
+const detailProduct = (url, product_id) => {
     $(".card-img").attr("src", "");
     $(".name").html("");
     $(".category").html("");
@@ -133,11 +145,10 @@ const detailProduct = (product_id) => {
 
     $.ajax({
         type: "POST",
-        url: $("#url-detail").data("url"),
+        url: url + "/detail",
         data: { id: product_id },
         dataType: "json",
         success: (res) => {
-            console.log(res);
             let product = res.data.product;
             let warehouse = res.data.warehouse;
             let qrCode = res.data.qr_weight_tag;

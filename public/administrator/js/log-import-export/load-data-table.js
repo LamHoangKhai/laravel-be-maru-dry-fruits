@@ -1,13 +1,21 @@
-import { formatDate, setTotalPages, loading } from "../function.js";
+import { formatDate, setTotalPages, loading, renderLink } from "../function.js";
 
 const loadProduct = (storage) => {
+    const links = [
+        {
+            url: storage.url + "/edit-import/",
+            text: "Edit",
+            classBootstrap: "",
+            classIcon: "bx bx-edit-alt me-1",
+        },
+    ];
     const numberOfTH = $("thead th").length;
     loading(numberOfTH);
     let text = storage.select == 1 ? "Import Quantity" : "Export Quantity";
     $("#quantity").html(text);
     $.ajax({
         type: "POST",
-        url: storage.url,
+        url: storage.url + "/get-log",
         data: storage,
         dataType: "json",
         success: (res) => {
@@ -24,15 +32,12 @@ const loadProduct = (storage) => {
                 data.forEach((element, index) => {
                     let updated_at = formatDate(new Date(element.updated_at));
                     // get url edit
-                    let urlEdit = $("#url-edit-import")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
 
                     let type =
                         element.transaction_type == 1
                             ? ["Import", "primary", "+"]
                             : ["Export", "dark", "-"];
-
+                   
                     xhtml += `
                         <tr>
                             <td>${
@@ -60,13 +65,9 @@ const loadProduct = (storage) => {
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                          <i class="bx bx-dots-vertical-rounded"></i>
                                     </button>
-                                    ${
-                                        storage.select == 1
-                                            ? `<div class="dropdown-menu" style="">
-                                                 <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a> 
-                                                </div>`
-                                            : ""
-                                    }
+                                        <div class="dropdown-menu" style="">
+                                            ${renderLink(links, element.id)}
+                                        </div>
                                  </div>
                             </td>
                         </tr>

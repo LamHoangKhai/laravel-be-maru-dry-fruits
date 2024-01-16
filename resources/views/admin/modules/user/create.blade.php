@@ -96,7 +96,8 @@
 
                     <div class="row ">
                         <div class="col d-flex  justify-content-end">
-                            <button type="submit" id="submit" class="btn btn-primary" style="margin-right: 4px">Create</button>
+                            <button type="submit" id="submit" class="btn btn-primary"
+                                style="margin-right: 4px">Create</button>
                             <a type="button" class="btn btn-outline-secondary" href="{{ route('admin.user.index') }}">
                                 Cancel
                             </a>

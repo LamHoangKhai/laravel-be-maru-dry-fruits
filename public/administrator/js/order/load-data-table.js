@@ -3,9 +3,10 @@ import { formatDate, loading, setTotalPages, statusText } from "../function.js";
 const loadProduct = (storage) => {
     const numberOfTH = $("thead th").length;
     loading(numberOfTH);
+    console.log("");
     $.ajax({
         type: "POST",
-        url: storage.url,
+        url: storage.url + $("#sub").val(),
         data: storage,
         dataType: "json",
         success: (res) => {

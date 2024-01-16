@@ -63,4 +63,29 @@ const statusText = (text) => {
     }
 };
 
-export { Mydebounce, formatDate, setTotalPages, loading, statusText };
+const getUrl = (path) => {
+    return $("#url").data("url") + "/admin" + path;
+};
+
+const renderLink = (links, id) => {
+    let xhtml = ``;
+    links.map((item) => {
+        xhtml += `<a 
+        value="${id}" 
+        href="${item.url + id}" 
+        class="dropdown-item ${item.classBootstrap}">
+        <i class='${item.classIcon}'></i> 
+        ${item.text}</a>`;
+    });
+    return xhtml;
+};
+
+export {
+    Mydebounce,
+    formatDate,
+    setTotalPages,
+    loading,
+    statusText,
+    getUrl,
+    renderLink,
+};

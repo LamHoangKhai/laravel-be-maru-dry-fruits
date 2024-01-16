@@ -9,8 +9,7 @@
 
 @section('content')
     <input type="hidden" id="product_id" value="{{ $id }}">
-    <input type="hidden" id="url" data-url="{{ route('admin.product.warehouse.getLog') }}">
-    <input type="hidden" id="url-edit-import" data-url="{{ route('admin.product.warehouse.editImport', 'id') }}">
+
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">

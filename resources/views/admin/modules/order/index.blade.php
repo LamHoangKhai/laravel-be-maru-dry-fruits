@@ -8,10 +8,9 @@
 
 
 @section('content')
-    <input type="hidden" id="url" data-url="{{ route('admin.order.getListOrder') }}">
-    <input type="hidden" id="url-detail" data-url="{{ route('admin.order.getOrderDetail') }}">
-    <input type="hidden" id="url-update-status" data-url="{{ route('admin.order.updateStatus') }}">
-    <input type="hidden" id="url-cancel" data-url="{{ route('admin.order.cancelOrder') }}">
+    <input type="hidden" id="sub" value="/get-list-order">
+
+
 
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">

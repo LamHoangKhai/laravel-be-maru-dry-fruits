@@ -15,7 +15,6 @@ use Carbon\Carbon;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class ProductController extends Controller
 {
@@ -56,10 +55,11 @@ class ProductController extends Controller
 
         //save  image
 
-        $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-            "folder" => 'dry_fruits_image',
-        ])->getSecurePath();
+        // $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
+        //     "folder" => 'dry_fruits_image',
+        // ])->getSecurePath();
 
+        $uploadedFileUrl =  UploadImageToCould($request->file('image')->getRealPath(), 'dry_fruits_image');
 
         $product->image = $uploadedFileUrl;
         $product->save();
@@ -71,10 +71,7 @@ class ProductController extends Controller
             //save qr code
             $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
             $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
-            $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
-                "folder" => 'dry_fruits_qrcode'
-            ])->getSecurePath();
-
+            $uploadedQRUrl = UploadImageToCould($qrCodeData, 'dry_fruits_qrcode');
             $insert[] = ["id" => $product->id . $weight, "product_id" => $product->id, "weight_tag_id" => $weight, "qrcode" => $uploadedQRUrl];
         }
         Product_Weight::insert($insert);
@@ -110,10 +107,10 @@ class ProductController extends Controller
             $old_image = explode('.', $image[sizeof($image) - 1]);
 
             try {
-                Cloudinary::destroy("dry_fruits_image/" . $old_image[0]);
-                $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                    "folder" => 'dry_fruits_image'
-                ])->getSecurePath();
+                // delete old image 
+                DeleteImageOnCloud("dry_fruits_image/", $old_image[0]);
+                // upload new image
+                $uploadedFileUrl = UploadImageToCould($request->file('image')->getRealPath(), 'dry_fruits_image');
                 $product->image = $uploadedFileUrl;
             } catch (\Exception $e) {
                 echo "Error </br>";
@@ -127,11 +124,10 @@ class ProductController extends Controller
         foreach ($request->weights as $weight) {
             $checkExist = Product_Weight::where([["product_id", $product->id], ["weight_tag_id", $weight]])->first();
             if (!$checkExist) {
+                // save qr to clound
                 $qrCodeImage = QrCode::size(100)->generate($product->id . $weight);
                 $qrCodeData = 'data:image/svg+xml;base64,' . base64_encode($qrCodeImage);
-                $uploadedQRUrl = Cloudinary::upload($qrCodeData, [
-                    "folder" => 'dry_fruits_qrcode'
-                ])->getSecurePath();
+                $uploadedQRUrl = UploadImageToCould($qrCodeData, 'dry_fruits_qrcode');
                 $insert[] = ["id" => $product->id . $weight, "product_id" => $product->id, "weight_tag_id" => $weight, "qrcode" => $uploadedQRUrl];
             }
         }
@@ -145,11 +141,13 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
         $weightTags = Product_Weight::where("product_id", $product->id)->get();
+        // delete weight tags
         foreach ($weightTags as $tag) {
             $image = explode('/', $tag->qrcode);
             $old_image = explode('.', $image[sizeof($image) - 1]);
             try {
-                Cloudinary::destroy("dry_fruits_qrcode/" . $old_image[0]);
+                //  delete qrcode
+                DeleteImageOnCloud("dry_fruits_qrcode/", $old_image[0]);
             } catch (\Exception $e) {
                 echo "Error </br>";
                 echo $e->getMessage();
@@ -223,7 +221,7 @@ class ProductController extends Controller
         $image = explode('/', $product_weight->qrcode);
         $old_image = explode('.', $image[sizeof($image) - 1]);
         try {
-            Cloudinary::destroy("dry_fruits_qrcode/" . $old_image[0]);
+            DeleteImageOnCloud("dry_fruits_qrcode/", $old_image[0]);
         } catch (\Exception $e) {
             echo "Error </br>";
             echo $e->getMessage();

@@ -29,10 +29,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route("viewLogin");
-});
+})->name('home');
 
-Route::get('uploads/')->name("uploads");
-Route::get('qrcode/')->name('qrcode');
+
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
@@ -84,10 +83,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->
         Route::post('get-products', 'getProducts')->name('getProducts');
         Route::post('remove-weight-tag', 'removeWeightTag')->name('removeWeightTag');
         Route::post('check-delete', 'checkDelete')->name('checkDelete');
-
-
-
-
 
         Route::prefix('warehouse')->name('warehouse.')->controller(WarehouseController::class)->group(function () {
             //view

@@ -1,11 +1,25 @@
-import { formatDate, loading, setTotalPages } from "../function.js";
+import { formatDate, loading, renderLink, setTotalPages } from "../function.js";
 
 const loadUser = (storage) => {
+    const links = [
+        {
+            url: storage.url + "/edit/",
+            text: "Edit",
+            classBootstrap: "",
+            classIcon: "bx bx-edit-alt me-1",
+        },
+        {
+            url: storage.url + "/destroy/",
+            text: "Delete",
+            classBootstrap: "text-danger delete",
+            classIcon: "bx bx-trash me-1",
+        },
+    ];
     const numberOfTH = $("thead th").length;
     loading(numberOfTH);
     $.ajax({
         type: "POST",
-        url: storage.url,
+        url: storage.url + "/get-users",
         data: storage,
         dataType: "json",
         success: (res) => {
@@ -20,13 +34,6 @@ const loadUser = (storage) => {
             } else {
                 data.forEach((element, index) => {
                     let updated_at = formatDate(new Date(element.updated_at));
-
-                    let urlEdit = $("#url-edit")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
-                    let urlDelete = $("#url-destroy")
-                        .attr("data-url")
-                        .replace(/id/g, element.id);
 
                     let level =
                         element.id === "maruDr-yfRui-tspRo-jectfORFOU-Rmembe" &&
@@ -53,7 +60,7 @@ const loadUser = (storage) => {
                                 ? element.full_name
                                 : "Wait For Update..."
                         }</td>
-                        <td>${element.email}</td>
+                        <td id="email">${element.email}</td>
                         <td>${
                             element.phone ? element.phone : "Wait For Update..."
                         }</td>
@@ -77,12 +84,7 @@ const loadUser = (storage) => {
                             </button>
 
                             <div class="dropdown-menu" style="">
-                                <a href="${urlEdit}" class="dropdown-item"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-
-                                <a  href="${urlDelete}" id="delete" 
-                                value="${
-                                    element.full_name
-                                }" class="text-danger delete dropdown-item"><i class="bx bx-trash me-1"></i> Delete</a>
+                              ${renderLink(links, element.id)}
                             </div>
                          </div>
                         </td>

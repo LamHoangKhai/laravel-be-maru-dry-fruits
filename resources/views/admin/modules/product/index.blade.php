@@ -11,15 +11,6 @@
 
 
 @section('content')
-    <input type="hidden" id="url" data-url="{{ route('admin.product.getProducts') }}">
-    <input type="hidden" id="url-edit" data-url="{{ route('admin.product.edit', 'id') }}">
-    <input type="hidden" id="url-destroy" data-url="{{ route('admin.product.destroy', 'id') }}">
-    <input type="hidden" id="url-check" data-url="{{ route('admin.product.checkDelete') }}">
-    <input type="hidden" id="url-detail" data-url="{{ route('admin.product.detail') }}">
-    <input type="hidden" id="url-import" data-url="{{ route('admin.product.warehouse.createImport', 'id') }}">
-    <input type="hidden" id="url-export" data-url="{{ route('admin.product.warehouse.createExport', 'id') }}">
-    <input type="hidden" id="url-log" data-url="{{ route('admin.product.warehouse.log', 'id') }}">
-
     <div class="container-fluid flex-grow-1 container-p-y">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">

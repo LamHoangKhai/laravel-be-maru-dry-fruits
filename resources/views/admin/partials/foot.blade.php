@@ -27,6 +27,12 @@
 
 
 <script>
+    $(document).ready(() => {
+        $("#renderData").on("contextmenu", ".delete", (e) => {
+            e.preventDefault();
+            return;
+        });
+    })
     const loading = () => {
         const loadingEl = $("#loading");
 

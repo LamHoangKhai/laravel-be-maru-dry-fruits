@@ -1,4 +1,4 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, getUrl } from "../function.js";
 import { loadUser } from "./load-data-table.js";
 //  call api Search
 
@@ -10,7 +10,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         select: 0,
-        url: $("#url").data("url"),
+        url: getUrl("/user"),
     };
     //handle search
     $("#search").keypress(
@@ -84,12 +84,13 @@ $(document).ready(() => {
     $("#renderData").on("click", ".delete", async (e) => {
         e.preventDefault();
         const url = e.target.href;
-        const name = e.target.getAttribute("value");
+        const parent = $(e.target).parent().parent().parent().parent();
+        const email = $(parent).children("#email").text();
         // show modal
         await Swal.fire({
             title: "<strong>Please read the warning carefully!!!</strong>",
             html: `
-            Do you want to delete user <strong>${name}, If you delete this user, things related to reviews and orders cannot be found?</strong>`,
+            Do you want to delete user <strong>${email}, If you delete this user, things related to reviews and orders cannot be found?</strong>`,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",

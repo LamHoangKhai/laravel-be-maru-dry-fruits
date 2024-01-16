@@ -1,4 +1,4 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, getUrl } from "../function.js";
 import { loadProduct } from "./load-data-table.js";
 //  call api Search
 
@@ -10,7 +10,7 @@ $(document).ready(() => {
         totalData: 0,
         totalPage: 1,
         select: 1,
-        url: $("#url").data("url"),
+        url: getUrl("/product/warehouse"),
         product_id: $("#product_id").val(),
     };
     //handle search

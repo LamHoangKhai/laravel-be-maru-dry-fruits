@@ -47,9 +47,10 @@ class BannerSliderController extends Controller
         $data->created_at = Carbon::now();
         $data->updated_at = Carbon::now();
         if (isset($request->image)) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                "folder" => 'dry_fruits_image'
-            ])->getSecurePath();
+            $uploadedFileUrl = UploadImageToCould(
+                $request->file('image')->getRealPath(),
+                'dry_fruits_image'
+            );
 
             $data->image = $uploadedFileUrl;
         }
@@ -96,17 +97,18 @@ class BannerSliderController extends Controller
             $banner = explode('/', $data->image);
             $old_banner = explode('.', $banner[sizeof($banner) - 1]);
             try {
-                Cloudinary::destroy("dry_fruits_banner/" . $old_banner[0]);
-                $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                    "folder" => 'dry_fruits_banner'
-                ])->getSecurePath();
+                DeleteImageOnCloud("dry_fruits_banner/", $old_banner[0]);
+
+                $uploadedFileUrl = UploadImageToCould(
+                    $request->file('image')->getRealPath(),
+                    'dry_fruits_banner'
+                );
                 $data->image = $uploadedFileUrl;
             } catch (\Exception $e) {
                 echo "Error  </br>";
                 echo $e->getMessage();
                 echo "</br>";
             }
-
         }
         $data->save();
         return redirect()->route("admin.slider-banner.index")->with("success", "Update success!");
@@ -122,7 +124,7 @@ class BannerSliderController extends Controller
         $banner = explode('/', $data->image);
         $old_banner = explode('.', $banner[sizeof($banner) - 1]);
         try {
-            Cloudinary::destroy("dry_fruits_banner/" . $old_banner[0]);
+            DeleteImageOnCloud("dry_fruits_banner/", $old_banner[0]);
         } catch (\Exception $e) {
             echo "Error  </br>";
             echo $e->getMessage();

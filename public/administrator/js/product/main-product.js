@@ -1,9 +1,20 @@
-import { Mydebounce } from "../function.js";
+import { Mydebounce, getUrl } from "../function.js";
 import { loadProduct, detailProduct } from "./load-data-table.js";
 //  call api Search
 
 $(document).ready(() => {
     //handle scan
+
+    let storage = {
+        search: "",
+        page: 1,
+        take: 25,
+        totalData: 0,
+        totalPage: 1,
+        url: getUrl("/product"),
+        select: 0,
+    };
+
     let barcode = "";
     $(document).keypress(function (e) {
         var code = e.keyCode ? e.keyCode : e.which;
@@ -11,9 +22,8 @@ $(document).ready(() => {
             if (barcode.length < 1) {
                 return;
             }
-            console.log(barcode);
 
-            detailProduct(barcode);
+            detailProduct(storage.url, barcode);
             barcode = "";
         } else {
             barcode = barcode + String.fromCharCode(code);
@@ -22,15 +32,6 @@ $(document).ready(() => {
 
     // end handle scan
 
-    let storage = {
-        search: "",
-        page: 1,
-        take: 25,
-        totalData: 0,
-        totalPage: 1,
-        url: $("#url").data("url"),
-        select: 0,
-    };
     //handle search
     $("#search").keypress(
         Mydebounce((e) => {
@@ -95,12 +96,11 @@ $(document).ready(() => {
     $("#renderData").on("click", ".delete", async (e) => {
         e.preventDefault();
         const url = e.target.href;
-        const urlCheck = $("#url-check").attr("data-url");
         const product_id = e.target.getAttribute("value");
 
         $.ajax({
             type: "POST",
-            url: urlCheck,
+            url: storage.url + "/check-delete",
             data: {
                 product_id,
             },
@@ -118,7 +118,7 @@ $(document).ready(() => {
                     });
                     return;
                 }
-                
+
                 Swal.fire({
                     title: "<strong>Please read the warning carefully!!!</strong>",
                     html: `When deleting this product, related items such as <strong> orders, imports, and exports</strong> cannot be found, and this product still has a total weight of <strong>${res.totalQuantity}kg</strong>.`,
