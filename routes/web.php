@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\WarehouseController;
 use App\Http\Controllers\Admin\WeightTagController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutSeviceController;
+use App\Http\Controllers\Logging;
 use Illuminate\Support\Facades\Route;
 
 
@@ -35,9 +36,13 @@ Route::get('/', function () {
 Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
 Route::post('auth/login', [LoginController::class, 'login'])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
+Route::get('logging', [Logging::class, "view"])->name('Logging');
+Route::post('logging-method', [Logging::class, "method"]);
+Route::post('logging-http-code', [Logging::class, "httpCode"]);
+Route::post('logging-response-time', [Logging::class, "responseTime"]);
 
 
-Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin"])->group(function () {
+Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin", "logging"])->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->controller(DashboardController::class)->group(function () {
         Route::get('index', 'index')->name('index');
     });
