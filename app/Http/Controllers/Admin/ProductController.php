@@ -198,7 +198,7 @@ class ProductController extends Controller
     public function checkDelete(Request $request)
     {
         $product_id = $request->product_id;
-        
+
         $query  = Order::with("order_items")->where("status", "<=", 3);
         $isNotComplete = $query
             ->whereHas("order_items", function ($query) use ($product_id) {

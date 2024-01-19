@@ -155,13 +155,10 @@ class OrderController extends Controller
             $query = $query->whereDate('updated_at', $date);
         }
 
-
         // if select  0 get  all status order else  status order  = select
         $query = $select > 0
             ? $query->where("status", "=", $select)
             : $query->where("status", ">", 3);
-
-
 
         // search order No.,user phone ,email , name 
         $query = $query
@@ -175,12 +172,6 @@ class OrderController extends Controller
         $result = $query->orderBy("created_at", "desc")->paginate($take);
         return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
-
-
-
-
-
-
 
     //API get order details
     public function getOrderDetail(Request $request)

@@ -20,21 +20,28 @@ class Logging extends Controller
         $times = [];
 
         foreach ($log as  $data) {
+            
             if ($date === $data->date) {
+
                 $roundedHour = date('H', ceil(strtotime($data->time))) . ":00";
                 $method = $data->method;
+
                 if (isset($times[$roundedHour])) {
                     if (isset($times[$roundedHour][$method])) {
                         $times[$roundedHour][$method] += 1;
                     } else {
                         $times[$roundedHour][$method] = 1;
                     }
+
                 } else {
                     $times[$roundedHour]  = [];
                     $times[$roundedHour][$method] = 1;
                 }
+
             }
+
         }
+        
         return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $times]);
     }
 
@@ -46,10 +53,14 @@ class Logging extends Controller
         $times = [];
 
         foreach ($log as  $data) {
+
             if ($date === $data->date) {
+
                 $roundedHour = date('H', ceil(strtotime($data->time))) . ":00";
                 $httpCode = $data->httpCode;
+
                 if (isset($times[$roundedHour])) {
+
                     if (isset($times[$roundedHour][$httpCode])) {
                         $times[$roundedHour][$httpCode] += 1;
                     } else {
@@ -74,17 +85,22 @@ class Logging extends Controller
 
         foreach ($log as  $data) {
             if ($date === $data->date) {
+
                 $roundedHour = date('H', ceil(strtotime($data->time))) . ":00";
                 $duration = $data->duration;
+
                 if (isset($times[$roundedHour])) {
                     if (isset($times[$roundedHour]['duration']) && $times[$roundedHour]['duration'] <=  $duration) {
                         $times[$roundedHour]['duration'] =  $duration;
                     }
+
                 } else {
                     $times[$roundedHour]  = [];
                     $times[$roundedHour]['duration'] =  $duration;
                 }
+
             }
+
         }
 
         return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $times]);
