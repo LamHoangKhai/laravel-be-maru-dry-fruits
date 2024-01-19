@@ -74,7 +74,7 @@ class CategoryController extends Controller
             }
         }
 
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "countProduct" => $countProduct, "countProductInStock" => $countProductInStock]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "countProduct" => $countProduct, "countProductInStock" => $countProductInStock]);
     }
 
 }

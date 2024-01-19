@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -47,7 +48,6 @@ class UserController extends Controller
         $data->phone = $request->phone;
         $data->save();
         return redirect()->route("admin.user.index")->with("success", "Create user successful");
-
     }
 
 
@@ -155,27 +155,33 @@ class UserController extends Controller
      */
     public function getUsers(Request $request)
     {
-        // query filter, search 
+        try {
+            // query filter, search 
 
-        $query = User::where("status", "!=", 3); // just get user when status 1,2
-        $search = $request->search ? $request->search : "";
-        $take = (int) $request->take;
-        $select = $request->select;
+            $query = User::where("status", "!=", 3); // just get user when status 1,2
+            $search = $request->search ? $request->search : "";
+            $take = (int) $request->take;
+            $select = $request->select;
 
-        if ($select > 0) {
-            $query = $query->where("status", "=", $select);
+            if ($select > 0) {
+                $query = $query->where("status", "=", $select);
+            }
+
+            // search email, phone ,name 
+            $query = $query->where(function ($query) use ($search) {
+                $query->where("full_name", "like", "%" . $search . "%")
+                    ->orWhere("email", "like", "%" . $search . "%")
+                    ->orWhere("phone", "like", "%" . $search . "%");
+            });
+
+            //return data
+            $result = $query->orderBy("created_at", "desc")->paginate($take);
+            return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
+        } catch (QueryException $e) {  // Xử lý lỗi nếu có lỗi truy vấn
+            return response()->json(['status_code' => 500, 'msg' => "Lỗi truy vấn cơ sở dữ liệu.", 'error' => $e->getMessage()]);
+        } catch (\Exception $e) {
+            // Xử lý các loại ngoại lệ khác
+            return abort(500);
         }
-
-        // search email, phone ,name 
-        $query = $query->where(function ($query) use ($search) {
-            $query->where("full_name", "like", "%" . $search . "%")
-                ->orWhere("email", "like", "%" . $search . "%")
-                ->orWhere("phone", "like", "%" . $search . "%");
-        });
-
-        //return data
-        $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
-
     }
 }

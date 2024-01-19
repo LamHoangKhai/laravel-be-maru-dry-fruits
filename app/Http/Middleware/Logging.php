@@ -36,7 +36,6 @@ class Logging
         } else {
             $body = $request->all();
         }
-
         $logData = [
             'ip' => $request->ip(),
             'url' => $request->fullUrl(),

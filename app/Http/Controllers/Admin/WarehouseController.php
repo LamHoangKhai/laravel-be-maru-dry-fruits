@@ -162,7 +162,7 @@ class WarehouseController extends Controller
 
         //return data
         $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
 
 

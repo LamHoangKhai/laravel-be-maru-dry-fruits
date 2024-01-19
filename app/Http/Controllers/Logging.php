@@ -35,7 +35,7 @@ class Logging extends Controller
                 }
             }
         }
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $times]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $times]);
     }
 
     public function httpCode(Request $request)
@@ -62,7 +62,7 @@ class Logging extends Controller
             }
         }
 
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $times]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $times]);
     }
 
     public function responseTime(Request $request)
@@ -87,6 +87,6 @@ class Logging extends Controller
             }
         }
 
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $times]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $times]);
     }
 }

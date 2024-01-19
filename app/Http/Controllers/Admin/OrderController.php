@@ -111,7 +111,7 @@ class OrderController extends Controller
     public function product(Request $request)
     {
         $product = Product_Weight::with(["weight_tag", "product"])->findOrFail($request->id)->toArray();
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $product]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $product]);
     }
 
 
@@ -140,7 +140,7 @@ class OrderController extends Controller
             });
         //return data
         $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
 
     public function getHistoryOrder(Request $request)
@@ -173,7 +173,7 @@ class OrderController extends Controller
             });
         //return data
         $result = $query->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
 
 
@@ -186,7 +186,7 @@ class OrderController extends Controller
     public function getOrderDetail(Request $request)
     {
         $order = Order::with(["order_items", "user"])->findOrFail($request->id);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $order]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $order]);
     }
 
     public function cancelOrder(Request $request)
@@ -195,7 +195,7 @@ class OrderController extends Controller
         $order->status = 5;
         $order->updated_at = Carbon::now();
         $order->save();
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+        return response()->json(['status_code' => 200, 'msg' => "Success"]);
     }
 
     public function updateStatus(Request $request)
@@ -208,6 +208,6 @@ class OrderController extends Controller
             $order->transaction_status = 1;
         }
         $order->save();
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+        return response()->json(['status_code' => 200, 'msg' => "Success"]);
     }
 }

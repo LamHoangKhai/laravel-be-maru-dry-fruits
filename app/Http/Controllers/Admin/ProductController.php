@@ -178,7 +178,7 @@ class ProductController extends Controller
 
         //return data
         $result = $query->with(["category", "product_weight"])->orderBy("created_at", "desc")->paginate($take);
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
 
     //api scan qr
@@ -190,7 +190,7 @@ class ProductController extends Controller
             ->first();
         $qrWeightTags =  Product_Weight::with("weight_tag")->where("product_id", $product->id,)->get();
         $result = ["product" => $product, "warehouse" => $warehouse, "qr_weight_tag" => $qrWeightTags];
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "data" => $result]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "data" => $result]);
     }
 
 
@@ -213,7 +213,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($request->product_id);
         $totalQuantity = $product->stock_quantity + $product->store_quantity;
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn.", "totalQuantity" => $totalQuantity, "permission" => true]);
+        return response()->json(['status_code' => 200, 'msg' => "Success", "totalQuantity" => $totalQuantity, "permission" => true]);
     }
 
     //remove weight tag
@@ -234,6 +234,6 @@ class ProductController extends Controller
         }
 
         $product_weight->delete();
-        return response()->json(['status_code' => 200, 'msg' => "Kết nối thành công nha bạn."]);
+        return response()->json(['status_code' => 200, 'msg' => "Success"]);
     }
 }
