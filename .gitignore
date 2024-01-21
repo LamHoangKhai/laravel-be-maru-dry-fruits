@@ -5,6 +5,7 @@
 /public/uploads
 /public/qrcode
 /storage/*.key
+/storage/debugbar
 /vendor
 .env.backup
 .env.production

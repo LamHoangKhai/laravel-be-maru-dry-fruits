@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Stacked Column Chart</title>
     <style>
@@ -58,38 +57,9 @@
     </div>
 
 
-    <script>
-        $(document).ready(function() {
-            // Hàm để lấy ngày gần nhất
-            function getRecentDays(count) {
-                let recentDays = [];
-                for (let i = 0; i < count; i++) {
-                    let date = new Date();
-                    date.setDate(date.getDate() - i);
-                    recentDays.push(date.toISOString().split('T')[0]);
-                }
-                return recentDays;
-            }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-            // Số ngày cần chọn
-            const numberOfDays = 3;
-
-            // Lấy ngày gần nhất
-            const recentDays = getRecentDays(numberOfDays);
-
-            // Chọn select element bằng jQuery
-            const $selectElement = $("#selectDays");
-
-            // Thêm options vào select element bằng jQuery
-            $.each(recentDays, function(index, day) {
-                if (index === 0) {
-                    $selectElement.append("<option value='" + day + "' selected>" + day + "</option>");
-                    return
-                }
-                $selectElement.append("<option value='" + day + "'>" + day + "</option>");
-            });
-        });
-    </script>
 
     <script src="{{ asset('administrator/logging/main.js') }}" type="module"></script>
 </body>

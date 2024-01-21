@@ -17,7 +17,13 @@ class Logging extends Controller
         $date = $request->date;
         $fileName = $date . '.json';
         $storagePath = storage_path("log-json/" . $fileName);
-        $log = json_decode(file_get_contents($storagePath, true));
+
+        if (file_exists($storagePath)) {
+            $log = json_decode(file_get_contents($storagePath, true));
+        } else {
+            return response()->json(['status_code' => 404, 'msg' => "Not find log."]);
+        }
+
         $times = [];
 
         for ($i = 0; $i < 24; $i++) {
@@ -48,7 +54,13 @@ class Logging extends Controller
         $date = $request->date;
         $fileName = $date . '.json';
         $storagePath = storage_path("log-json/" . $fileName);
-        $log = json_decode(file_get_contents($storagePath, true));
+
+        if (file_exists($storagePath)) {
+            $log = json_decode(file_get_contents($storagePath, true));
+        } else {
+            return response()->json(['status_code' => 404, 'msg' => "Not find log."]);
+        }
+
         $times = [];
 
         for ($i = 0; $i < 24; $i++) {
@@ -81,7 +93,13 @@ class Logging extends Controller
         $date = $request->date;
         $fileName = $date . '.json';
         $storagePath = storage_path("log-json/" . $fileName);
-        $log = json_decode(file_get_contents($storagePath, true));
+
+        if (file_exists($storagePath)) {
+            $log = json_decode(file_get_contents($storagePath, true));
+        } else {
+            return response()->json(['status_code' => 404, 'msg' => "Not find log."]);
+        }
+
         $times = [];
 
         for ($i = 0; $i < 24; $i++) {
