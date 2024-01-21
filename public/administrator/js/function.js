@@ -1,3 +1,20 @@
+const ajaxReq = (url, method, data) => {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: url,
+            type: method,
+            data: data,
+            dataType: "json",
+            success: (res) => {
+                resolve(res);
+            },
+            error: function (error) {
+                reject(error);
+            },
+        });
+    });
+};
+
 const Mydebounce = (callback, timeout = 500) => {
     let timer;
     return (...agrs) => {
@@ -88,4 +105,5 @@ export {
     statusText,
     getUrl,
     renderLink,
+    ajaxReq,
 };

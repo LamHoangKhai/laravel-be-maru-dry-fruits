@@ -16,13 +16,13 @@
             justify-content: space-evenly
         }
 
-        .width-400px {
-            width: 400px;
+        .width-600px {
+            width: 600px;
             display: flex;
             flex-direction: column;
         }
 
-        .width-400px h2 {
+        .width-600px h2 {
             text-align: center;
         }
     </style>
@@ -34,30 +34,31 @@
         <!-- Options sẽ được thêm vào đây bằng JavaScript -->
     </select>
     <div class="content">
-        <div class="width-400px">
+        <div class="width-600px">
             <h2>Http Method</h2>
             <canvas id="method" width="600" height="400"></canvas>
 
         </div>
-        
-        <div class="width-400px">
+
+        <div class="width-600px">
             <h2>Http Response Time</h2>
             <canvas id="responseTime" width="600" height="400"></canvas>
         </div>
 
-        <div class="width-400px">
+
+    </div>
+
+    <div class="content">
+
+        <div class="width-600px">
             <h2>Http Code</h2>
             <canvas id="httpCode" width="600" height="400"></canvas>
         </div>
 
     </div>
 
+
     <script>
-        $.ajaxSetup({
-            headers: {
-                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-            },
-        });
         $(document).ready(function() {
             // Hàm để lấy ngày gần nhất
             function getRecentDays(count) {

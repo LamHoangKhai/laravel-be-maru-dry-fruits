@@ -1,3 +1,9 @@
+$.ajaxSetup({
+    headers: {
+        "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+    },
+});
+
 const renderBarCharMethod = (date) => {
     $.ajax({
         type: "POST",
@@ -159,12 +165,6 @@ const renderBarCharHttpCode = (date) => {
             });
         },
         error: function (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Error!!!",
-                html: "<strong>QR not exist</strong>",
-                timer: 3000,
-            });
             console.log(error.message);
         },
     });
@@ -230,12 +230,6 @@ const renderBarCharResponseTime = (date) => {
             });
         },
         error: function (error) {
-            Swal.fire({
-                icon: "error",
-                title: "Error!!!",
-                html: "<strong>QR not exist</strong>",
-                timer: 3000,
-            });
             console.log(error.message);
         },
     });

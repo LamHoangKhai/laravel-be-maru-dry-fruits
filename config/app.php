@@ -156,20 +156,21 @@ return [
     */
 
     'providers' => ServiceProvider::defaultProviders()->merge([
-            /*
+        /*
              * Package Service Providers...
              */
 
-            /*
+        /*
              * Application Service Providers...
              */
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
-            // App\Providers\BroadcastServiceProvider::class,
+        // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
-        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        'Barryvdh\Debugbar\ServiceProvider',
     ])->toArray(),
 
     /*
@@ -185,7 +186,8 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
-        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class
+        'QrCode' => SimpleSoftwareIO\QrCode\Facades\QrCode::class,
+        'Debugbar' => 'Barryvdh\Debugbar\Facade',
     ])->toArray(),
 
 ];

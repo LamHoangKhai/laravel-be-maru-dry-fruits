@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\File;
 
 class Logging
 {
@@ -16,12 +17,12 @@ class Logging
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $stored =  'logs.json';
+        $fileName = Carbon::createFromTimestamp($_SERVER["REQUEST_TIME"])->format('Y-m-d') . ".json";
+        $storagePath = storage_path("log-json/" . $fileName);
 
         // Calculate response time
 
-
-        $startTime = microtime(true);
+        $startTime = $request->server()["REQUEST_TIME_FLOAT"];
 
         $response = $next($request);
 
@@ -30,12 +31,13 @@ class Logging
         $durationInMicroseconds = floor(($endTime - $startTime) * 1000);
 
         // read and write log to file json
-        $oldLog = json_decode(file_get_contents($stored, true));
+
         if ($request->id) {
             $body = ["id" => $request->id];
         } else {
             $body = $request->all();
         }
+
         $logData = [
             'ip' => $request->ip(),
             'url' => $request->fullUrl(),
@@ -47,9 +49,22 @@ class Logging
             'time' => Carbon::createFromTimestamp($_SERVER["REQUEST_TIME"])->format('H:i:s'),
             'duration' => $durationInMicroseconds
         ];
-        array_push($oldLog, $logData);
-        $newLog = json_encode($oldLog, JSON_PRETTY_PRINT);
-        file_put_contents($stored, $newLog);
+        
+        if (file_exists($storagePath)) {
+
+            $oldLog = json_decode(file_get_contents($storagePath, true));
+            array_push($oldLog, $logData);
+            $newLog = json_encode($oldLog, JSON_PRETTY_PRINT);
+            file_put_contents($storagePath, $newLog);
+
+        } else {
+
+            $newArray[] = $logData;
+            $newLog = json_encode($newArray, JSON_PRETTY_PRINT);
+            File::put($storagePath, $newLog);
+
+        }
+
         return $response;
     }
 }
