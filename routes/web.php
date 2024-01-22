@@ -30,16 +30,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()->route("viewLogin");
-})->name('home');
+})->middleware(["logging"])->name('home');
 
 
-Route::get('auth/login', [LoginController::class, 'viewLogin'])->name('viewLogin');
-Route::post('auth/login', [LoginController::class, 'login'])->name('login');
+Route::get('auth/login', [LoginController::class, 'viewLogin'])->middleware(["logging"])->name('viewLogin');
+Route::post('auth/login', [LoginController::class, 'login'])->middleware(["logging"])->name('login');
 Route::get('auth/logout', LogoutSeviceController::class)->name('logout');
-Route::get('logging', [Logging::class, "view"])->name('Logging');
-Route::post('logging-method', [Logging::class, "method"]);
-Route::post('logging-http-code', [Logging::class, "httpCode"]);
-Route::post('logging-response-time', [Logging::class, "responseTime"]);
+Route::get('logging', [Logging::class, "view"])->middleware(["logging"])->name('Logging');
+Route::post('logging-method', [Logging::class, "method"])->middleware(["logging"]);
+Route::post('logging-http-code', [Logging::class, "httpCode"])->middleware(["logging"]);
+Route::post('logging-response-time', [Logging::class, "responseTime"])->middleware(["logging"]);
 
 
 Route::prefix('admin')->name('admin.')->middleware(['auth:web', "checkLogin", "logging"])->group(function () {

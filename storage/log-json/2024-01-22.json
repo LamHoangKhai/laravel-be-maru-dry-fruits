@@ -1,0 +1,1068 @@
+[
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:11:44",
+        "duration": 232
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "0",
+            "totalPage": "1",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:11:46",
+        "duration": 200
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "2",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:12:00",
+        "duration": 193
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "5",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:12:57",
+        "duration": 179
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:13:36",
+        "duration": 236
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "0",
+            "totalPage": "1",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:13:39",
+        "duration": 191
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:14:32",
+        "duration": 284
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "0",
+            "totalPage": "1",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:14:35",
+        "duration": 198
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "3",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:24:28",
+        "duration": 194
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:24:29",
+        "duration": 203
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "0",
+            "totalPage": "1",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "00:24:31",
+        "duration": 199
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/dashboard\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:09:17",
+        "duration": 308
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:09:34",
+        "duration": 228
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "0",
+            "totalPage": "1",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:09:36",
+        "duration": 241
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "2",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Linux; Android 6.0; Nexus 5 Build\/MRA58N) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Mobile Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:21",
+        "duration": 228
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "3",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:31",
+        "duration": 185
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "4",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:36",
+        "duration": 216
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "5",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:40",
+        "duration": 213
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "25",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:44",
+        "duration": 181
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/user\/get-users",
+        "method": "POST",
+        "body": {
+            "search": null,
+            "page": "1",
+            "take": "100",
+            "totalData": "102",
+            "totalPage": "5",
+            "select": "0",
+            "url": "http:\/\/localhost:8000\/admin\/user"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:12:49",
+        "duration": 216
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/auth\/login",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "PostmanRuntime\/7.32.1"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:17:12",
+        "duration": 160
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/auth\/login",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:17:55",
+        "duration": 191
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/auth\/login",
+        "method": "POST",
+        "body": {
+            "_token": "itf6Ab9ezlZopIOzXN8mMg3dpDPyiyeJY35o1AGs",
+            "email": "administrator@gmail.com",
+            "password": "administrator"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 302,
+        "date": "2024-01-22",
+        "time": "15:18:01",
+        "duration": 393
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/admin\/dashboard\/index",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:18:01",
+        "duration": 215
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:18:58",
+        "duration": 170
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:18:58",
+        "duration": 159
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:18:59",
+        "duration": 175
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:18:59",
+        "duration": 174
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "PostmanRuntime\/7.32.1"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:19:22",
+        "duration": 168
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "PostmanRuntime\/7.32.1"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:24:08",
+        "duration": 157
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "PostmanRuntime\/7.32.1"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "15:55:39",
+        "duration": 229
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:09",
+        "duration": 213
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:10",
+        "duration": 179
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:10",
+        "duration": 187
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:11",
+        "duration": 190
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:12",
+        "duration": 704
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:13",
+        "duration": 737
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:38:13",
+        "duration": 729
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:37",
+        "duration": 210
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:38",
+        "duration": 187
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:38",
+        "duration": 196
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:39",
+        "duration": 760
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:40",
+        "duration": 855
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-21"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:47:41",
+        "duration": 734
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:55:03",
+        "duration": 205
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:55:03",
+        "duration": 196
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:55:04",
+        "duration": 183
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:55:04",
+        "duration": 248
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:58:55",
+        "duration": 188
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:58:56",
+        "duration": 154
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:58:56",
+        "duration": 172
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:58:56",
+        "duration": 172
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:16",
+        "duration": 164
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:17",
+        "duration": 160
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:17",
+        "duration": 184
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:17",
+        "duration": 174
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:25",
+        "duration": 174
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:26",
+        "duration": 174
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:26",
+        "duration": 185
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "16:59:26",
+        "duration": 188
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:06:56",
+        "duration": 191
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:06:56",
+        "duration": 162
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:06:56",
+        "duration": 167
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:06:57",
+        "duration": 173
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging",
+        "method": "GET",
+        "body": [],
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:07:20",
+        "duration": 176
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-http-code",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:07:21",
+        "duration": 208
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-method",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:07:22",
+        "duration": 226
+    },
+    {
+        "ip": "127.0.0.1",
+        "url": "http:\/\/localhost:8000\/logging-response-time",
+        "method": "POST",
+        "body": {
+            "date": "2024-01-22"
+        },
+        "userAgent": [
+            "Mozilla\/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/120.0.0.0 Safari\/537.36"
+        ],
+        "httpCode": 200,
+        "date": "2024-01-22",
+        "time": "17:07:22",
+        "duration": 166
+    }
+]

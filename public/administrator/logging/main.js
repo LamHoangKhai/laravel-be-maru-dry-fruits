@@ -9,7 +9,14 @@ $(document).ready(function () {
         for (let i = 0; i < count; i++) {
             let date = new Date();
             date.setDate(date.getDate() - i);
-            recentDays.push(date.toISOString().split("T")[0]);
+
+            let year = date.getFullYear();
+            let month = (date.getMonth() + 1).toString().padStart(2, "0");
+            let day = date.getDate().toString().padStart(2, "0");
+
+            let formattedDate = `${year}-${month}-${day}`;
+
+            recentDays.push(formattedDate);
         }
         return recentDays;
     }

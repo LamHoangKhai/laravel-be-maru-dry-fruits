@@ -20,11 +20,15 @@ class LogProcessingJob implements ShouldQueue
     public $storagePath;
     public $data;
 
-    public $request;
-    public function __construct($storagePath, $data)
+    public $startTime;
+
+    public $endTime;
+    public function __construct($storagePath, $data, $startTime)
     {
         $this->storagePath = $storagePath;
         $this->data = $data;
+        $this->startTime = $startTime;
+        $this->endTime = microtime(true);
     }
 
     /**
@@ -32,6 +36,11 @@ class LogProcessingJob implements ShouldQueue
      */
     public function handle(): void
     {
+
+        $durationInMicroseconds = floor(($this->endTime - $this->startTime) * 1000);
+
+        $this->data["duration"] = $durationInMicroseconds;
+
         if (file_exists($this->storagePath)) {
             $oldLog = json_decode(file_get_contents($this->storagePath, true));
             array_push($oldLog, $this->data);

@@ -18,6 +18,7 @@ class Logging
      */
     public function handle(Request $request, Closure $next): Response
     {
+       
         $fileName = Carbon::createFromTimestamp($request->server()["REQUEST_TIME_FLOAT"])->format('Y-m-d') . ".json";
         $storagePath = storage_path("log-json/" . $fileName);
 
@@ -31,11 +32,6 @@ class Logging
         $startTime = $request->server()["REQUEST_TIME_FLOAT"];
 
         $response = $next($request);
-
-        $endTime = microtime(true);
-
-        $durationInMicroseconds = floor(($endTime - $startTime) * 1000);
-
         // read and write log to file json
         $data = [
             'ip' => $request->ip(),
@@ -46,10 +42,9 @@ class Logging
             'httpCode' => $response->getStatusCode(),
             'date' => Carbon::createFromTimestamp($request->server()["REQUEST_TIME_FLOAT"])->format('Y-m-d'),
             'time' => Carbon::createFromTimestamp($request->server()["REQUEST_TIME_FLOAT"])->format('H:i:s'),
-            'duration' => $durationInMicroseconds
         ];
         // handle
-        LogProcessingJob::dispatchAfterResponse($storagePath, $data);
+        LogProcessingJob::dispatchAfterResponse($storagePath, $data, $startTime);
 
         return $response;
     }
